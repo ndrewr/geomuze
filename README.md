@@ -22,6 +22,7 @@ NOTES:
 	- Click and hold for 2 secs to drop pin
 	- Select location from modal window to pan to location
 - Remember to attribute any photos used...can use KO to bind to a small span, auto updating when neccessary
+- Google Places API search box is a possibility
 
 IDEAS:
 - What about a search game? like carmen san diego? Where user gets hints or riddles
@@ -35,6 +36,7 @@ data on an area
 - Singing in the shower...what about user types a destination, app fires off a search for songs with that
 destination in the title/lyrics? can present a youtube video link in modal, or a jukebox or something...
 maybe save last several searches (persist on server) in the jukebox...
+- If I keep the routing structure I can set up the about page as instructions or a history of past searches
 
 
 *****************************************************************************

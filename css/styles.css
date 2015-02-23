@@ -1,3 +1,44 @@
+/* CSS reset applied? */
+
+
+
 #page {
 	margin-top: 80px;
+}
+
+#appConsole {
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+input {
+	height: 50px;
+	width: 200px;
+	padding: 10px;
+
+}
+.search-btn {
+	height: 50px;
+	min-width: 60px;
+}
+input, button {
+	outline: none !important;
+}
+
+#map-container {
+	position: relative;
+}
+
+#result-list {
+
+	position: absolute;
+	z-index: 1;
+	right: 5%;
+	top: 15%;
+	width: 40%;
+	background: white;
+	opacity: .9;
 }

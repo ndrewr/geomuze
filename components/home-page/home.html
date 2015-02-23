@@ -1,5 +1,12 @@
-<h2>Home</h2>
 
-<p data-bind='text: message'></p>
+<section id="appConsole">
+	<div>
+		<h2>Welcome to GeoMuze</h2>
+		<p data-bind='text: message'></p>
+	</div>
 
-<button data-bind='click: doSomething'>Click me</button>
+	<form data-bind="submit: goSearch">
+		<input id="searchbar" data-bind="value: search_terms" placeholder="take me to..."/>
+		<button class="btn btn-lg btn-warning search-btn" type='submit'>DO IT</button>
+	</form>
+</section>
