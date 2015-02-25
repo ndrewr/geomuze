@@ -1,12 +1,24 @@
-define(["knockout", "text!./home.html"], function(ko, homeTemplate) {
+define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTemplate) {
+
+//	function Result(track, artist, url) {
+//		this.url = url || '';
+//		this.artist_name = artist || '';
+//		this.track_name = track || '';
+//	}
+
 	function HomeViewModel(route) {
 		var self = this;
 		self.message = ko.observable('Lets get rockin!');
 		self.search_terms = ko.observable();
 
+		var test_list = [new Result("Can't Stop", "RHCP"), new Result("Flaws", "Bastille"), new Result("Rainbow Connection", "Willie Nelson")];
+
+		self.search_results = ko.observableArray(test_list).publishOn('new_results');
+
 		self.goSearch = function() {
-			console.log('You invoked goSearch() on the viewmodel. The terms are...%s', self.search_terms());
-			// construct a google maps query from search string
+			var results_buffer = []; // hold results for one push into observable array; better perf
+
+			// update map by calling google place search
 			if (mapView)
 				mapView.doPlaceSearch(self.search_terms());
 
@@ -22,7 +34,7 @@ define(["knockout", "text!./home.html"], function(ko, homeTemplate) {
 				track_list.forEach(function(track) {
 					var track_name = track.name;
 					var track_artist = track.artists[0].name;
-					console.log("top song is %s performed by %s", track_name, track_artist);
+					results_buffer.push(new Result(track_name, track_artist));
 				})
 			}).error(function(e) {
 				console.log("Problem with spotify!!!");
@@ -34,13 +46,15 @@ define(["knockout", "text!./home.html"], function(ko, homeTemplate) {
 			$.getJSON(musix_query, function(data) {
 				console.log("Response from Musixmatch...");
 				var track_list = data.message.body.track_list;
-				var track_name = track_list[0].track.track_name;
-				var artist = track_list[0].track.artist_name;
 				track_list.forEach(function(track) {
-					track_name = track.track.track_name;
-					artist = track.track.artist_name;
-				 console.log("Musixmatch top hit is %s by %s", track_name, artist);
+					var track_name = track.track.track_name;
+					var track_artist = track.track.artist_name;
+					results_buffer.push(new Result(track_name, track_artist));
 				});
+
+				// finally, upate the actual observable in one go
+				// AFTER async call returns
+				self.search_results(results_buffer);
 			}).error(function(e) {
 				console.log("Problem with Musixmatch!!!");
 			});

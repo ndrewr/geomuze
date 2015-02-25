@@ -1,11 +1,10 @@
-define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko, resultsTemplate) {
+define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, favesTemplate) {
 
-	function ListViewModel() {
+	function FaveListViewModel() {
 		var self = this;
-		self.current_location = {}; // location of search results
-		self.latestFave = ko.observable();
 		self.current_selection = ko.observable(0);
-		self.tracks = ko.observableArray().subscribeTo('new_results');
+		self.fresh_tracks = ko.observableArray().subscribeTo('new_results');
+		self.fave_tracks = ko.observableArray();
 
 		// user selects a track to see more info,
 		// open additional opens such as Play, etc
@@ -19,11 +18,11 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 		// "favorite", therby adding to a second array list
 		// that can be viewed in a seperate element pane or
 		// thru a toggle btn on this pane
-		self.setFavorite = function() {
-			console.log("Track favorite fired!");
+		self.removeItem = function() {
+			console.log("Remove favorite fired!");
 
 		};
 
 	}
-	return { viewModel: ListViewModel, template: resultsTemplate };
+	return { viewModel: FaveListViewModel, template: favesTemplate };
 });

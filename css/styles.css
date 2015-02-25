@@ -30,15 +30,56 @@ input, button {
 
 #map-container {
 	position: relative;
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
 }
 
-#result-list {
+#map-canvas {
+	height: 400px;
+	width: 50%;
+	margin: 20px;
+	padding: 0;
+}
 
+#result-list, #fave-list {
 	position: absolute;
-	z-index: 1;
-	right: 5%;
-	top: 15%;
+	margin: 20px;
+	padding: 10px;
+
+/*	z-index: 1;*/
 	width: 40%;
+	max-height: 90%;
+	overflow-y: scroll;
 	background: white;
 	opacity: .9;
+	border: 2px solid #ED9C28;
 }
+#result-list h3 {
+	margin: 10px;
+}
+#result-list ul {
+	list-style:none;
+	padding: 0;
+}
+#result-list li {
+	margin: 10px;
+	padding: 10px;
+	border-bottom: 1px solid gray;
+
+}
+#result-list li:hover {
+	box-shadow: inset 0 0 10px #CCCCCC;
+	background: gray;
+}
+.result-track {
+
+}
+.result-artist {
+
+}
+
+.result-selected {
+	background: yellow;
+}
+

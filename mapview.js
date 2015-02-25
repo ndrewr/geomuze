@@ -1,6 +1,5 @@
 /* initialize google map functions */
 function initializeMap() {
-	console.log("map starting!");
 	// custom map styles as set at Maps Styling Wizard
 	var custom_style = [
 		{
@@ -47,19 +46,16 @@ function initializeMap() {
 	];
 
 	window.mapView = new MapView(custom_style);
+	console.log("map started!?");
 }
 
 function MapView(map_style) {
 	var self = this;
-	// map object property
-	// autocomplete object property
-	// search object property
-
 
 	// Initial map settings, location
 	var mapOptions = {
 		center: { lat: -34.397, lng: 150.644},
-		zoom: 8,
+		zoom: 10,
 		styles: map_style
 	};
 
@@ -67,8 +63,7 @@ function MapView(map_style) {
 
 	// bind page search bar to autocomplete function
 	var search_bar = document.getElementById('searchbar');
-	// for google maps api own search bar
-	//map.controls[google.maps.ControlPosition.TOP_LEFT].push(search_bar);
+	// for google maps api own search bar	//map.controls[google.maps.ControlPosition.TOP_LEFT].push(search_bar);
 	self.autocomplete = new google.maps.places.Autocomplete(
 		/** @type {HTMLInputElement} */(search_bar),
 		{
@@ -77,9 +72,7 @@ function MapView(map_style) {
 
 	self.service = new google.maps.places.PlacesService(self.map);
 
-
-	console.log("time to assign the autocomplete event!");
-
+// create a google maps marker
 	self.createMarker = function(location) {
 		var marker=new google.maps.Marker({
 			map: self.map,
@@ -89,8 +82,9 @@ function MapView(map_style) {
 //		marker.setMap(self.map);
 	};
 
+// perform places search based on query string param
+// upon success, call gotoLocation to update map
 	self.doPlaceSearch = function(place_string) {
-
 		self.service.textSearch(
 			{
 				query: place_string,
@@ -98,28 +92,29 @@ function MapView(map_style) {
 			}, self.gotoLocation);
 	};
 
+// use selected autocomplete option to perform place search
 	self.gotoAutoComplete = function() {
+			console.log("Autocomplete event listener fired!");
 
-		var place = self.autocomplete.getPlace();
-
-		console.log("event listener fired! Result is %O", place);
-
-		self.map.setCenter(place.geometry.location);
-		self.createMarker(place.geometry.location);
-
-		if (!place.geometry) {
-			return;
-		}
-
-		var address = '';
-		if (place.address_components)
-		{
-			address = [
-				(place.address_components[0] && place.address_components[0].short_name || ''),
-				(place.address_components[1] && place.address_components[1].short_name || ''),
-				(place.address_components[2] && place.address_components[2].short_name || '')
-			].join(' ');
-		}
+//		var place = self.autocomplete.getPlace();
+//
+//
+//		if (!place.geometry) {
+//			return;
+//		}
+//
+//		self.map.setCenter(place.geometry.location);
+//		self.createMarker(place.geometry.location);
+//
+//		var address = '';
+//		if (place.address_components)
+//		{
+//			address = [
+//				(place.address_components[0] && place.address_components[0].short_name || ''),
+//				(place.address_components[1] && place.address_components[1].short_name || ''),
+//				(place.address_components[2] && place.address_components[2].short_name || '')
+//			].join(' ');
+//		}
 	};
 
 	self.gotoLocation = function(results, status) {
@@ -137,7 +132,6 @@ function MapView(map_style) {
 	};
 
 /*** Event handlers ***/
-
 	google.maps.event.addListener(self.autocomplete, 'place_changed', self.gotoAutoComplete);
 
 
@@ -150,7 +144,7 @@ function MapView(map_style) {
 	};
 	// run search for initial location as set above
 	// textSearch() returns results array and status code
-	self.service.textSearch(request, self.gotoLocation);
+//	self.service.textSearch(request, self.gotoLocation);
 
 }
 
