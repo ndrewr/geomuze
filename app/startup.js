@@ -8,7 +8,9 @@ define(['jquery', 'knockout', './router', 'bootstrap', 'knockout-projections'], 
 	ko.components.register('fave-list', {require:
 'components/fave-list/fave-list'}),
 	ko.components.register('btn-panel', {require:
-'components/btn-panel/btn-panel'});
+'components/btn-panel/btn-panel'}),
+	ko.components.register('track-item', {require:
+'components/track-item/track-item'});
 
 	// ... or for template-only components, you can just point to a .html file directly:
 	ko.components.register('about-page', {

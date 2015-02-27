@@ -2,17 +2,23 @@
 <section >
 	<h3>RESULTS</h3>
 	<ul data-bind="foreach: tracks">
-		<li data-bind="click: $parent.selectTrack.bind($data, $index(), $index()), css: { 'result-selected': $parent.current_selection() === $index() }">
-			<span class="result_track" data-bind="text: track_name"></span> by
-			<span class="result_artist" data-bind="text: artist_name"></span>
-			<div data-bind="visible: $parent.current_selection() === $index()">
-				<btn-panel params="fave: true"></btn-panel>
-			</div>
+		<track-item params="{track: $data, parent: $parent, index: $index}" class="track-item" data-bind="click: $parent.selectTrack.bind($data, $index())">
+
+<!--data-bind="click: $parent.selectTrack.bind($data, $index(), $index()), css: { 'result-selected': $parent.current_selection() === $index() }"> -->
+
+
 <!--
-			<div data-bind= "foreach: $parent.control_btns, visible: $parent.current_selection() === $index()">
-				<button data-bind="text: btn_title, click: handler"></button>
-			</div>
--->
+	<li class="track-item" data-bind="
+	click: $parent.selectTrack.bind($data, $index()),
+	css: { 'result-selected': $parent.current_selection() === $index() }
+	">
+				<p class="result-track" data-bind="text: track_name"></p> by
+				<span class="result-artist" data-bind="text: artist_name"></span>
+				<btn-panel data-bind="visible: $parent.current_selection() === $index()" params="fave: true"></btn-panel>
 		</li>
+-->
+
+		</track-item>
+
 	</ul>
 </section>

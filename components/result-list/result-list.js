@@ -3,12 +3,15 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 	function ListViewModel() {
 		var self = this;
 		self.current_location = {}; // location of search results
-		self.latestFave = ko.observable();
-		self.current_selection = ko.observable(0);
-		self.tracks = ko.observableArray().subscribeTo('new_results');
+		self.latest_fave = ko.observable({}).publishOn('fave_alert');
+		self.current_selection = ko.observable();
+
+		var test_list = [new Result("Raindance Maggie", "RHCP"), new Result("Pompeii", "Bastille"), new Result("Star Wars Cantina", "Weird Al Yankovic"), new Result("Changes", "Tupac Shakur")];
+
+		self.tracks = ko.observableArray(test_list).subscribeTo('new_results');
 
 		// user selects a track to see more info,
-		// open additional opens such as Play, etc
+		// open additional options such as Play, etc
 		// also control relevant styles and transitions
 		// Note: called from view using bind(), this = data_obj
 		self.selectTrack = function(index) {
@@ -21,6 +24,7 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 		// thru a toggle btn on this pane
 		self.setFavorite = function() {
 			console.log("Track favorite fired!");
+
 
 		};
 

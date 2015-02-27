@@ -12,7 +12,10 @@ var require = {
 				"text":                 "bower_modules/requirejs-text/text",
 
 			// add custom libraries
-			"knockout-postbox":                 "knockout-postbox"
+			"knockout-postbox":
+			"knockout-postbox",
+			"models":
+			"models"
 		},
 		shim: {
 				"bootstrap": { deps: ["jquery"] }

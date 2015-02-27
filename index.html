@@ -26,19 +26,19 @@
 		</div>
 		<section id="map-container">
 			<div id="map-canvas"></div>
-			<result-list id="result-list"></result-list>
+			<result-list id="result-list" class="track-list"></result-list>
 		</section>
 
-		<fave-list id="fave-list"></fave-list>
+		<fave-list id="fave-list" class="track-list"></fave-list>
 
 
-		<script type="text/javascript" src="./mapview.js"></script>
+		<script type="text/javascript" src="./app.js"></script>
 		<script type="text/javascript" src="./models.js"></script>
 
 
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCoh9OIWE1vT85aaoVRqszGR6E3TeEut24"></script>
 		<script type="text/javascript">
-			google.maps.event.addDomListener(window, 'load', initializeMap);
+//			google.maps.event.addDomListener(window, 'load', app.initialize);
 		</script>
 	</body>
 </html>
