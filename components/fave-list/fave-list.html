@@ -1,5 +1,5 @@
 <section >
-	<h3>FAVORITES</h3>
+	<h3>FAVORITE TRACKS<small><span class="list-item-count" data-bind="text: fave_tracks().length"</span></small></h3>
 	<ul data-bind="foreach: fave_tracks">
 		<track-item params="{track: $data, parent: $parent, delete:true}" class="track-item" data-bind="click: $parent.selectTrack.bind($data, $index())"></track-item>
 	</ul>

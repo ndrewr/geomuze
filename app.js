@@ -1,15 +1,25 @@
 
-var app = (function() {
+(function() {
 
-	console.log("Initializing app!");
-	window.app = {};
+	window.app = 	{};
+
+	function loadScript() {
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places' +
+//			'&key=AIzaSyCoh9OIWE1vT85aaoVRqszGR6E3TeEut24' +
+			'&signed_in=true&callback=initialize';
+		document.body.appendChild(script);
+	}
 
 	// under this implementation I might try to load  faves from
 	// database first...
 //	app.faves = new FaveList();
 
 	/* initialize google map functions */
-	function initialize() {
+	// google api searches global obj for callback
+	window.initialize = function() {
+		console.log("Initializing app!");
 		// custom map styles as set at Maps Styling Wizard
 		var custom_style = [
 			{
@@ -59,7 +69,6 @@ var app = (function() {
 		app.mapView = new MapView(custom_style, app);
 
 		console.log("map started!?");
-
 	}
 
 	function MapView(map_style, app) {
@@ -92,7 +101,6 @@ var app = (function() {
 				position: location,
 				animation:google.maps.Animation.DROP
 			});
-	//		marker.setMap(self.map);
 		};
 
 	// perform places search based on query string param
@@ -106,15 +114,19 @@ var app = (function() {
 		};
 
 	// use selected autocomplete option to perform place search
+	// NOTE: when user chooses autocomplete to populate the
+	// search bar, the observable doesnt get all the terms...
+	// only the term(s) user actually typed!
 		self.gotoAutoComplete = function() {
-			var place = self.autocomplete.getPlace();
+//			var place = self.autocomplete.getPlace();
+//
+//			if (!place.geometry) {
+//				return;
+//			}
+//
+//			self.gotoLocation([place], google.maps.places.PlacesServiceStatus.OK);
 
-			if (!place.geometry) {
-				return;
-			}
-
-			self.gotoLocation([place], google.maps.places.PlacesServiceStatus.OK);
-	//
+	//		Autocomplete functionality as supplied by google
 	//		self.map.setCenter(place.geometry.location);
 	//		self.createMarker(place.geometry.location);
 	//
@@ -144,11 +156,11 @@ var app = (function() {
 			}
 		};
 
-	/*** Event handlers ***/
+		/*** Event handlers ***/
 		google.maps.event.addListener(self.autocomplete, 'place_changed', self.gotoAutoComplete);
 
 
-	/*** run default location ***/
+		/*** run default location ***/
 		// initial location default set to Pyrmont
 		var request = {
 			location: new google.maps.LatLng(-33.8665433,151.1956316),
@@ -158,19 +170,25 @@ var app = (function() {
 		// run search for initial location as set above
 		// textSearch() returns results array and status code
 		self.service.textSearch(request, self.gotoLocation);
+
 	}
+
+
+	window.onload = loadScript;
+
 
 	// Can setTimeout for 3-5 secs here,
 	// display error if Google still has not loaded
-	var getG = setInterval(function() {
-			console.log("Load try...");
-			if(google.maps.event) {
-				clearInterval(getG);
-				google.maps.event.addDomListener(window, 'load', initialize);
-			}
-	}, 70);
+//	var getG = setInterval(function() {
+//			console.log("Load try...");
+//			if(google.maps.event.addDomListener) {
+//
+//				clearInterval(getG);
+//				google.maps.event.addDomListener(window, 'load', initialize);
+//			}
+//	}, 50);
 
 
-	return app;
+//	return app;
 
 })();

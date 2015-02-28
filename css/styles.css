@@ -42,17 +42,29 @@ input, button {
 	padding: 0;
 }
 
+#list-container {
+	width: 40%;
+	height: 400px;
+	margin: 20px;
+
+	position: absolute;
+}
+
+.list-item-count {
+	margin-left: 2em;
+}
+
 .track-list {
 	position: absolute;
 	margin: 20px;
 	padding: 10px;
 
 /*	z-index: 1;*/
-	width: 40%;
+	width: 90%;
 	max-height: 90%;
 	overflow-y: scroll;
 	background: white;
-	opacity: .9;
+/*	opacity: .9;*/
 	border: 2px solid #ED9C28;
 }
 .track-list h3 {

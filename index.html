@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 		<title>udacityP5</title>
 		<!-- build:css -->
@@ -12,10 +13,9 @@
 		<!-- endbuild -->
 		<!-- build:js -->
 
-
-
 			<script src="app/require.config.js"></script>
 			<script data-main="app/startup" src="bower_modules/requirejs/require.js"></script>
+
 
 		<!-- endbuild -->
 
@@ -26,19 +26,30 @@
 		</div>
 		<section id="map-container">
 			<div id="map-canvas"></div>
-			<result-list id="result-list" class="track-list"></result-list>
+			<section id="list-container">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#result-list" data-toggle="tab">RESULTS</a></li>
+					<li><a href="#fave-list" data-toggle="tab">FAVES</a></li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<result-list id="result-list" class="tab-pane active track-list"></result-list>
+						<fave-list id="fave-list" class="tab-pane track-list"></fave-list>
+				</div>
+
+			</section>
 		</section>
 
-		<fave-list id="fave-list" class="track-list"></fave-list>
-
+		<footer>
+		</footer>
 
 		<script type="text/javascript" src="./app.js"></script>
 		<script type="text/javascript" src="./models.js"></script>
-
-
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCoh9OIWE1vT85aaoVRqszGR6E3TeEut24"></script>
+<!--		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCoh9OIWE1vT85aaoVRqszGR6E3TeEut24"></script>-->
+<!--
 		<script type="text/javascript">
-//			google.maps.event.addDomListener(window, 'load', app.initialize);
+			google.maps.event.addDomListener(window, 'load', app.initialize);
 		</script>
+-->
 	</body>
 </html>

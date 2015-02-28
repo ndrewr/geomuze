@@ -35,4 +35,17 @@
 			this.faves = ko.observableArray();
 		}
 
+Array.prototype.unique = function(){
+	return this.filter(function(s, i, a){ return i == a.lastIndexOf(s); });
+};
+
+Array.prototype.alreadyInArray = function(prop1, prop2) {
+	console.log("Is it in the array?");
+	var same = false;
+	this.forEach(function(item) {
+		if (item.track_name === prop1 && item.artist_name === prop2) { same = true; }
+	});
+	return same;
+};
+
 //}));

@@ -19,10 +19,12 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		function addFave(result, location) {
 			// make sure the 'type' being set is a Result obj
 			if(Result.prototype.isPrototypeOf(result)) {
-				console.log("Soooo...wonder if addFave is working? Data is %O", result);
-				var result_origin = location || self.current_location;
-				var new_fave = new FaveTrack(result, result_origin);
-				self.fave_tracks.push(new_fave);
+			// also make sure the track isn't already faved!
+				if(!self.fave_tracks().alreadyInArray(result.track_name, result.artist_name)) {
+					var result_origin = location || self.current_location;
+					var new_fave = new FaveTrack(result, result_origin);
+					self.fave_tracks.push(new_fave);
+				}
 			}
 		}
 
