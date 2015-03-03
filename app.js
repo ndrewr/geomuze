@@ -1,7 +1,7 @@
 
 (function() {
 
-	window.app = 	{};
+	window.app = 	{}; // public interface obj for map functions
 
 	function loadScript() {
 		var script = document.createElement('script');
@@ -16,8 +16,49 @@
 	// database first...
 //	app.faves = new FaveList();
 
+	app.bindPlayer = function(url, title) {
+		var aud = $('#jukebox .aud').get(0);
+
+		aud.setAttribute('src', url);
+		$('#jukebox .info').html(title);
+		aud.load();
+
+		$('#jukebox .play').bind('click', function(evt) {
+			evt.preventDefault();
+			aud.play();
+		});
+
+		$('#jukebox .pause').bind('click', function(evt) {
+			evt.preventDefault();
+			aud.pause();
+		});
+
+		// JQuery doesn't seem to like binding to these HTML 5
+		// media events, but addEventListener does just fine
+		aud.addEventListener('progress', function(evt) {
+			var width = parseInt($('#jukebox').css('width'));
+			var percentLoaded = Math.round(evt.loaded / evt.total * 100);
+			var barWidth = Math.ceil(percentLoaded * (width / 100));
+			$('#jukebox .load-progress').css( 'width', barWidth );
+		});
+
+		aud.addEventListener('timeupdate', function(evt) {
+			var width = parseInt($('#jukebox').css('width'));
+			var percentPlayed = Math.round(aud.currentTime / aud.duration * 100);
+			var barWidth = Math.ceil(percentPlayed * (width / 100));
+			$('#jukebox .play-progress').css( 'width', barWidth);
+		});
+
+		aud.addEventListener('canplay', function(evt) {
+			$('#jukebox .play').trigger('click');
+		});
+
+		return aud;
+	}
+
+
 	/* initialize google map functions */
-	// google api searches global obj for callback
+	// google api will search global obj for callback
 	window.initialize = function() {
 		console.log("Initializing app!");
 		// custom map styles as set at Maps Styling Wizard
@@ -65,14 +106,16 @@
 			}
 		];
 
-		app.current_location = {lat: -34.397, lng: 150.644};
-		app.mapView = new MapView(custom_style, app);
+		MapView(custom_style, app);
+//		app.mapView = new MapView(custom_style, app);
+
 
 		console.log("map started!?");
 	}
 
 	function MapView(map_style, app) {
 		var self = app;
+		self.current_location = new google.maps.LatLng(-33.8665433,151.1956316); // default location
 
 		// Initial map settings, location
 		var mapOptions = {
@@ -94,17 +137,67 @@
 
 		self.service = new google.maps.places.PlacesService(self.map);
 
-	// create a google maps marker
+
+
+		var audio_template =
+				'<div id="jukebox"><div class="info">Please wait...</div><div class="loader"><div class="load-progress"><div class="play-progress"></div></div></div><div class="controls"><a class="play" href="#"><span>Play</span></a><a class="pause" href="#"><span>Pause</span></a></div><audio class="aud" src="http://www.scottandrew.com/mp3/demos/holding_back_demo_011504.mp3"><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
+
+
+
+		// create the map info window
+		// NOTE only one window open at a time; reuse!
+		self.infopane = new google.maps.InfoWindow({
+//			content: "Well, Hullo! I'll have more to say after a lil' searchy-search!",
+			content: audio_template,
+			maxWidth: 300
+		});
+
+		// this helper can be used to config info window content
+		// before it is displayed on map
+		self.configInfopane = function(track) {
+			// content:
+			// - album cover?
+			// song title
+			// artist title
+			// spotify play link?
+			var info_template = '<h3>' + track.track_name +
+					'</h3><div><p><img src="' +
+					track.cover + '"/></p><p>' +
+					track.artist_name + '</p></div>';
+
+//			self.infopane.setContent(info_template + audio_template);
+
+			self.bindPlayer(track.url, track.track_name);
+
+		}
+
+
+		var current_marker;
+		// create a google maps marker
 		self.createMarker = function(location) {
-			var marker=new google.maps.Marker({
+
+			if (current_marker) {
+				current_marker.setMap(null);
+				current_marker = null;
+			}
+
+			var marker = new google.maps.Marker({
 				map: self.map,
 				position: location,
 				animation:google.maps.Animation.DROP
 			});
+
+			current_marker = marker;
+
+			// if I assign the click handler here...
+			google.maps.event.addListener(marker, 'click', function() {
+				self.infopane.open(self.map, marker);
+			});
+
 		};
 
-	// perform places search based on query string param
-	// upon success, call gotoLocation to update map
+		// perform places search based on query string param
+		// upon success, call gotoLocation to update map
 		self.doPlaceSearch = function(place_string) {
 			self.service.textSearch(
 				{
@@ -113,46 +206,28 @@
 				}, self.gotoLocation);
 		};
 
-	// use selected autocomplete option to perform place search
-	// NOTE: when user chooses autocomplete to populate the
-	// search bar, the observable doesnt get all the terms...
-	// only the term(s) user actually typed!
-		self.gotoAutoComplete = function() {
-//			var place = self.autocomplete.getPlace();
-//
-//			if (!place.geometry) {
-//				return;
-//			}
-//
-//			self.gotoLocation([place], google.maps.places.PlacesServiceStatus.OK);
-
-	//		Autocomplete functionality as supplied by google
-	//		self.map.setCenter(place.geometry.location);
-	//		self.createMarker(place.geometry.location);
-	//
-	//		var address = '';
-	//		if (place.address_components)
-	//		{
-	//			address = [
-	//				(place.address_components[0] && place.address_components[0].short_name || ''),
-	//				(place.address_components[1] && place.address_components[1].short_name || ''),
-	//				(place.address_components[2] && place.address_components[2].short_name || '')
-	//			].join(' ');
-	//		}
-		};
+		// Stub for future autocomplete functionality...
+		// NOTE: when user chooses autocomplete to populate the
+		// search bar, the observable doesnt get all the terms...
+		// only the term(s) user actually typed!
+		//	self.gotoAutoComplete = function() {};
 
 		self.gotoLocation = function(results, status) {
+			console.log("Seeking new location...");
 			if (status == google.maps.places.PlacesServiceStatus.OK) {
-				//			for (var i = 0; i < results.length; i++) {
-				var place = results[0]; //first result of search
-				////				createMarker(results[i]);
-				//			}
+				var place, new_coord;
+				// check if passed 'result' is an array of locations
+				if (Array.isArray(results)) {
+					place = results[0]; //first result of search
+					new_coord = place.geometry.location;
+				}
+				else new_coord = results; //param is a location obj
 
 				console.log("Going to location...result is %O", place);
 
-				self.current_location = place.geometry.location;
-				self.map.setCenter(place.geometry.location);
-				self.createMarker(place.geometry.location);
+				self.current_location = new_coord;
+				self.map.setCenter(new_coord);
+				self.createMarker(new_coord);
 			}
 		};
 
@@ -175,7 +250,6 @@
 
 
 	window.onload = loadScript;
-
 
 	// Can setTimeout for 3-5 secs here,
 	// display error if Google still has not loaded

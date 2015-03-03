@@ -4,6 +4,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 		var self = this;
 		self.message = ko.observable('Lets get rockin!').subscribeTo('home_msg');
 		self.search_terms = ko.observable();
+
 		var results_buffer = []; // hold results for one push into observable array; better perf
 
 		var test_list = [new Result("Can't Stop", "RHCP"), new Result("Flaws", "Bastille"), new Result("Rainbow Connection", "Willie Nelson"), new Result("Raindance Maggie", "RHCP"), new Result("Pompeii", "Bastille"), new Result("Star Wars Cantina", "Weird Al Yankovic"), new Result("Changes", "Tupac Shakur")];
@@ -17,13 +18,16 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			console.log("Search terms are...%s", self.search_terms());
 			self.message("Searching for..." + self.search_terms());
 
-			app.doPlaceSearch(self.search_terms());
+			var loc = app.doPlaceSearch(self.search_terms());
+			console.log("New location is at...%O", loc);
 
 			// format search string for api query
 			var formatted_terms = self.search_terms().replace( /\s|,/g ,"%20");
 			results_buffer = []; // reset results buffer
 			spotifySearch(formatted_terms);
 			musixSearch(formatted_terms); // note currently only this call actually updates observable!
+
+
 		};
 
 		// look for songs on spotify
@@ -34,16 +38,20 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 				var track_list = data.tracks.items; // an array
 				console.log("Response from Spotify...");
 				track_list.forEach(function(track) {
+
+					console.log("This spotify track object...%O", track);
+
 					var track_name = track.name;
 					var track_artist = track.artists[0].name;
+					var track_cover = track.album.images[2].url;
+					var track_url = track.preview_url;
 					if(!results_buffer.alreadyInArray(track_name, track_artist)) {
-						results_buffer.push(new Result(track_name, track_artist));
+						results_buffer.push(new Result(track_name, track_artist, track_cover, track_url));
 					}
 				});
 
 				self.search_results(results_buffer);
 			}).error(function(e) {
-				console.log("Problem with spotify!!!");
 				self.message("Aw man! Problem with Spotify!");
 			});
 		}
@@ -58,7 +66,14 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 				track_list.forEach(function(track) {
 					var track_name = track.track.track_name;
 					var track_artist = track.track.artist_name;
-					results_buffer.push(new Result(track_name, track_artist));
+
+					var track_cover = track.track.album_coverart_100x100;
+//					console.log("The cover value for %s is %s", track_name, track_cover);
+
+
+					results_buffer.push(new Result(track_name, track_artist, track_cover));
+
+
 				});
 
 				// finally, upate the actual observable in one go
@@ -70,7 +85,6 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 				console.log("Updating search results!!!");
 				self.search_results(results_buffer);
 			}).error(function(e) {
-				console.log("Problem with Musixmatch!!!");
 				self.message("Uh-oh! Problem with MusixMatch!");
 			});
 		}

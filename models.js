@@ -14,11 +14,12 @@
 		}
 
 		// Data model for music track search results
-		function Result(track, artist, url, location) {
-			this.url = url || '';
-			this.artist_name = artist || '';
-			this.track_name = track || '';
+		function Result(track, artist, cover, url, location) {
+			this.url = url || 'No Url';
+			this.artist_name = artist || 'No Name';
+			this.track_name = track || 'No Title';
 			this.location = location || {};
+			this.cover = cover || 'No Cover';
 		}
 
 		// Data model for a Fave music track result
@@ -26,6 +27,8 @@
 			this.result = result || {msg: "uh oh nuthin"};
 			this.track_name = result.track_name;
 			this.artist_name = result.artist_name;
+			this.cover = result.cover || "No Cover Available";
+			this.url = result.url || "#";
 			this.location = location || {msg: "oh noes nowhere"};
 		//	this.playcount = ko.observable(0);
 		}
@@ -35,12 +38,7 @@
 			this.faves = ko.observableArray();
 		}
 
-Array.prototype.unique = function(){
-	return this.filter(function(s, i, a){ return i == a.lastIndexOf(s); });
-};
-
 Array.prototype.alreadyInArray = function(prop1, prop2) {
-	console.log("Is it in the array?");
 	var same = false;
 	this.forEach(function(item) {
 		if (item.track_name === prop1 && item.artist_name === prop2) { same = true; }

@@ -33,6 +33,7 @@ input, button {
 	display: flex;
 	flex-flow: row wrap;
 	align-items: center;
+	margin-bottom: 40px;
 }
 
 #map-canvas {
@@ -94,4 +95,101 @@ input, button {
 .result-selected {
 	background: yellow;
 }
+
+footer {
+	width: 100%;
+	height: 100px;
+	background: black;
+	border-top: 4px solid red;
+}
+
+.site-texture {
+	background-color: #000000;
+	background-image: url(http://www.transparenttextures.com/patterns/lined-paper.png);
+}
+
+black-paper-texture {
+	background-color: #000000;
+	background-image: url(http://www.transparenttextures.com/patterns/lined-paper.png);
+	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+wavecut-texture {
+	background-color: #000000;
+	background-image: url(http://www.transparenttextures.com/patterns/wavecut.png);
+	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+dark-stripes-texture {
+	background-color: #000000;
+	background-image: url(http://www.transparenttextures.com/patterns/dark-stripes.png);
+	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+
+
+/* Scott Andrew's HTML5 audio player styles*/
+#jukebox {
+	background-color:#cc0000;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	color:#fff;
+	padding:10px;
+	font-family:helvetica, arial, verdana;
+	font-weight:bold;
+	width:300px;
+}
+#jukebox .loader {
+	border:1px solid #fff;
+	height:3px;
+	margin:10px 0px
+}
+#jukebox .load-progress {
+	width:0px;
+	background-color:#fff;
+	height:3px;
+}
+#jukebox .play-progress {
+	width:0px;
+	background-color:#9999cc;
+	height:3px;
+}
+
+#jukebox .controls {
+	text-align:center;
+}
+
+#jukebox .controls a {
+	display:inline-block;
+	width:33px;
+	height:33px;
+	margin:0px 14px;
+	overflow:hidden;
+	background-image:url('../audio-controls.png');
+	background-repeat:no-repeat;
+}
+
+#jukebox .controls a:hover {
+	background-color:#ff9900;
+}
+
+#jukebox .controls a span {
+	display:none;
+}
+
+#jukebox .controls a.prev {
+	background-position:top -60px;
+}
+#jukebox .controls a.next {
+	background-position:top -90px;
+}
+#jukebox .controls a.play {
+	background-position:top left;
+}
+#jukebox .controls a.pause {
+	background-position:top -30px;
+}
+
+
+
 

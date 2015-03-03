@@ -4,8 +4,6 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		var self = this;
 		self.current_selection = ko.observable(); //need to be synched btwn lists?
 
-		self.current_location = {lat: -34.397, lng: 150.644};
-
 //		var test_list = [new Result("Can't Stop", "RHCP"), new Result("Flaws", "Bastille"), new Result("Rainbow Connection", "Willie Nelson")];
 
 		self.fave_tracks = ko.observableArray();
@@ -16,12 +14,12 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		// to benefit from 'hoisting'
 		ko.postbox.subscribe('fave_alert', addFave);
 
-		function addFave(result, location) {
+		function addFave(result) {
 			// make sure the 'type' being set is a Result obj
 			if(Result.prototype.isPrototypeOf(result)) {
 			// also make sure the track isn't already faved!
 				if(!self.fave_tracks().alreadyInArray(result.track_name, result.artist_name)) {
-					var result_origin = location || self.current_location;
+					var result_origin = app.current_location;
 					var new_fave = new FaveTrack(result, result_origin);
 					self.fave_tracks.push(new_fave);
 				}

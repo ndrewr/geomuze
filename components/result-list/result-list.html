@@ -3,22 +3,6 @@
 	<h3>SEARCH RESULTS<small><span class="list-item-count" data-bind="text: tracks().length"</span></small></h3>
 	<ul data-bind="foreach: tracks">
 		<track-item params="{track: $data, parent: $parent, index: $index}" class="track-item" data-bind="click: $parent.selectTrack.bind($data, $index())">
-
-<!--data-bind="click: $parent.selectTrack.bind($data, $index(), $index()), css: { 'result-selected': $parent.current_selection() === $index() }"> -->
-
-
-<!--
-	<li class="track-item" data-bind="
-	click: $parent.selectTrack.bind($data, $index()),
-	css: { 'result-selected': $parent.current_selection() === $index() }
-	">
-				<p class="result-track" data-bind="text: track_name"></p> by
-				<span class="result-artist" data-bind="text: artist_name"></span>
-				<btn-panel data-bind="visible: $parent.current_selection() === $index()" params="fave: true"></btn-panel>
-		</li>
--->
-
 		</track-item>
-
 	</ul>
 </section>
