@@ -33,11 +33,6 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		// also control relevant styles and transitions
 		// Note: called from view using bind(), this = data_obj
 		self.selectFave = function(index) {
-			var context = ko.contextFor(this);
-			var data = ko.dataFor(this);
-			console.log("Delegated click handler...data is %O and context is %O", data, context);
-			console.log("The affected element is %O and the event data is %O", this, event);
-
 			// the two toggle actions actually also combine for
 			// effect of NOT removing class if btn is pressed
 			if(event.target.nodeName !== "BUTTON" ) {
@@ -51,8 +46,17 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 			}
 		};
 
-		self.doAction = function() {
-			console.log("I have fired")
+		// meant to fire a location change request on map
+		self.locateFave = function(track) {
+			console.log("Locating this track...")
+
+			//var track = ko.dataFor(this);
+			var context = ko.contextFor(this);
+
+			console.log("Delegated click handler...data is %O and context is %O", track, context);
+
+			app.configInfopane(track);
+			app.gotoLocation(track.location, google.maps.places.PlacesServiceStatus.OK);
 		};
 
 		// delegate click handling to the parent list

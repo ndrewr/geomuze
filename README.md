@@ -45,3 +45,10 @@ Steps:
 - Set up Data Model and View Model JS structure
 - Get a modal list on screen with data-bound LI elements
 - Bind Map Marker items to Data model objects...lets call them SongMatch objects?
+
+Log of Resources:
+- https://miguelmota.com/blog/basic-html5-audio-manipulation/
+- transparenttextures
+- knockmeout.com
+-
+

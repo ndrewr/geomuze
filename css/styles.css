@@ -133,20 +133,37 @@ dark-stripes-texture {
 
 
 /* Scott Andrew's HTML5 audio player styles*/
+.secret-embedded {
+	display: none;
+}
+
+.infobox-player {
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+	justify-content: space-around;
+}
+
 #jukebox {
 	background-color:#cc0000;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
 	color:#fff;
-	padding:10px;
+	padding:5px;
 	font-family:helvetica, arial, verdana;
 	font-weight:bold;
-	width:300px;
+	width:180px;
+	display: flex;
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: space-around;
 }
 #jukebox .loader {
 	border:1px solid #fff;
 	height:3px;
-	margin:10px 0px
+	margin:10px 0px;
+	margin-top: 5px;
+	width: 180px;
 }
 #jukebox .load-progress {
 	width:0px;
@@ -163,7 +180,8 @@ dark-stripes-texture {
 	text-align:center;
 }
 
-#jukebox .controls a {
+/*#jukebox .controls a {*/
+#jukebox a {
 	display:inline-block;
 	width:33px;
 	height:33px;
@@ -173,25 +191,16 @@ dark-stripes-texture {
 	background-repeat:no-repeat;
 }
 
-#jukebox .controls a:hover {
+#jukebox a:hover {
 	background-color:#ff9900;
 }
 
-#jukebox .controls a span {
+#jukebox a span {
 	display:none;
 }
 
-#jukebox .controls a.prev {
-	background-position:top -60px;
-}
-#jukebox .controls a.next {
-	background-position:top -90px;
-}
 #jukebox .controls a.play {
 	background-position:top left;
-}
-#jukebox .controls a.pause {
-	background-position:top -30px;
 }
 
 

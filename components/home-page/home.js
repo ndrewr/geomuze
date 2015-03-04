@@ -26,8 +26,6 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			results_buffer = []; // reset results buffer
 			spotifySearch(formatted_terms);
 			musixSearch(formatted_terms); // note currently only this call actually updates observable!
-
-
 		};
 
 		// look for songs on spotify
@@ -37,10 +35,9 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			$.getJSON(spotify_query, function(data) {
 				var track_list = data.tracks.items; // an array
 				console.log("Response from Spotify...");
+				console.log("This spotify track object...%O", track_list[0]);
+
 				track_list.forEach(function(track) {
-
-					console.log("This spotify track object...%O", track);
-
 					var track_name = track.name;
 					var track_artist = track.artists[0].name;
 					var track_cover = track.album.images[2].url;
@@ -67,11 +64,14 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 					var track_name = track.track.track_name;
 					var track_artist = track.track.artist_name;
 
+					var track_lyrics = track.track.track_share_url;
+//					var track_lyrics = track.track.track_edit_url;
+
 					var track_cover = track.track.album_coverart_100x100;
 //					console.log("The cover value for %s is %s", track_name, track_cover);
 
 
-					results_buffer.push(new Result(track_name, track_artist, track_cover));
+					results_buffer.push(new Result(track_name, track_artist, track_cover, track_lyrics));
 
 
 				});

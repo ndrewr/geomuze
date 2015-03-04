@@ -12,48 +12,47 @@
 		document.body.appendChild(script);
 	}
 
-	// under this implementation I might try to load  faves from
-	// database first...
-//	app.faves = new FaveList();
+
+	function initPlayer(app) {
+		app.player = {};
+		app.player.audio = $('.aud')[0];
+		app.player.isPlaying = false;
+
+		var aud = app.player.audio;
+
+		$('body').on('click', '.audio-control', function(evt) {
+			evt.preventDefault();
+
+			if(app.player.audio.isPlaying) {
+				console.log("Pause the song!");
+				aud.pause();
+				app.player.audio.isPlaying = false;
+			}
+			else {
+				console.log("Play the song!");
+				aud.play();
+				app.player.audio.isPlaying = true;
+			}
+
+			aud.addEventListener('timeupdate', function(evt) {
+				var width = parseInt($('#jukebox').css('width')) - 10; // the adjustment is to account for padding
+				var percentPlayed = Math.round(aud.currentTime / aud.duration * 100);
+				var barWidth = Math.floor(percentPlayed * (width / 100));
+				$('#jukebox .play-progress').css( 'width', barWidth);
+			});
+
+		});
+	}
 
 	app.bindPlayer = function(url, title) {
-		var aud = $('#jukebox .aud').get(0);
+		//var aud = $('.aud')[0];
+		//if(!aud) console.log("nuthin audio");
 
-		aud.setAttribute('src', url);
+		app.player.audio.setAttribute('src', url);
 		$('#jukebox .info').html(title);
-		aud.load();
+		app.player.audio.load();
 
-		$('#jukebox .play').bind('click', function(evt) {
-			evt.preventDefault();
-			aud.play();
-		});
 
-		$('#jukebox .pause').bind('click', function(evt) {
-			evt.preventDefault();
-			aud.pause();
-		});
-
-		// JQuery doesn't seem to like binding to these HTML 5
-		// media events, but addEventListener does just fine
-		aud.addEventListener('progress', function(evt) {
-			var width = parseInt($('#jukebox').css('width'));
-			var percentLoaded = Math.round(evt.loaded / evt.total * 100);
-			var barWidth = Math.ceil(percentLoaded * (width / 100));
-			$('#jukebox .load-progress').css( 'width', barWidth );
-		});
-
-		aud.addEventListener('timeupdate', function(evt) {
-			var width = parseInt($('#jukebox').css('width'));
-			var percentPlayed = Math.round(aud.currentTime / aud.duration * 100);
-			var barWidth = Math.ceil(percentPlayed * (width / 100));
-			$('#jukebox .play-progress').css( 'width', barWidth);
-		});
-
-		aud.addEventListener('canplay', function(evt) {
-			$('#jukebox .play').trigger('click');
-		});
-
-		return aud;
 	}
 
 
@@ -107,8 +106,7 @@
 		];
 
 		MapView(custom_style, app);
-//		app.mapView = new MapView(custom_style, app);
-
+		initPlayer(app);
 
 		console.log("map started!?");
 	}
@@ -137,40 +135,29 @@
 
 		self.service = new google.maps.places.PlacesService(self.map);
 
-
-
-		var audio_template =
-				'<div id="jukebox"><div class="info">Please wait...</div><div class="loader"><div class="load-progress"><div class="play-progress"></div></div></div><div class="controls"><a class="play" href="#"><span>Play</span></a><a class="pause" href="#"><span>Pause</span></a></div><audio class="aud" src="http://www.scottandrew.com/mp3/demos/holding_back_demo_011504.mp3"><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
-
-
-
 		// create the map info window
 		// NOTE only one window open at a time; reuse!
 		self.infopane = new google.maps.InfoWindow({
-//			content: "Well, Hullo! I'll have more to say after a lil' searchy-search!",
-			content: audio_template,
-			maxWidth: 300
+			content: "Well, Hullo! I'll have more to say after a lil' searchy-search!",
+			maxWidth: 320
 		});
 
-		// this helper can be used to config info window content
-		// before it is displayed on map
+		// configs info window before it is displayed on map
 		self.configInfopane = function(track) {
-			// content:
-			// - album cover?
-			// song title
-			// artist title
+			// content: album cover, song title, artist title
 			// spotify play link?
-			var info_template = '<h3>' + track.track_name +
-					'</h3><div><p><img src="' +
-					track.cover + '"/></p><p>' +
-					track.artist_name + '</p></div>';
 
-//			self.infopane.setContent(info_template + audio_template);
+			var audio_template =
+					'<div id="jukebox"><div class="player-info">Sample Clip</div><a class="audio-control play" href="#"><span>Play</span></a><div class="loader"><div class="play-progress"></div></div><audio class="aud" src="http://www.scottandrew.com/mp3/demos/holding_back_demo_011504.mp3"><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
+
+			var info_template = '<h3>' + track.track_name +
+					'</h3><p>' + track.artist_name +
+					'</p><div class="infobox-player"><img src="' + 					track.cover + '"/>' + audio_template + '</div>';
+
+			self.infopane.setContent(info_template);
 
 			self.bindPlayer(track.url, track.track_name);
-
 		}
-
 
 		var current_marker;
 		// create a google maps marker

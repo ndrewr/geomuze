@@ -14,12 +14,13 @@
 		}
 
 		// Data model for music track search results
-		function Result(track, artist, cover, url, location) {
+		function Result(track, artist, cover, url, lyrics, location) {
 			this.url = url || 'No Url';
 			this.artist_name = artist || 'No Name';
 			this.track_name = track || 'No Title';
 			this.location = location || {};
 			this.cover = cover || 'No Cover';
+			this.lyrics_url = lyrics || '#';
 		}
 
 		// Data model for a Fave music track result
