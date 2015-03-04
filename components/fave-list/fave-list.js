@@ -2,10 +2,6 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 
 	function FaveListViewModel() {
 		var self = this;
-		self.current_selection = ko.observable(); //need to be synched btwn lists?
-
-//		var test_list = [new Result("Can't Stop", "RHCP"), new Result("Flaws", "Bastille"), new Result("Rainbow Connection", "Willie Nelson")];
-
 		self.fave_tracks = ko.observableArray();
 
 		// To make sure addFave callback was already
@@ -26,26 +22,41 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 			}
 		}
 
+		// allows user to remove track from this list
+		self.removeFave = function(index) {
+			console.log("Track # %s wants to be unfaved!", index);
+			self.fave_tracks.remove(self.fave_tracks()[index]);
+		};
+
 		// user selects a track to see more info,
 		// open additional opens such as Play, etc
 		// also control relevant styles and transitions
 		// Note: called from view using bind(), this = data_obj
-		self.selectTrack = function(index) {
-			self.current_selection(index);
+		self.selectFave = function(index) {
+			var context = ko.contextFor(this);
+			var data = ko.dataFor(this);
+			console.log("Delegated click handler...data is %O and context is %O", data, context);
+			console.log("The affected element is %O and the event data is %O", this, event);
+
+			// the two toggle actions actually also combine for
+			// effect of NOT removing class if btn is pressed
+			if(event.target.nodeName !== "BUTTON" ) {
+				if(!$(this).hasClass('result-selected')) {
+					var prev_selected = $('.result-selected');
+					prev_selected.toggleClass('result-selected');
+					prev_selected.find('.result-btn-panel').slideToggle();
+				}
+				$(this).toggleClass('result-selected');
+				$(this).find('.result-btn-panel').slideToggle();
+			}
 		};
 
-		// optional feature allowing user to mark a track as
-		// "favorite", therby adding to a second array list
-		// that can be viewed in a seperate element pane or
-		// thru a toggle btn on this pane
-		self.removeItem = function(item) {
-			console.log("Remove favorite fired!");
-			self.fave_tracks.remove(item);
-			var selection = self.current_selection();
-			selection = (selection === 0)? 0 : selection-1;
-			self.current_selection(0);
+		self.doAction = function() {
+			console.log("I have fired")
 		};
 
+		// delegate click handling to the parent list
+		$('#fave-list').on('click', 'li', self.selectFave);
 	}
 	return { viewModel: FaveListViewModel, template: favesTemplate };
 });
