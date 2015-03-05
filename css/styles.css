@@ -6,6 +6,9 @@
 	margin-top: 80px;
 }
 
+.navbar {
+	border-bottom: 4px solid #CC0000;
+}
 #appConsole {
 	display: flex;
 	flex-flow: row wrap;
@@ -101,10 +104,15 @@ input, button {
 }
 
 footer {
+	display: flex;
+	flex-flow: row;
+	justify-content: space-around;
+	align-items: baseline;
 	width: 100%;
 	height: 100px;
+	color: #d8d8c8;
 	background: black;
-	border-top: 4px solid red;
+	border-top: 4px solid #CC0000;
 }
 
 .site-texture {
@@ -133,9 +141,6 @@ dark-stripes-texture {
 
 
 /* Scott Andrew's HTML5 audio player styles*/
-.secret-embedded {
-	display: none;
-}
 
 .infobox-player {
 	display: flex;
@@ -144,11 +149,16 @@ dark-stripes-texture {
 	justify-content: space-around;
 }
 
+.infobox-player img {
+	max-height: 64px;
+	max-width: 64px;
+}
+
 #jukebox {
-	background-color:#cc0000;
+	background-color:#CC0000;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
-	color:#fff;
+	color:#FFF;
 	padding:5px;
 	font-family:helvetica, arial, verdana;
 	font-weight:bold;
@@ -159,7 +169,7 @@ dark-stripes-texture {
 	justify-content: space-around;
 }
 #jukebox .loader {
-	border:1px solid #fff;
+	border:1px solid #FFF;
 	height:3px;
 	margin:10px 0px;
 	margin-top: 5px;
@@ -167,12 +177,12 @@ dark-stripes-texture {
 }
 #jukebox .load-progress {
 	width:0px;
-	background-color:#fff;
+	background-color:#FFF;
 	height:3px;
 }
 #jukebox .play-progress {
 	width:0px;
-	background-color:#9999cc;
+	background-color:#9999CC;
 	height:3px;
 }
 
@@ -192,7 +202,7 @@ dark-stripes-texture {
 }
 
 #jukebox a:hover {
-	background-color:#ff9900;
+	background-color:#FF9900;
 }
 
 #jukebox a span {
@@ -205,4 +215,9 @@ dark-stripes-texture {
 
 
 
+
+
+.secret-embedded {
+	display: none;
+}
 
