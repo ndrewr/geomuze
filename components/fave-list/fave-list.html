@@ -6,9 +6,7 @@
 			<div class="result-btn-panel" data-bind="">
 				<button data-bind="click: $parent.locateFave">locate</button>
 				<button data-bind="click: $parent.removeFave.bind($data, $index())">unfave</button>
-				<a data-bind="attr:{ href: lyrics_url }" target="_blank">lyrics</a>
+				<a data-bind="attr:{ href: lyrics_url }, css:{ disable: lyrics_url === '#' }" target="_blank">lyrics</a>
 			</div>
 		</li>
-
-<!--		<track-item params="{track: $data, parent: $parent, delete:true, locate:true}" class="track-item" data-bind="click: $parent.selectTrack.bind($data, $index())"></track-item>-->
 	</ul>

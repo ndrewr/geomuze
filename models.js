@@ -14,6 +14,7 @@
 		}
 
 		// Data model for music track search results
+		// First param indicates which service result is from
 		function Result(service, track, artist, cover, url, lyrics) {
 			this.url = url || 'No Url';
 			this.artist_name = artist || 'No Name';
@@ -40,11 +41,13 @@
 		}
 
 Array.prototype.alreadyInArray = function(prop1, prop2) {
-	var same = false;
+	var found = false;
 	this.forEach(function(item) {
-		if (item.track_name === prop1 && item.artist_name === prop2) { same = true; }
+		if (item.track_name === prop1 && item.artist_name === prop2) {
+			found = true;
+		}
 	});
-	return same;
+	return found;
 };
 
 //}));

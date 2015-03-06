@@ -141,8 +141,6 @@
 		// configs info window before it is displayed on map
 		self.configInfopane = function(track) {
 			// content: album cover, song title, artist title
-			// spotify play link?
-
 			var audio_template =
 					'<div id="jukebox"><div class="player-info">Sample Clip</div><a class="audio-control play" href="#"><span>Play</span></a><div class="loader"><div class="play-progress"></div></div><audio class="aud" src="http://www.scottandrew.com/mp3/demos/holding_back_demo_011504.mp3"><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
 
@@ -215,7 +213,7 @@
 		};
 
 		/*** Event handlers ***/
-		google.maps.event.addListener(self.autocomplete, 'place_changed', self.gotoAutoComplete);
+//		google.maps.event.addListener(self.autocomplete, 'place_changed', self.gotoAutoComplete);
 
 
 		/*** run default location ***/
