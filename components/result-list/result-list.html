@@ -4,10 +4,11 @@
 		<li>
 			<p class="result-track" data-bind="text: track_name"></p> by
 			<span class="result-artist" data-bind="text: artist_name"></span>
-			<a data-bind="attr:{ href: lyrics_url }" target="_blank">lyrics</a>
+			<span class="" data-bind="text: service"></span>
 			<div class="result-btn-panel">
-				<button data-bind="click: $parent.doAction">rave</button>
 				<button data-bind="click: $parent.setFave.bind($data, $index())">fave</button>
+				<button data-bind="click: $parent.doAction">rave</button>
+				<a data-bind="attr:{ href: lyrics_url }, css:{ disable: lyrics_url === '#' }" target="_blank">lyrics</a>
 			</div>
 		</li>
 	</ul>

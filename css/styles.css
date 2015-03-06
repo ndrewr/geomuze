@@ -1,6 +1,9 @@
 /* CSS reset applied? */
 
-
+.disable {
+	pointer-events: none;
+	text-decoration: line-through;
+}
 
 #page {
 	margin-top: 80px;
@@ -9,6 +12,7 @@
 .navbar {
 	border-bottom: 4px solid #CC0000;
 }
+
 #appConsole {
 	display: flex;
 	flex-flow: row wrap;

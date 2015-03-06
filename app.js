@@ -44,15 +44,11 @@
 		});
 	}
 
-	app.bindPlayer = function(url, title) {
-		//var aud = $('.aud')[0];
-		//if(!aud) console.log("nuthin audio");
-
+	// updates player params with src and title info
+	app.configPlayer = function(url, title) {
 		app.player.audio.setAttribute('src', url);
 		$('#jukebox .info').html(title);
 		app.player.audio.load();
-
-
 	}
 
 
@@ -127,11 +123,11 @@
 		// bind page search bar to autocomplete function
 		var search_bar = document.getElementById('searchbar');
 		// for google maps api own search bar	//map.controls[google.maps.ControlPosition.TOP_LEFT].push(search_bar);
-		self.autocomplete = new google.maps.places.Autocomplete(
-			/** @type {HTMLInputElement} */(search_bar),
-			{
-				types: ['(cities)'],
-			});
+//		self.autocomplete = new google.maps.places.Autocomplete(
+//			/** @type {HTMLInputElement} */(search_bar),
+//			{
+//				types: ['(cities)'],
+//			});
 
 		self.service = new google.maps.places.PlacesService(self.map);
 
@@ -156,7 +152,7 @@
 
 			self.infopane.setContent(info_template);
 
-			self.bindPlayer(track.url, track.track_name);
+			self.configPlayer(track.url, track.track_name);
 		}
 
 		var current_marker;

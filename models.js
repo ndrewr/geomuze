@@ -14,13 +14,13 @@
 		}
 
 		// Data model for music track search results
-		function Result(track, artist, cover, url, lyrics, location) {
+		function Result(service, track, artist, cover, url, lyrics) {
 			this.url = url || 'No Url';
 			this.artist_name = artist || 'No Name';
 			this.track_name = track || 'No Title';
-			this.location = location || {};
 			this.cover = cover || 'No Cover';
 			this.lyrics_url = lyrics || '#';
+			this.service = service || 'unaffiliated';
 		}
 
 		// Data model for a Fave music track result
@@ -30,8 +30,8 @@
 			this.artist_name = result.artist_name;
 			this.cover = result.cover || "No Cover Available";
 			this.url = result.url || "#";
+			this.lyrics_url = result.lyrics || '#';
 			this.location = location || {msg: "oh noes nowhere"};
-		//	this.playcount = ko.observable(0);
 		}
 
 		// Data model for a Fave list that persists in LocalStorage
