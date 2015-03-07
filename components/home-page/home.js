@@ -21,12 +21,15 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			// lets simplify the search terms shall we?
 			var simple_terms = self.search_terms().split(/\s|,/g, 2).join(' ');
 			// update map by calling google place search
-			var loc = app.doPlaceSearch(simple_terms);
-			console.log("New location is at...%O", loc);
+			app.doPlaceSearch(simple_terms);
 
-			// format search string for api query
+			// format search string then run api query
 			var formatted_terms = self.search_terms().replace( /\s|,/g ,"%20");
 			spotifySearch(formatted_terms);
+
+			// auto-switch list view to Results
+			var tab = $('#list-container').find('a').first();
+			tab.trigger('click');
 		};
 
 		// look for songs on spotify
@@ -45,6 +48,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 					var track_artist = track.artists[0].name;
 					var track_cover = track.album.images[2].url;
 					var track_url = track.preview_url;
+					var track_album = track.album.name;
 
 					// check to see if this result already exists
 					if(!filter_list.alreadyInArray(track_name, track_artist)) {
@@ -65,14 +69,16 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 								var track = fetch_result[0];
 								track_lyrics = track.track.track_share_url;
 							}
+						})
+						.always(function() {
 							// push the results; track_url default undef
-							results_buffer.push(new Result("spotify", track_name, track_artist, track_cover, track_url, track_lyrics));
+							results_buffer.push(new Result("spotify", track_name, track_artist, track_album, track_cover, track_url, track_lyrics));
+
 						})
 						.fail(function(e) {
 							// on fail, alert home msg and push
 							// result object w/o lyrics url
 							self.message("Uh-oh! Wee problem fetching this MusixMatch track...");
-							results_buffer.push(new Result("spotify", track_name, track_artist, track_cover, track_url));
 						});
 					}
 				});
@@ -101,6 +107,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 					var track_artist = track.track.artist_name;
 					var track_lyrics = track.track.track_share_url;
 					var track_cover = track.track.album_coverart_100x100;
+					var track_album = track.track.album_name;
 
 					// NOTE I currently don't query for spotify url
 					// and stick undefined as placeholder
@@ -112,11 +119,19 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 					// Note this is called regardless of either
 					// service failing to respond
 					self.search_results(results_buffer);
+					// preconfig the map infobox with top result
+					var top_hit = self.search_results()[0];
+					if(top_hit) app.configInfopane(top_hit);
 			})
 				.done(function() {
 					self.message("Track search completed!");
 			})
 				.fail(function(e) {
+					// if both services failed, insert a joke result
+					// can also just check if results_buffer.length=0
+					if (self.message() === "Aw man! Problem with Spotify!") {
+						self.search_results.push(new Result("Oh No", "I'm Sorry", "Sad Pandas"));
+					}
 					self.message("Uh-oh! Problem with MusixMatch!");
 			});
 		}

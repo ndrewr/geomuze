@@ -24,7 +24,6 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 
 		// allows user to remove track from this list
 		self.removeFave = function(index) {
-			console.log("Track # %s wants to be unfaved!", index);
 			self.fave_tracks.remove(self.fave_tracks()[index]);
 		};
 
@@ -48,15 +47,14 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 
 		// meant to fire a location change request on map
 		self.locateFave = function(track) {
-			console.log("Locating this track...")
-
-			//var track = ko.dataFor(this);
-			var context = ko.contextFor(this);
-
-			console.log("Delegated click handler...data is %O and context is %O", track, context);
-
 			app.configInfopane(track);
 			app.gotoLocation(track.location, google.maps.places.PlacesServiceStatus.OK);
+		};
+
+		self.locateAll = function() {
+			console.log("locate all fired!");
+
+			app.showAllMarkers(self.fave_tracks());
 		};
 
 		// delegate click handling to the parent list

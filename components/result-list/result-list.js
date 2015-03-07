@@ -9,10 +9,10 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 		// also control relevant styles and transitions
 		// Note: called from view using bind(), this = data_obj
 		self.selectResult = function(index) {
-			var context = ko.contextFor(this);
-			var data = ko.dataFor(this);
-			console.log("Delegated click handler...data is %O and context is %O", data, context);
-			console.log("The affected element is %O and the event data is %O", this, event);
+//			var context = ko.contextFor(this);
+//			var data = ko.dataFor(this);
+//			console.log("Delegated click handler...data is %O and context is %O", data, context);
+//			console.log("The affected element is %O and the event data is %O", this, event);
 
 			// the two toggle actions actually also combine for
 			// effect of NOT removing class if btn is pressed
@@ -25,12 +25,13 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 				$(this).toggleClass('result-selected');
 				$(this).find('.result-btn-panel').slideToggle();
 			}
+
+			// config the info window
 		};
 
 		// allows user to mark a track as "favorite", therby
 		// adding to a second array list
 		self.setFave = function(index) {
-			console.log("Track # %s wants to be favorited!", index);
 			self.latest_fave(self.tracks()[index]);
 		};
 

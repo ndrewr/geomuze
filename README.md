@@ -50,5 +50,10 @@ Log of Resources:
 - https://miguelmota.com/blog/basic-html5-audio-manipulation/
 - transparenttextures
 - knockmeout.com
+- Stack Overflow, esp.
+	- http://stackoverflow.com/questions/2362337/how-to-set-the-google-map-zoom-level-to-show-all-the-markers
+	-
+- Google Maps API docs
 -
+
 

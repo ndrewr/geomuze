@@ -4,7 +4,6 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-
 		<title>udacityP5</title>
 		<!-- build:css -->
 			<link href="bower_modules/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -16,16 +15,13 @@
 			<script src="app/require.config.js"></script>
 			<script data-main="app/startup" src="bower_modules/requirejs/require.js"></script>
 
-
 		<!-- endbuild -->
-
 	</head>
 	<body>
 		<nav-bar params="route: route"></nav-bar>
 		<div id="page" class="container" data-bind="component: { name: route().page, params: route }">
 		</div>
 		<section id="map-container">
-			<div id="map-canvas"></div>
 			<section id="list-container">
 				<ul class="nav nav-tabs">
 					<li class="active"><a href="#result-list" data-toggle="tab">RESULTS</a></li>
@@ -36,8 +32,9 @@
 					<result-list id="result-list" class="tab-pane active track-list"></result-list>
 					<fave-list id="fave-list" class="tab-pane track-list"></fave-list>
 				</div>
-
 			</section>
+			<div id="map-canvas"></div>
+
 		</section>
 
 		<div class="secret-embedded">

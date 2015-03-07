@@ -15,24 +15,31 @@
 
 		// Data model for music track search results
 		// First param indicates which service result is from
-		function Result(service, track, artist, cover, url, lyrics) {
+		function Result(service, track, artist, album, cover, url, lyrics) {
 			this.url = url || 'No Url';
 			this.artist_name = artist || 'No Name';
 			this.track_name = track || 'No Title';
 			this.cover = cover || 'No Cover';
 			this.lyrics_url = lyrics || '#';
 			this.service = service || 'unaffiliated';
+			this.album = album || 'No Album Title';
 		}
 
 		// Data model for a Fave music track result
 		function FaveTrack(result, location) {
-			this.result = result || {msg: "uh oh nuthin"};
+			this.result = result || {msg: 'uh oh nuthin'};
 			this.track_name = result.track_name;
 			this.artist_name = result.artist_name;
-			this.cover = result.cover || "No Cover Available";
-			this.url = result.url || "#";
+			this.cover = result.cover || 'No Cover Available';
+			this.url = result.url || '#';
 			this.lyrics_url = result.lyrics || '#';
-			this.location = location || {msg: "oh noes nowhere"};
+			this.album = result.album || 'No Album Title';
+			this.location = location || {msg: 'oh noes nowhere'};
+			this.marker = new google.maps.Marker({
+				position: location,
+				title: this.track_name,
+				animation: google.maps.Animation.DROP
+			});
 		}
 
 		// Data model for a Fave list that persists in LocalStorage
