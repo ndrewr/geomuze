@@ -7,10 +7,8 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 		var results_buffer = []; // hold results for one push into observable array; better perf
 		var filter_list = []; // used to check for same results
 
-		var test_list = [new Result("Can't Stop", "RHCP"), new Result("Flaws", "Bastille"), new Result("Rainbow Connection", "Willie Nelson"), new Result("Raindance Maggie", "RHCP"), new Result("Pompeii", "Bastille"), new Result("Star Wars Cantina", "Weird Al Yankovic"), new Result("Changes", "Tupac Shakur")];
-
 		// uses postbox lib to sync results with List View
-		self.search_results = ko.observableArray(test_list).publishOn('new_results');
+		self.search_results = ko.observableArray().publishOn('new_results');
 
 		// kicks off all search activity:
 		// phase 1 google map location update
@@ -111,7 +109,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 
 					// NOTE I currently don't query for spotify url
 					// and stick undefined as placeholder
-					results_buffer.push(new Result("musix", track_name, track_artist, track_cover, undefined, track_lyrics));
+					results_buffer.push(new Result("musix", track_name, track_artist, track_album, track_cover, undefined, track_lyrics));
 				});
 			})
 				.always(function() {

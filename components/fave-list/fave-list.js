@@ -3,6 +3,7 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 	function FaveListViewModel() {
 		var self = this;
 		self.fave_tracks = ko.observableArray();
+		var _inform = $('.list-inform');
 
 		// To make sure addFave callback was already
 		// defined when executing this line...
@@ -18,13 +19,20 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 					var result_origin = app.current_location;
 					var new_fave = new FaveTrack(result, result_origin);
 					self.fave_tracks.push(new_fave);
+					_inform.find('span').html('this track has been faved!');
 				}
+				else {
+					_inform.find('span').html('this track is ALREADY faved!');
+				}
+				_inform.fadeIn().delay( 1000 ).fadeOut();
 			}
 		}
 
 		// allows user to remove track from this list
 		self.removeFave = function(index) {
 			self.fave_tracks.remove(self.fave_tracks()[index]);
+			_inform.find('span').html('this track hath been UNfaved.');
+			_inform.fadeIn().delay( 1000 ).fadeOut();
 		};
 
 		// user selects a track to see more info,
@@ -49,13 +57,16 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		self.locateFave = function(track) {
 			app.configInfopane(track);
 			app.gotoLocation(track.location, google.maps.places.PlacesServiceStatus.OK);
+//			console.log(JSON.stringify(self.fave_tracks(), null, '\t'));
 		};
 
 		self.locateAll = function() {
-			console.log("locate all fired!");
-
 			app.showAllMarkers(self.fave_tracks());
 		};
+
+		self.emptyList = function() {
+			self.fave_tracks.removeAll(); // remove & return list
+		}
 
 		// delegate click handling to the parent list
 		$('#fave-list').on('click', 'li', self.selectFave);

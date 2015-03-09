@@ -1,12 +1,12 @@
 
 <section id="appConsole">
-	<div>
-		<h2>Welcome to GeoMuze</h2>
-		<p data-bind='text: message'></p>
+	<div id="main-message">
+		<h1><small>welcome to</small> geoMuze</h1>
+		<h3 data-bind='text: message'></h3>
 	</div>
 
-	<form data-bind="submit: goSearch">
+	<form id="searchbar" data-bind="submit: goSearch">
 		<input id="searchbar" data-bind="value: search_terms" placeholder="take me to..."/>
-		<button class="btn btn-lg btn-warning search-btn" type='submit'>DO IT</button>
+		<button class="btn btn-lg btn-warning search-btn" type='submit'>DO IT !</button>
 	</form>
 </section>

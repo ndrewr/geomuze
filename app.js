@@ -169,7 +169,8 @@
 				map: self.map,
 				position: location,
 				animation:google.maps.Animation.DROP,
-				draggable: true
+				draggable: true,
+				icon: 'images/geomuze-icon-small.png'
 			});
 
 			current_marker = marker;
@@ -220,6 +221,7 @@
 
 				self.current_location = new_coord; // used by Faves
 				self.map.setCenter(new_coord);
+				self.map.setZoom(10);
 				self.createMarker(new_coord);
 			}
 		};
