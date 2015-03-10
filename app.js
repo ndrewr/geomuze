@@ -216,15 +216,6 @@
 		// perform places search based on query string param
 		// upon success, call gotoLocation to update map
 		self.doPlaceSearch = function(place_string) {
-			// clear prev set marker then
-			// remove markers case user prev did showAllMarkers
-			clearMarker();
-//			if (markers.length > 0) {
-//				markers.forEach(function(marker) {
-//					marker.setMap(null); // should be no need to null actual marker refs since they belong to Fave objects?
-//				});
-//			}
-
 			self.service.textSearch(
 				{
 					query: place_string,
