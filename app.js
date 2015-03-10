@@ -13,6 +13,32 @@
 		document.body.appendChild(script);
 	}
 
+	function initStorage(app) {
+		console.log("init storage!");
+		app.storage = {
+			set: function(key, value) {
+				if (!key || !value) {return;}
+
+				if (typeof value === "object") {
+					value = JSON.stringify(value);
+				}
+				localStorage.setItem(key, value);
+			},
+			get: function(key) {
+				var value = localStorage.getItem(key);
+
+				if (!value) {return;}
+
+				// assume it is an object that has been stringified
+				//if (value[0] === "{") {
+					value = JSON.parse(value);
+				//}
+
+				return value;
+			}
+		}
+	}
+
 	function initPlayer(app) {
 		app.player = {};
 		app.player.audio = $('.aud')[0];
@@ -99,6 +125,7 @@
 
 		MapView(custom_style, app);
 		initPlayer(app);
+		initStorage(app);
 
 		console.log("map started!?");
 	}
@@ -153,11 +180,17 @@
 			self.configPlayer(track.url, track.track_name);
 		}
 
-		// create a google maps marker
+		// Destroy previously placed markers;
+		// In case showAll was called, remove those markers
 		function clearMarker() {
 			if (current_marker) {
 				current_marker.setMap(null);
 				current_marker = null;
+			}
+			if (markers.length > 0) {
+				markers.forEach(function(marker) {
+					marker.setMap(null); // should be no need to null actual marker refs since they belong to Fave objects?
+				});
 			}
 		}
 
@@ -186,11 +219,11 @@
 			// clear prev set marker then
 			// remove markers case user prev did showAllMarkers
 			clearMarker();
-			if (markers.length > 0) {
-				markers.forEach(function(marker) {
-					marker.setMap(null); // should be no need to null actual marker refs since they belong to Fave objects?
-				});
-			}
+//			if (markers.length > 0) {
+//				markers.forEach(function(marker) {
+//					marker.setMap(null); // should be no need to null actual marker refs since they belong to Fave objects?
+//				});
+//			}
 
 			self.service.textSearch(
 				{
@@ -211,13 +244,14 @@
 			if (status === google.maps.places.PlacesServiceStatus.OK) {
 				var place, new_coord;
 				// check if passed 'result' is an array of locations
+				clearMarker();
 				if (Array.isArray(location_data)) {
 					place = location_data[0]; //first search result
 					new_coord = place.geometry.location;
 				}
 				else new_coord = location_data; //param is a location obj
 
-				console.log("Going to location...result is %O", place);
+				console.log("Going to location...located at %O", new_coord);
 
 				self.current_location = new_coord; // used by Faves
 				self.map.setCenter(new_coord);

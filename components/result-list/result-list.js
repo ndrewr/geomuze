@@ -8,12 +8,7 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 		// open additional options such as Play, etc
 		// also control relevant styles and transitions
 		// Note: called from view using bind(), this = data_obj
-		self.selectResult = function(index) {
-//			var context = ko.contextFor(this);
-//			var data = ko.dataFor(this);
-//			console.log("Delegated click handler...data is %O and context is %O", data, context);
-//			console.log("The affected element is %O and the event data is %O", this, event);
-
+		self.selectResult = function() {
 			// the two toggle actions actually also combine for
 			// effect of NOT removing class if btn is pressed
 			if(event.target.nodeName !== "BUTTON" ) {
@@ -26,7 +21,10 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 				$(this).find('.result-btn-panel').slideToggle();
 			}
 
+			var track = ko.dataFor(event.target);
+			console.log("here is the element data obj: %O", track);
 			// config the info window
+			app.configInfopane(track);
 		};
 
 		// allows user to mark a track as "favorite", therby

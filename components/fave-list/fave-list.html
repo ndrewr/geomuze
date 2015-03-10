@@ -1,4 +1,4 @@
-<h3>FAVORITE TRACKS<span class="list-item-count" data-bind="text: fave_tracks().length"></span><button class="btn btn-warning btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 1, click: locateAll">scatter</button><button class="btn btn-danger btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 0, click: emptyList">trash</button></h3>
+<h3>FAVORITE TRACKS<span class="list-item-count" data-bind="text: fave_tracks().length"></span><button class="btn btn-warning btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 1, click: locateAll">scatter</button><button class="btn btn-danger btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 0, click: emptyList">trash</button><button class="btn btn-success btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 0, click: saveList">save</button><button class="btn btn-info btn-xs list-head-btn" data-bind="click: loadList">load</button></h3>
 	<ul data-bind="foreach: fave_tracks">
 		<li data-bind="">
 			<p class="result-track" data-bind="text: track_name"></p> by
