@@ -43,11 +43,6 @@
 			});
 		}
 
-		// Data model for a Fave list that persists in LocalStorage
-		function FaveList() {
-			this.faves = ko.observableArray();
-		}
-
 Array.prototype.alreadyInArray = function(prop1, prop2) {
 	var found = false;
 	this.forEach(function(item) {

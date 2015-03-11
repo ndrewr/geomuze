@@ -53,6 +53,7 @@ Log of Resources:
 - Stack Overflow, esp.
 	- http://stackoverflow.com/questions/2362337/how-to-set-the-google-map-zoom-level-to-show-all-the-markers
 	- http://stackoverflow.com/questions/2010892/storing-objects-in-html5-localstorage
+	- http://stackoverflow.com/questions/15625945/delay-marker-drop-api-v3
 	-
 - Google Maps API docs
 -

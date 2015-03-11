@@ -191,7 +191,8 @@
 			}
 			if (markers.length > 0) {
 				markers.forEach(function(marker) {
-					marker.setMap(null); // should be no need to null actual marker refs since they belong to Fave objects?
+					marker.setMap(null);
+					marker = null; // make sure to dealloc
 				});
 			}
 		}
@@ -256,28 +257,26 @@
 		self.showAllMarkers = function(items) {
 			clearMarker(); // remove prev set marker
 			markers = []; // reset markers in case of unfaves
-			if(items.length > 0) {
-				var boundary = new google.maps.LatLngBounds();
-
-				var i = 0;
-
-				items.forEach(function(item) {
-					var marker = item.marker;
-					if (marker) {
-						markers.push(marker); // list for removal later
-						boundary.extend(marker.position);
-						self.map.fitBounds(boundary); // outside loop?
-//						marker.setMap(self.map);
-
-						setTimeout(function() {
-							marker.setMap(self.map);
-						}, i * 200);
-
-						i++;
-
-					}
+			var boundary = new google.maps.LatLngBounds();
+			for (var i=0; i < items.length; i++) {
+				var marker = new google.maps.Marker({
+					position: items[i].location,
+					title: items[i].track_name,
+					animation: google.maps.Animation.DROP,
+					icon: 'images/geomuze-icon-small.png'
 				});
+				markers.push(marker);
+				boundary.extend(marker.position);
+				self.map.fitBounds(boundary);
+				drop(marker, i); // use helper function closure
 			}
+		}
+
+		// helper function to delay marker drops
+		function drop(marker, delay) {
+			setTimeout(function() {
+				marker.setMap(self.map);
+			}, delay * 200);
 		}
 
 		/*** Event handlers ***/
