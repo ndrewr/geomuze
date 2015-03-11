@@ -52,6 +52,7 @@ Log of Resources:
 - knockmeout.com
 - Stack Overflow, esp.
 	- http://stackoverflow.com/questions/2362337/how-to-set-the-google-map-zoom-level-to-show-all-the-markers
+	- http://stackoverflow.com/questions/2010892/storing-objects-in-html5-localstorage
 	-
 - Google Maps API docs
 -

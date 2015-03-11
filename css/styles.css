@@ -2,7 +2,7 @@
 /*@import url(http://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise|Gochi+Hand|Architects+Daughter|Audiowide);*/
 
 body {
-	background: url(../images/bg6.jpg) no-repeat center center fixed;
+	background: url(../images/bg4.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -17,8 +17,16 @@ input, button {
 	outline: none !important;
 }
 
+a:hover, a:visited, a:link, a:active
+{
+	text-decoration: none;
+}
+
 .disable {
 	pointer-events: none;
+	text-decoration: line-through;
+}
+.disable:link {
 	text-decoration: line-through;
 }
 
@@ -120,7 +128,8 @@ input {
 	position: absolute;
 	display: none;
 	background-color: #d8d8c8;
-	width: 70%;
+	padding: 10px;
+	width: 60%;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
@@ -295,12 +304,17 @@ dark-stripes-texture {
 	height:33px;
 	margin:0px 14px;
 	overflow:hidden;
-	background-image:url('../audio-controls.png');
-	background-repeat:no-repeat;
+/*	background-image:url('../audio-controls.png');*/
+/*	background-repeat:no-repeat;*/
+	color: white;
+	text-align: center;
+	line-height: 30px;
+	font-size: 20px;
 }
 
 #jukebox a:hover {
-	background-color:#FF9900;
+	color:#FF9900;
+	text-decoration: none;
 }
 
 #jukebox a span {

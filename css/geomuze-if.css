@@ -1,10 +1,8 @@
 @font-face {
 	font-family: 'icomoon';
-	src:url('fonts/icomoon.eot?-6ce72s');
-	src:url('fonts/icomoon.eot?#iefix-6ce72s') format('embedded-opentype'),
-		url('fonts/icomoon.woff?-6ce72s') format('woff'),
-		url('fonts/icomoon.ttf?-6ce72s') format('truetype'),
-		url('fonts/icomoon.svg?-6ce72s#icomoon') format('svg');
+	src:url('../fonts/geomuze-if.eot?-6ce72s');
+	src:url('../fonts/geomuze-if.eot?#iefix-6ce72s') format('embedded-opentype'),
+		url('../fonts/geomuze-if.woff?-6ce72s') format('woff');
 	font-weight: normal;
 	font-style: normal;
 }

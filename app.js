@@ -52,10 +52,12 @@
 			if(app.player.audio.isPlaying) {
 				aud.pause();
 				app.player.audio.isPlaying = false;
+
 			}
 			else {
 				aud.play();
 				app.player.audio.isPlaying = true;
+
 			}
 
 			// event handlers for audio player
@@ -168,7 +170,7 @@
 		// content: album cover, song title, artist title
 		self.configInfopane = function(track) {
 			var audio_template =
-					'<div id="jukebox"><div class="player-info">Sample Clip</div><a class="audio-control play" href="#"><span>Play</span></a><div class="loader"><div class="play-progress"></div></div><audio class="aud" src="http://www.scottandrew.com/mp3/demos/holding_back_demo_011504.mp3"><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
+					'<div id="jukebox"><div class="player-info">Sample Clip</div><a class="audio-control play icon-play3" href="#"><span class="icon-play3">Play</span></a><div class="loader"><div class="play-progress"></div></div><audio class="aud" src="http://www.scottandrew.com/mp3/demos/holding_back_demo_011504.mp3"><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
 
 			var info_template = '<h3>' + track.track_name +
 					'</h3><p>' + track.artist_name +
@@ -256,13 +258,23 @@
 			markers = []; // reset markers in case of unfaves
 			if(items.length > 0) {
 				var boundary = new google.maps.LatLngBounds();
+
+				var i = 0;
+
 				items.forEach(function(item) {
 					var marker = item.marker;
 					if (marker) {
 						markers.push(marker); // list for removal later
 						boundary.extend(marker.position);
 						self.map.fitBounds(boundary); // outside loop?
-						marker.setMap(self.map);
+//						marker.setMap(self.map);
+
+						setTimeout(function() {
+							marker.setMap(self.map);
+						}, i * 200);
+
+						i++;
+
 					}
 				});
 			}

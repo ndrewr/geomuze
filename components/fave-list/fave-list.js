@@ -52,6 +52,7 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 
 		function addFave(result) {
 			// make sure the 'type' being set is a Result obj
+			console.log("adding a fave...user msg should appear");
 			if(Result.prototype.isPrototypeOf(result)) {
 			// also make sure the track isn't already faved!
 				if(!self.fave_tracks().alreadyInArray(result.track_name, result.artist_name)) {
