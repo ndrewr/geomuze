@@ -144,12 +144,16 @@ input {
 }
 
 .list-item-count {
-	margin-left: 1em;
-	text-decoration: none;
+/*	margin-left: 1em;*/
+/*	text-decoration: none;*/
 }
 
 .list-head-btn {
 	margin-left: 1em;
+}
+
+.list-filter-panel span{
+	margin-left: 2em;
 }
 
 .track-list {
@@ -204,10 +208,16 @@ input {
 
 .result-selected {
 	background: yellow;
+	opacity: .9;
 }
 
 .result-btn-panel {
 	display: none;
+	margin-top: 5px;
+}
+
+.result-btn-panel button {
+	margin-right: 20px;
 }
 
 footer {

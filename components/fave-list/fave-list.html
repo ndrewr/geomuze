@@ -1,12 +1,20 @@
-<h3>FAVORITE TRACKS<span class="list-item-count" data-bind="text: fave_tracks().length"></span><button class="btn btn-warning btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 1, click: locateAll">scatter</button><button class="btn btn-danger btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 0, click: emptyList">trash</button><button class="btn btn-success btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 0, click: saveList">save</button><button class="btn btn-info btn-xs list-head-btn" data-bind="click: loadList">load</button></h3>
+<h3>FAVORITE TRACKS<span class="list-item-count" data-bind="text: list_size"></span>
+	<button class="btn btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 0, click: saveList">save</button><button class="btn btn-xs list-head-btn" data-bind="click: loadList">load</button>
+</h3>
+<div class="list-filter-panel" data-bind="visible: fave_tracks().length > 1">
+	<button class="btn btn-warning btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 1, click: locateAll">scatter</button><button class="btn btn-danger btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 0, click: emptyList">trash</button>
+		<span>has:</span>
+		<button class="btn btn-info btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 0, click: emptyList">sample</button>
+</div>
+
 	<ul data-bind="foreach: fave_tracks">
 		<li data-bind="">
 			<p class="result-track" data-bind="text: track_name"></p> by
 			<span class="result-artist" data-bind="text: artist_name"></span>
 			<div class="result-btn-panel" data-bind="">
-				<button data-bind="click: $parent.locateFave">locate</button>
-				<button data-bind="click: $parent.removeFave.bind($data, $index())">unfave</button>
-				<a data-bind="attr:{ href: lyrics_url }, css:{ disable: lyrics_url === '#' }" target="_blank">lyrics</a>
+				<button class="btn btn-success btn-sm" data-bind="click: $parent.locateFave">locate</button>
+				<button class="btn btn-primary btn-sm" data-bind="click: $parent.removeFave.bind($data, $index())">unfave</button>
+				<a data-bind="attr:{ href: lyrics_url }, css:{ disable: lyrics_url === '#' }" target="_blank" role="button" class="btn btn-default btn-sm">lyrics</a>
 			</div>
 		</li>
 	</ul>

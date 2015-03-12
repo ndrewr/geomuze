@@ -1,31 +1,34 @@
 define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, favesTemplate) {
-
 	function FaveListViewModel() {
 		var self = this;
 		self.fave_tracks = ko.observableArray();
+		self.list_size = ko.computed(function() {
+			return ' ' + 	self.fave_tracks().length;
+		});
 		var _inform = $('.list-inform');
 
+		// sets, displays and removes user-informing elmnt
 		function informUser(message) {
 			_inform.find('span').html(message);
 			_inform.fadeIn().delay( 1000 ).fadeOut();
 		}
 
+		// check for saved fave list and load if so
 		function checkStorage() {
 			var user_list = app.storage.get('saved_list');
 			if(user_list) {
 				// restore certain properties
 				user_list.forEach(function(track) {
-					console.log("Prev coord data is: %O", track.location);
 					// restore the maps lat/loong obj
 					var lat = track.location.D;
 					var long = track.location.k;
 					track.location = new google.maps.LatLng(long, lat);
 					// restore the marker obj
-					track.marker = new google.maps.Marker({
-						position: track.location,
-						animation:google.maps.Animation.DROP,
-						icon: 'images/geomuze-icon-small.png'
-					});
+//					track.marker = new google.maps.Marker({
+//						position: track.location,
+//						animation:google.maps.Animation.DROP,
+//						icon: 'images/geomuze-icon-small.png'
+//					});
 				});
 				// set into list view...
 				self.fave_tracks(user_list);
@@ -36,10 +39,10 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 				informUser('I am so sorry. No trace of a list.');
 		}
 
+		// save user fave list to localstorage;
+		// can be restored with load call
 		self.saveList = function() {
-			// confirm with user
 			app.storage.set('saved_list', self.fave_tracks());
-
 			_inform.find('span').html('Your list has been preserved.');
 			_inform.fadeIn().delay( 1000 ).fadeOut();
 		}
@@ -59,32 +62,25 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 					var result_origin = app.current_location;
 					var new_fave = new FaveTrack(result, result_origin);
 					self.fave_tracks.push(new_fave);
-//					_inform.find('span').html('this track has been faved!');
 					informUser('this track has been faved!');
 				}
 				else {
-//					_inform.find('span').html('this track is ALREADY faved!');
 					informUser('this track is ALREADY faved..')
 				}
-//				_inform.fadeIn().delay( 1000 ).fadeOut();
 			}
 		}
 
 		// allows user to remove track from this list
 		self.removeFave = function(index) {
 			self.fave_tracks.remove(self.fave_tracks()[index]);
-//			_inform.find('span').html('this track hath been UNfaved.');
-//			_inform.fadeIn().delay( 1000 ).fadeOut();
 			informUser('this track hath been UNfaved.');
 		};
 
-		// user selects a track to see more info,
-		// open additional opens such as Play, etc
-		// also control relevant styles and transitions
+		// user selects a track to see additional options
 		// Note: called from view using bind(), this = data_obj
 		self.selectFave = function(index) {
-			// the two toggle actions actually also combine for
-			// effect of NOT removing class if btn is pressed
+			// if the target wasnt a btn, toggle the class
+			// if other item had the class, remove it
 			if(event.target.nodeName !== "BUTTON" ) {
 				if(!$(this).hasClass('result-selected')) {
 					var prev_selected = $('.result-selected');
@@ -97,21 +93,25 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		};
 
 		// meant to fire a location change request on map
+		// and preconfig the map infobox
 		self.locateFave = function(track) {
 			app.configInfopane(track);
 			app.gotoLocation(track.location, google.maps.places.PlacesServiceStatus.OK);
-			console.log("want to locate ... %O", track.location);
 		};
 
+		// shows location of all faved tracks on map
 		self.locateAll = function() {
 			app.infopane.close(); // close an open info window
 			app.showAllMarkers(self.fave_tracks());
 		};
 
+		// empties current favelist; does not effect saved data
 		self.emptyList = function() {
 			self.fave_tracks.removeAll(); // remove & return list
 		};
 
+		// will load saved list if one exists;
+		// NOTE: overwrites current list!
 		self.loadList = function() {
 			checkStorage();
 		};
@@ -119,8 +119,7 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		// delegate click handling to the parent list
 		$('#fave-list').on('click', 'li', self.selectFave);
 
-		// check if user already has a list on local storage
-		//checkStorage();
+		// end of Fave List Model definition
 	}
 	return { viewModel: FaveListViewModel, template: favesTemplate };
 });

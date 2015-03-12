@@ -52,17 +52,18 @@
 			if(app.player.audio.isPlaying) {
 				aud.pause();
 				app.player.audio.isPlaying = false;
-
+				$('.play').removeClass('icon-pause2').addClass('icon-play3');
 			}
 			else {
 				aud.play();
 				app.player.audio.isPlaying = true;
-
+				$('.play').removeClass('icon-play3').addClass('icon-pause2');
 			}
 
 			// event handlers for audio player
 			aud.addEventListener('ended', function() {
 				app.player.audio.isPlaying = false;
+				$('.play').removeClass('icon-pause2').addClass('icon-play3');
 			});
 
 			aud.addEventListener('timeupdate', function(evt) {
@@ -170,7 +171,7 @@
 		// content: album cover, song title, artist title
 		self.configInfopane = function(track) {
 			var audio_template =
-					'<div id="jukebox"><div class="player-info">Sample Clip</div><a class="audio-control play icon-play3" href="#"><span class="icon-play3">Play</span></a><div class="loader"><div class="play-progress"></div></div><audio class="aud" src="http://www.scottandrew.com/mp3/demos/holding_back_demo_011504.mp3"><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
+					'<div id="jukebox"><div class="player-info">Sample Clip</div><a class="audio-control play icon-play3" href="#"><span>Play</span></a><div class="loader"><div class="play-progress"></div></div><audio class="aud" src="http://www.scottandrew.com/mp3/demos/holding_back_demo_011504.mp3"><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
 
 			var info_template = '<h3>' + track.track_name +
 					'</h3><p>' + track.artist_name +

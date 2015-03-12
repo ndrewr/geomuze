@@ -2,6 +2,9 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 	function ListViewModel() {
 		var self = this;
 		self.tracks = ko.observableArray(	).subscribeTo('new_results');
+		self.list_size = ko.computed(function() {
+			return ' ' + 	self.tracks().length;
+		});
 		self.latest_fave = ko.observable({}).publishOn('fave_alert');
 
 		// user selects a track to see more info,
