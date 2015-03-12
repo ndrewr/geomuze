@@ -1,13 +1,14 @@
 <h3>FAVORITE TRACKS<span class="list-item-count" data-bind="text: list_size"></span>
 	<button class="btn btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 0, click: saveList">save</button><button class="btn btn-xs list-head-btn" data-bind="click: loadList">load</button>
 </h3>
-<div class="list-filter-panel" data-bind="visible: fave_tracks().length > 1">
-	<button class="btn btn-warning btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 1, click: locateAll">scatter</button><button class="btn btn-danger btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 0, click: emptyList">trash</button>
-		<span>has:</span>
-		<button class="btn btn-info btn-xs list-head-btn" data-bind="visible: fave_tracks().length > 0, click: emptyList">sample</button>
+<div data-bind="visible: fave_tracks().length > 1">
+	<button class="btn btn-warning btn-xs list-head-btn" data-bind="click: locateAll">scatter</button><button class="btn btn-danger btn-xs list-head-btn" data-bind="click: emptyList">trash</button>
+	<span class="list-filter-span" >has:</span>
+	<span class="list-filter-label">samples</span><input type="checkbox" data-bind="checked: hasSamples" /></span>
+<span class="list-filter-label">lyrics</span><input type="checkbox" data-bind="checked: hasLyrics" /></span>
 </div>
 
-	<ul data-bind="foreach: fave_tracks">
+	<ul data-bind="foreach: display_list">
 		<li data-bind="">
 			<p class="result-track" data-bind="text: track_name"></p> by
 			<span class="result-artist" data-bind="text: artist_name"></span>

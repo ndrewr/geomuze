@@ -5,6 +5,26 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		self.list_size = ko.computed(function() {
 			return ' ' + 	self.fave_tracks().length;
 		});
+		self.hasSamples = ko.observable(false);
+		self.hasLyrics = ko.observable(false);
+		self.display_list = ko.computed(function() {
+			if (!self.hasSamples() && !self.hasLyrics()) {
+				return self.fave_tracks();
+			} else if (self.hasSamples() && !self.hasLyrics()) {
+				return ko.utils.arrayFilter(self.fave_tracks(), function(item) {
+					return item.url !== 'No Url';
+				});
+			} else if (!self.hasSamples() && self.hasLyrics()) {
+				return ko.utils.arrayFilter(self.fave_tracks(), function(item) {
+					return item.lyrics_url !== '#';
+				});
+			} else {
+					return ko.utils.arrayFilter(self.fave_tracks(), function(item) {
+						return item.lyrics_url !== '#' && item.url !== 'No Url';
+					});
+			}
+		});
+
 		var _inform = $('.list-inform');
 
 		// sets, displays and removes user-informing elmnt

@@ -70,14 +70,12 @@ a:hover, a:visited, a:link, a:active
 }
 
 #searchbar {
-
-}
-input {
 	height: 50px;
-	width: 200px;
+/*	width: 200px;*/
 	padding: 10px;
 	border-radius: 10px;
 }
+
 .search-btn {
 	height: 50px;
 	min-width: 60px;
@@ -96,8 +94,6 @@ input {
 	flex-flow: row wrap;
 	align-items: center;
 	margin-bottom: 40px;
-
-
 }
 
 #map-canvas {
@@ -152,8 +148,13 @@ input {
 	margin-left: 1em;
 }
 
-.list-filter-panel span{
+.list-filter-span {
 	margin-left: 2em;
+}
+
+.list-filter-label {
+	margin-left: 1em;
+	margin-right: .5em;
 }
 
 .track-list {
