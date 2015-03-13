@@ -98,7 +98,7 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 
 		// user selects a track to see additional options
 		// Note: called from view using bind(), this = data_obj
-		self.selectFave = function(index) {
+		self.selectFave = function() {
 			// if the target wasnt a btn, toggle the class
 			// if other item had the class, remove it
 			if(event.target.nodeName !== "BUTTON" ) {

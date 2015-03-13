@@ -43,7 +43,6 @@
 		app.player = {};
 		app.player.audio = $('.aud')[0];
 		app.player.isPlaying = false;
-
 		var aud = app.player.audio;
 
 		$('body').on('click', '.audio-control', function(evt) {
@@ -80,9 +79,12 @@
 		app.player.audio.setAttribute('src', url);
 		if(url === 'No Url') {
 			$('.play').removeClass('icon-play3').addClass('disable');
+			title = 'No Sample';
 		}
+		else
+			app.player.audio.load();
+
 		$('#jukebox .info').html(title);
-		app.player.audio.load();
 	}
 
 	/**** initialize google map functions ****/
@@ -133,15 +135,16 @@
 		initPlayer(app);
 		initStorage(app);
 
-		app.configInfopane(new Result(
-			"spotify",
-			"Dragonfire",
-			"Lost Legacy",
-			"Gates Of Wrath",
-			"https://i.scdn.co/image/ecd1070cbc572dd534becd67b49fba23bdf0b406",
-			"https://p.scdn.co/mp3-preview/8c4e0e9f50663d1a2ac537027708324c48e4d548",
-			"https://www.musixmatch.com/lyrics/Lost-Legacy/Dragonfire"
-		));
+		app.configInfopane(initial_result);
+//			new Result(
+//			"spotify",
+//			"Dragonfire",
+//			"Lost Legacy",
+//			"Gates Of Wrath",
+//			"https://i.scdn.co/image/ecd1070cbc572dd534becd67b49fba23bdf0b406",
+//			"https://p.scdn.co/mp3-preview/8c4e0e9f50663d1a2ac537027708324c48e4d548",
+//			"https://www.musixmatch.com/lyrics/Lost-Legacy/Dragonfire"
+//		));
 
 		console.log("map started!?");
 	}

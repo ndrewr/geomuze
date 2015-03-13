@@ -1,6 +1,11 @@
 
 	<h3>SEARCH RESULTS<span class="list-item-count" data-bind="text: list_size"</span></h3>
-	<ul data-bind="foreach: tracks">
+	<div data-bind="visible: tracks().length > 1">
+		<span class="list-filter-span" >has:</span>
+		<span class="list-filter-label">samples</span><input type="checkbox" data-bind="checked: hasSamples" /></span>
+	<span class="list-filter-label">lyrics</span><input type="checkbox" data-bind="checked: hasLyrics" /></span>
+	</div>
+	<ul data-bind="foreach: display_list">
 		<li>
 			<p class="result-track" data-bind="text: track_name"></p> by
 			<span class="result-artist" data-bind="text: artist_name"></span>

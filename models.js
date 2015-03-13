@@ -54,6 +54,17 @@ Array.prototype.alreadyInArray = function(prop1, prop2) {
 };
 
 // test data
+var initial_result = new Result(
+	"spotify",
+	"Dragonfire",
+	"Lost Legacy",
+	"Gates Of Wrath",
+	"https://i.scdn.co/image/ecd1070cbc572dd534becd67b49fba23bdf0b406",
+	"https://p.scdn.co/mp3-preview/8c4e0e9f50663d1a2ac537027708324c48e4d548",
+	"https://www.musixmatch.com/lyrics/Lost-Legacy/Dragonfire"
+);
+
+
 var test_data = [
 	{
 		"result": {

@@ -76,7 +76,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 						.fail(function(e) {
 							// on fail, alert home msg and push
 							// result object w/o lyrics url
-							self.message("Uh-oh! Wee problem fetching this MusixMatch track...");
+							self.message("Uh-oh! Problem fetching MusixMatch track...");
 						});
 					}
 				});
