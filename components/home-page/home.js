@@ -59,8 +59,8 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 						// using the title and name from spotify result
 						// NOTE: must be a nested async call
 						var track_lyrics;
-						var musix_query = 'http://api.musixmatch.com/ws/1.1/track.search?q_track=' + track_name + '&q_artist=' + track_artist + '&f_has_lyrics=1&apikey=0bc726067d82f809bd3d1f7b5f0f7c2c';
-						$.getJSON(musix_query, function(data) {
+						var musix_query = 'http://api.musixmatch.com/ws/1.1/track.search?q_track=' + track_name + '&q_artist=' + track_artist + '&format=JSONP' + '&f_has_lyrics=1&apikey=0bc726067d82f809bd3d1f7b5f0f7c2c';
+						$.getJSON(musix_query+'&callback=?', function(data) {
 							var fetch_result = data.message.body.track_list;
 							// check response for track
 							if (fetch_result.length > 0) {
@@ -71,7 +71,6 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 						.always(function() {
 							// push the results; track_url default undef
 							results_buffer.push(new Result("spotify", track_name, track_artist, track_album, track_cover, track_url, track_lyrics));
-
 						})
 						.fail(function(e) {
 							// on fail, alert home msg and push
@@ -91,13 +90,29 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 				});
 		}
 
+		function musixCallback(data) {
+			console.log("Response from Musixmatch...I'm handlin...data is %O", data);
+			var track_list = data.message.body.track_list;
+			track_list.forEach(function(track) {
+				var track_name = track.track.track_name;
+				var track_artist = track.track.artist_name;
+				var track_lyrics = track.track.track_share_url;
+				var track_cover = track.track.album_coverart_100x100;
+				var track_album = track.track.album_name;
+
+				// NOTE I currently don't query for spotify url
+				// and stick undefined as placeholder
+				results_buffer.push(new Result("musix", track_name, track_artist, track_album, track_cover, undefined, track_lyrics));
+			});
+		}
+
 		// look for songs on musixmatch
 		// NOTE I did not see repeat results from musix queries
 		// so I did not run response through a filter
 		function musixSearch(formatted_terms) {
-			var musix_query = 'http://nomocors.appspot.com/api.musixmatch.com/ws/1.1/track.search?q_lyrics=' + formatted_terms + '&f_has_lyrics=1&s_track_rating=ASC&f_lyrics_language=en&apikey=0bc726067d82f809bd3d1f7b5f0f7c2c';
+			var musix_query = 'http://api.musixmatch.com/ws/1.1/track.search?q_lyrics=' + formatted_terms + '&f_has_lyrics=1&s_track_rating=ASC&f_lyrics_language=en&apikey=0bc726067d82f809bd3d1f7b5f0f7c2c&format=JSONP';
 
-			$.getJSON(musix_query, function(data) {
+			$.getJSON(musix_query+'&callback=?', function(data) {
 				console.log("Response from Musixmatch...");
 				var track_list = data.message.body.track_list;
 				track_list.forEach(function(track) {

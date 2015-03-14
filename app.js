@@ -81,10 +81,15 @@
 			$('.play').removeClass('icon-play3').addClass('disable');
 			title = 'No Sample';
 		}
-		else
+		else {
 			app.player.audio.load();
-
+		}
 		$('#jukebox .info').html(title);
+
+		// if player was middle of playing, set back to false
+		if(app.player.audio.isPlaying) {
+			app.player.audio.isPlaying = false;
+		}
 	}
 
 	/**** initialize google map functions ****/
