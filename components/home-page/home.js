@@ -95,7 +95,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 		// NOTE I did not see repeat results from musix queries
 		// so I did not run response through a filter
 		function musixSearch(formatted_terms) {
-			var musix_query = 'http://api.musixmatch.com/ws/1.1/track.search?q_lyrics=' + formatted_terms + '&f_has_lyrics=1&s_track_rating=ASC&f_lyrics_language=en&apikey=0bc726067d82f809bd3d1f7b5f0f7c2c';
+			var musix_query = 'http://nomocors.appspot.com/api.musixmatch.com/ws/1.1/track.search?q_lyrics=' + formatted_terms + '&f_has_lyrics=1&s_track_rating=ASC&f_lyrics_language=en&apikey=0bc726067d82f809bd3d1f7b5f0f7c2c';
 
 			$.getJSON(musix_query, function(data) {
 				console.log("Response from Musixmatch...");
