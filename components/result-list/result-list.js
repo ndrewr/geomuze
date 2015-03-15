@@ -7,7 +7,7 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 		});
 		self.hasSamples = ko.observable(false);
 		self.hasLyrics = ko.observable(false);
-		self.latest_fave = ko.observable({}).publishOn('fave_alert');
+		self.latest_fave = ko.observable({}).publishOn('fave_alert', function () { return false; }); // second param forces update even if same value
 		self.display_list = ko.computed(function() {
 			if (!self.hasSamples() && !self.hasLyrics()) {
 				return self.tracks();
@@ -42,7 +42,6 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 			}
 
 			var track = ko.dataFor(event.target);
-			console.log("here is the element data obj: %O", track);
 			// config the info window
 			app.configInfopane(track);
 		};

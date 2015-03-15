@@ -76,15 +76,17 @@
 
 	// updates player params with src and title info
 	app.configPlayer = function(url, title) {
-		app.player.audio.setAttribute('src', url);
-		if(url === 'No Url') {
+		app.player.audio.pause();
+		app.player.audio.currentTime = 0;
+		if(url === 'No Url' || url === 'No%20Url') {
 			$('.play').removeClass('icon-play3').addClass('disable');
 			title = 'No Sample';
 		}
 		else {
+			app.player.audio.setAttribute('src', url);
 			app.player.audio.load();
 		}
-		$('#jukebox .info').html(title);
+		$('.player-info').html(title);
 
 		// if player was middle of playing, set back to false
 		if(app.player.audio.isPlaying) {

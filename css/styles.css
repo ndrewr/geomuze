@@ -22,6 +22,24 @@ a:hover, a:visited, a:link, a:active
 	text-decoration: none;
 }
 
+.btn {
+	box-shadow: -1px 6px 2px -2px #a07423;
+}
+.btn-sm, .btn-xs {
+	transform: translateY(-5px);
+	box-shadow: 0px 4px 2px -1px #837f77;
+	transition: all 0.3s ease;
+
+}
+.btn-sm:active, .btn-xs:active {
+	transform: translateY(-3px);
+	box-shadow: 0px 1px 2px -1px #837f77;
+}
+.btn-danger {
+	box-shadow: 0px 4px 2px -1px #900a0a;
+
+}
+
 .disable {
 	pointer-events: none;
 	text-decoration: line-through;
@@ -77,25 +95,46 @@ a:hover, a:visited, a:link, a:active
 	transform: translateY(-5px);
 }
 
+#about {
+	background-color: #d8d8c8;
+	padding: 20px;
+	border: 2px solid #bfbfb5;
+	border-radius: 0px 0px 14px 14px;
+	box-shadow: inset 0 0 10px #000000;
+	transform: translateY(-10px);
+}
 #appConsole {
+	display: -webkit-flex;
 	display: flex;
+	-webkit-flex-flow: row wrap;
 	flex-flow: row wrap;
+	-webkit-align-items: center;
 	align-items: center;
+	-webkit-justify-content: space-between;
 	justify-content: space-between;
 	width: 100%;
+	background: white;
 }
 
 #searchbar {
 	height: 50px;
 /*	width: 200px;*/
 	padding: 10px;
-	border-radius: 10px;
+	border-radius: 10px 0 0 10px;
 }
 
 .search-btn {
 	height: 50px;
 	min-width: 60px;
-	transform: translateX(-30px);
+	border-radius: 0 10px 10px 0;
+	transform: translate(-6px, -5px);
+	transition: all 0.3s ease;
+
+}
+
+.search-btn:active {
+	transform: translate(-6px, -1px);
+	box-shadow: -1px 2px 2px -2px #a07423;
 }
 /*
 #searchbar:hover {
@@ -106,8 +145,11 @@ a:hover, a:visited, a:link, a:active
 
 #map-container {
 	position: relative;
+	display: -webkit-flex;
 	display: flex;
+	-webkit-flex-flow: row wrap;
 	flex-flow: row wrap;
+	-webkit-align-items: center;
 	align-items: center;
 	margin-bottom: 40px;
 }
@@ -203,19 +245,17 @@ a:hover, a:visited, a:link, a:active
 	padding: 10px;
 	border-bottom: 1px solid gray;
 
-
-
+/*
 	-webkit-clip-path: polygon(1% 0%, 49% 0%, 49% 2%, 100% 4%, 99% 26%, 100% 26%, 99% 49%, 100% 58%, 99% 80%, 100% 84%, 98% 100%, 60% 100%, 59% 100%, 1% 100%, 2% 84%, 0% 78%, 0% 52%, 0% 47%, 0% 22%, 0% 19%);
 	clip-path: polygon(1% 0%, 49% 0%, 49% 2%, 100% 4%, 99% 26%, 100% 26%, 99% 49%, 100% 58%, 99% 80%, 100% 84%, 98% 100%, 60% 100%, 59% 100%, 1% 100%, 2% 84%, 0% 78%, 0% 52%, 0% 47%, 0% 22%, 0% 19%);
+*/
 
-/*
 	-webkit-clip-path: polygon(1% 0%, 69% 0%, 69% 2%, 100% 3%, 100% 18%, 99% 23%, 100% 29%, 100% 49%, 99% 59%, 99% 70%, 100% 78%, 100% 93%, 100% 100%, 75% 100%, 34% 97%, 33% 100%, 0% 98%, 1% 86%, 0% 83%, 0% 66%, 1% 64%, 0% 45%, 1% 43%, 0% 24%, 1% 23%);
 	clip-path: polygon(1% 0%, 69% 0%, 69% 2%, 100% 3%, 100% 18%, 99% 23%, 100% 29%, 100% 49%, 99% 59%, 99% 70%, 100% 78%, 100% 93%, 100% 100%, 75% 100%, 34% 97%, 33% 100%, 0% 98%, 1% 86%, 0% 83%, 0% 66%, 1% 64%, 0% 45%, 1% 43%, 0% 24%, 1% 23%);
-*/
 }
 .track-list li:hover {
 	box-shadow: inset 0 0 10px #CCCCCC;
-	background: gray;
+	background: #d8d8c8;
 }
 .result-track {
 	font-size: 16px;
@@ -225,13 +265,13 @@ a:hover, a:visited, a:link, a:active
 }
 
 .result-selected {
-	background: yellow;
+	background-color: yellow;
 	opacity: .9;
 }
 
 .result-btn-panel {
 	display: none;
-	margin-top: 5px;
+	margin-top: 14px;
 }
 
 .result-btn-panel button {
@@ -239,9 +279,13 @@ a:hover, a:visited, a:link, a:active
 }
 
 footer {
+	display: -webkit-flex;
 	display: flex;
+	-webkit-flex-flow: row wrap;
 	flex-flow: row wrap;
+	-webkit-justify-content: space-around;
 	justify-content: space-around;
+	-webkit-align-items: baseline;
 	align-items: baseline;
 	width: 100%;
 	height: 100px;
@@ -278,9 +322,13 @@ dark-stripes-texture {
 /* Scott Andrew's HTML5 audio player styles*/
 
 .infobox-player {
+	display: -webkit-flex;
 	display: flex;
+	-webkit-flex-flow: row;
 	flex-flow: row;
+	-webkit-align-items: center;
 	align-items: center;
+	-webkit-justify-content: space-around;
 	justify-content: space-around;
 }
 
@@ -298,9 +346,13 @@ dark-stripes-texture {
 	font-family:helvetica, arial, verdana;
 	font-weight:bold;
 	width:180px;
+	display: -webkit-flex;
 	display: flex;
+	-webkit-flex-flow: row wrap;
 	flex-flow: row wrap;
+	-webkit-align-items: center;
 	align-items: center;
+	-webkit-justify-content: space-around;
 	justify-content: space-around;
 }
 #jukebox .loader {
@@ -325,15 +377,12 @@ dark-stripes-texture {
 	text-align:center;
 }
 
-/*#jukebox .controls a {*/
 #jukebox a {
 	display:inline-block;
 	width:33px;
 	height:33px;
 	margin:0px 14px;
 	overflow:hidden;
-/*	background-image:url('../audio-controls.png');*/
-/*	background-repeat:no-repeat;*/
 	color: white;
 	text-align: center;
 	line-height: 30px;
@@ -355,9 +404,6 @@ dark-stripes-texture {
 
 
 
-
-
 .secret-embedded {
 	display: none;
 }
-
