@@ -50,10 +50,13 @@ Log of Resources:
 - https://miguelmota.com/blog/basic-html5-audio-manipulation/
 - transparenttextures
 - knockmeout.com
+- https://github.com/rniemeyer/knockout-postbox
 - Stack Overflow, esp.
 	- http://stackoverflow.com/questions/2362337/how-to-set-the-google-map-zoom-level-to-show-all-the-markers
 	- http://stackoverflow.com/questions/2010892/storing-objects-in-html5-localstorage
 	- http://stackoverflow.com/questions/15625945/delay-marker-drop-api-v3
+	- http://stackoverflow.com/questions/17240544/jquery-toggle-animated-width
+	- http://stackoverflow.com/questions/14248194/close-responsive-navbar-automatically
 	-
 - Google Maps API docs
 -

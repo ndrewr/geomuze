@@ -85,8 +85,8 @@
 		else {
 			app.player.audio.setAttribute('src', url);
 			app.player.audio.load();
+			$('.player-info').html('Sample Clip');
 		}
-		$('.player-info').html(title);
 
 		// if player was middle of playing, set back to false
 		if(app.player.audio.isPlaying) {
@@ -306,6 +306,24 @@
 		/*** Event handlers ***/
 //		google.maps.event.addListener(self.autocomplete, 'place_changed', self.gotoAutoComplete);
 
+		// handles the list toggle btn for smaller screens
+		$('#list-toggle').click(function() {
+			var leftOffset = $("#list-container").css('left') === '0px' ? '-290px' : '0px';
+			$('#list-container').animate({ left: leftOffset }, 1000);
+			var icon = $('#list-toggle span');
+			// swap btn icons
+			if (icon.hasClass('icon-map'))
+				icon.removeClass('icon-map').addClass('icon-file-text');
+			else
+				icon.removeClass('icon-file-text').addClass('icon-map');
+		});
+
+		// makes bootstrap navbar auto collapse on selection
+		$('.navbar-collapse a').click(function(){
+			$(".navbar-collapse").collapse('hide');
+		});
+
+
 		/*** run default location ***/
 		// initial location default set to Pyrmont
 		var request = {
@@ -321,10 +339,7 @@
 
 
 
-	// make this the default track info
-//	album: "Relaxing Yoga Workout"artist_name: "Musical Mandalas"cover: "https://i.scdn.co/image/b8305dfeee259951395d2aff387c826e487d62a1"lyrics_url: "#"service: "spotify"track_name: "Mountain View"url: "https://p.scdn.co/mp3-preview/316b7bd9a6129b44666c2425355f928acfd5cffc"
 
-	//	album: "Gates Of Wrath"artist_name: "Lost Legacy"cover: "https://i.scdn.co/image/ecd1070cbc572dd534becd67b49fba23bdf0b406"lyrics_url: "https://www.musixmatch.com/lyrics/Lost-Legacy/Dragonfire"service: "spotify"track_name: "Dragonfire"url: "https://p.scdn.co/mp3-preview/8c4e0e9f50663d1a2ac537027708324c48e4d548"
 
 
 	// kick off map load and initializing functions

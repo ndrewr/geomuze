@@ -113,7 +113,6 @@ a:hover, a:visited, a:link, a:active
 	-webkit-justify-content: space-between;
 	justify-content: space-between;
 	width: 100%;
-	background: white;
 }
 
 #searchbar {
@@ -152,6 +151,7 @@ a:hover, a:visited, a:link, a:active
 	-webkit-align-items: center;
 	align-items: center;
 	margin-bottom: 40px;
+	width: 100%;
 }
 
 #map-canvas {
@@ -206,11 +206,32 @@ a:hover, a:visited, a:link, a:active
 	margin-left: 1em;
 }
 
-.list-filter-span {
+#list-toggle {
+	display: none;
+	position: absolute;
+	right: 0;
+	height: 40px;
+	background-color: #ED9C28;
+
+}
+
+#list-storage {
+	display: inline;
+}
+
+#list-options {
+	display: inline;
+}
+
+#list-filter {
+	margin-top: 10px;
+}
+
+#list-filter-span {
 	margin-left: 2em;
 }
 
-.list-filter-label {
+#list-filter-label {
 	margin-left: 1em;
 	margin-right: .5em;
 }
@@ -407,3 +428,83 @@ dark-stripes-texture {
 .secret-embedded {
 	display: none;
 }
+
+
+/* RESPONSIVE CSS media queries
+--------------------------------------------------
+/* For smaller screens, map and list sections overlap.
+		List section slides in and out of view as needed */
+/* iphone5/ nexus5 screen considered baseline width*/
+@media only screen and (max-width: 360px) {
+
+	#main-message h1 {
+		font-size: 30px;
+	}
+
+	#main-message h3 {
+		display: none;
+	}
+
+	#list-container {
+
+		margin: 20px 0;
+	}
+
+	#map-canvas {
+		margin-right: 0;
+	}
+
+	footer h3, footer h4 {
+		font-size: 14px;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+
+	#map-container {
+/*		width: 100%;*/
+/*		overflow: auto;*/
+		z-index: 3;
+	}
+
+	#list-container {
+		min-width: 320px;
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 2;
+		opacity: .95;
+	}
+
+	#map-canvas {
+		width: 100%;
+	}
+
+	#list-storage {
+		display: inline-block;
+	}
+
+	#list-filter {
+		display: inline-block;
+	}
+
+	#list-toggle {
+		display: inherit;
+	}
+}
+
+/* for tablets in portrait mode*/
+@media only screen and (min-width: 768px) and (max-width: 900px) {
+
+}
+
+/* for larger device screens, increase name font and adjust spacing */
+@media only screen and (min-width: 768px) {
+
+}
+
+/* Enbiggen some stuff. */
+@media only screen and (min-width: 992px) {
+
+}
+

@@ -35,12 +35,6 @@
 			this.lyrics_url = result.lyrics_url || '#';
 			this.album = result.album || 'No Album Title';
 			this.location = location || {msg: 'oh noes nowhere'};
-//			this.marker = new google.maps.Marker({
-//				position: location,
-//				title: this.track_name,
-//				animation: google.maps.Animation.DROP,
-//				icon: 'images/geomuze-icon-small.png'
-//			});
 		}
 
 Array.prototype.alreadyInArray = function(prop1, prop2) {

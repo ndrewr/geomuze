@@ -148,6 +148,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 					self.message("Uh-oh! Problem with MusixMatch!");
 			});
 		}
+
 	// end of HomeViewModel definition
 	}
 	return { viewModel: HomeViewModel, template: homeTemplate };
