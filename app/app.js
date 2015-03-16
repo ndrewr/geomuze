@@ -88,6 +88,42 @@
 		}
 	}
 
+	function initHandlers(app) {
+		// handles the list toggle btn for smaller screens
+		var _listtoggle = $('#list-toggle');
+		var _icon = $('#list-toggle span');
+		var _listcontainer = $("#list-container");
+
+		_listtoggle.click(function() {
+			var leftOffset = _listcontainer.css('left') === '0px' ? '-290px' : '0px';
+			_listcontainer.animate({ left: leftOffset }, 1000);
+			// swap btn icons
+			if (_icon.hasClass('icon-map'))
+				_icon.removeClass('icon-map').addClass('icon-file-text');
+			else
+				_icon.removeClass('icon-file-text').addClass('icon-map');
+		});
+
+		// makes bootstrap navbar auto collapse on selection
+		$('.navbar-collapse a').click(function(){
+			$(".navbar-collapse").collapse('hide');
+		});
+
+		// define a function to auto hide the list view
+		app.hideList = function() {
+			var isMobileMode = _listtoggle.css('display') === 'none' ? false : true;
+			if (isMobileMode)
+				_listtoggle.click();
+		}
+
+		app.showList = function() {
+			var isMobileMode = _listtoggle.css('display') === 'none' ? false : true;
+			var isHidden = _listcontainer.css('left') === '0px' ? false : true;
+			if (isMobileMode && isHidden)
+				_listtoggle.click();
+		}
+	}
+
 	/**** initialize app storage, media plaback and
 	      google map functions; Note: google api
 				will search global obj for callback ****/
@@ -135,9 +171,22 @@
 
 		// initialize app components
 		MapView(custom_style, app);
-		initPlayer(app);
 		initStorage(app);
-		app.configInfopane(initial_result); //load first Result
+
+		// following steps require jquery
+		var checker = 0;
+		(function checkJquery() {
+			if (window.jQuery) {
+				clearInterval(checker);
+				initPlayer(app);
+				app.configInfopane(initial_result); //load default
+				initHandlers(app);
+			}
+			if(checker == 0) {
+				//alert('Setting up interval');
+				checker = window.setInterval(checkJquery, 100);
+			}
+		})();
 	}
 
 	function MapView(map_style, app) {
@@ -296,40 +345,6 @@
 
 		/*** Event handlers ***/
 //		google.maps.event.addListener(self.autocomplete, 'place_changed', self.gotoAutoComplete);
-
-		// handles the list toggle btn for smaller screens
-		var _listtoggle = $('#list-toggle');
-		var _icon = $('#list-toggle span');
-		var _listcontainer = $("#list-container");
-
-		_listtoggle.click(function() {
-			var leftOffset = _listcontainer.css('left') === '0px' ? '-290px' : '0px';
-			_listcontainer.animate({ left: leftOffset }, 1000);
-			// swap btn icons
-			if (_icon.hasClass('icon-map'))
-				_icon.removeClass('icon-map').addClass('icon-file-text');
-			else
-				_icon.removeClass('icon-file-text').addClass('icon-map');
-		});
-
-		// makes bootstrap navbar auto collapse on selection
-		$('.navbar-collapse a').click(function(){
-			$(".navbar-collapse").collapse('hide');
-		});
-
-		// define a function to auto hide the list view
-		app.hideList = function() {
-			var isMobileMode = _listtoggle.css('display') === 'none' ? false : true;
-			if (isMobileMode)
-				_listtoggle.click();
-		}
-
-		app.showList = function() {
-			var isMobileMode = _listtoggle.css('display') === 'none' ? false : true;
-			var isHidden = _listcontainer.css('left') === '0px' ? false : true;
-			if (isMobileMode && isHidden)
-				_listtoggle.click();
-		}
 
 		// initial location default set to Udacity Intl HQ
 		var request = {

@@ -49,6 +49,7 @@ Steps:
 Log of Resources:
 - http://www.scottandrew.com/pub/html5audioplayer
 - https://miguelmota.com/blog/basic-html5-audio-manipulation/
+- http://snipplr.com/view/54863/wait-for-jquery-to-load/
 - transparenttextures
 - knockmeout.com
 - https://github.com/rniemeyer/knockout-postbox
