@@ -41,6 +41,9 @@
 
 		$('body').on('click', '.audio-control', function(evt) {
 			evt.preventDefault();
+
+			console.log("play/pause btn pressed");
+
 			// control state between play/pause
 			if(app.player.audio.isPlaying) {
 				aud.pause();
@@ -182,8 +185,7 @@
 				app.configInfopane(initial_result); //load default
 				initHandlers(app);
 			}
-			if(checker == 0) {
-				//alert('Setting up interval');
+			else {
 				checker = window.setInterval(checkJquery, 100);
 			}
 		})();

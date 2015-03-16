@@ -29,6 +29,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			var tab = $('#list-container').find('a').first();
 			tab.trigger('click');
 			app.showList(); // toggles visibility
+			self.search_terms(''); // reset search box
 		};
 
 		// look for songs on spotify

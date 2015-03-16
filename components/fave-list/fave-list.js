@@ -43,16 +43,9 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 					var lat = track.location.D;
 					var long = track.location.k;
 					track.location = new google.maps.LatLng(long, lat);
-					// restore the marker obj
-//					track.marker = new google.maps.Marker({
-//						position: track.location,
-//						animation:google.maps.Animation.DROP,
-//						icon: 'images/geomuze-icon-small.png'
-//					});
 				});
 				// set into list view...
 				self.fave_tracks(user_list);
-				console.log("saved list data is: %O", user_list);
 				informUser('Here is your precious list!');
 			}
 			else
