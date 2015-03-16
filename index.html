@@ -9,8 +9,7 @@
 			<link href="bower_modules/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
 			<link href="css/styles.css" rel="stylesheet">
 			<link href="css/geomuze-if.css" rel="stylesheet">
-
-			<link href='http://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise|Gochi+Hand|Architects+Daughter|Audiowide' rel='stylesheet' type='text/css'>
+			<link href='http://fonts.googleapis.com/css?family=Architects+Daughter|Audiowide' rel='stylesheet' type='text/css'>
 
 		<!-- endbuild -->
 		<!-- build:js -->
@@ -26,7 +25,7 @@
 		</div>
 		<section id="map-container">
 			<section id="list-container">
-				<button id="list-toggle">
+				<button id="list-toggle" class="btn">
 					<span class="icon-map"></span>
 				</button>
 				<div class="list-inform"><img src="images/geomuze-icon-large.png"/><span>Something happened here.</span></div>
@@ -45,8 +44,7 @@
 
 		<div class="secret-embedded">
 			<div id="jukebox">
-				<div class="info">Please wait...	</div>
-				<a class="audio-control play" href="#"><span>Play</span></a>
+				<a class="audio-control play" href="#"></a>
 				<div class="loader">
 					<div class="play-progress"></div>
 				</div>
@@ -59,11 +57,10 @@
 		<footer class="site-texture">
 			<h3>Udacity P5</h3>
 			<h4><a href="https://github.com/uncleoptimus/udacityP5">developer: Andrew Roy Chen</a></h4>
-			<h4><a href="https://developer.musixmatch.com/">lyrics by musixmatch</a></h4>
-			<h4><a href="https://developer.spotify.com/">tracks by spotify</a></h4>
+			<a href="https://developer.musixmatch.com/">lyrics by musixmatch</a>
+			<a href="https://developer.spotify.com/">tracks by spotify</a>
 		</footer>
-
-		<script type="text/javascript" src="./app.js"></script>
-		<script type="text/javascript" src="./models.js"></script>
+		<script type="text/javascript" src="app/app.js"></script>
+		<script type="text/javascript" src="app/models.js"></script>
 	</body>
 </html>

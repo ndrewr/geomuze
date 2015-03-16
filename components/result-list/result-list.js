@@ -52,8 +52,10 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 			self.latest_fave(self.tracks()[index]);
 		};
 
-		self.doAction = function() {
-			console.log("I have fired")
+		// open info window
+		self.checkIt = function() {
+			app.hideList();
+			app.infopane.open(app.map);
 		};
 
 		// delegate click handling to the parent list

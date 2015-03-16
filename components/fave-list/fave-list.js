@@ -65,6 +65,9 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 			app.storage.set('saved_list', self.fave_tracks());
 			_inform.find('span').html('Your list has been preserved.');
 			_inform.fadeIn().delay( 1000 ).fadeOut();
+
+			console.log("the saved list...voila %O", self.fave_tracks());
+			console.dir("here is the dir version: %O", self.fave_tracks());
 		}
 
 		// To make sure addFave callback was already
@@ -115,12 +118,17 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		// and preconfig the map infobox
 		self.locateFave = function(track) {
 			app.configInfopane(track);
+			app.hideList(); // if mobile mode, auto-hide list
 			app.gotoLocation(track.location, google.maps.places.PlacesServiceStatus.OK);
+			setTimeout(function() {
+				app.infopane.open(app.map);
+			}, 1000);
 		};
 
 		// shows location of all faved tracks on map
 		self.locateAll = function() {
 			app.infopane.close(); // close an open info window
+			app.hideList(); // if mobile mode, auto-hide list
 			app.showAllMarkers(self.fave_tracks());
 		};
 

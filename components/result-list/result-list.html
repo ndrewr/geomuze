@@ -1,19 +1,19 @@
+<h3>SEARCH RESULTS<span class="list-item-count" data-bind="text: list_size"</span></h3>
 
-	<h3>SEARCH RESULTS<span class="list-item-count" data-bind="text: list_size"</span></h3>
-	<div data-bind="visible: tracks().length > 1">
-		<span class="list-filter-span" >has:</span>
-		<span class="list-filter-label">samples</span><input type="checkbox" data-bind="checked: hasSamples" /></span>
-	<span class="list-filter-label">lyrics</span><input type="checkbox" data-bind="checked: hasLyrics" /></span>
-	</div>
-	<ul data-bind="foreach: display_list">
-		<li>
-			<p class="result-track" data-bind="text: track_name"></p> by
-			<span class="result-artist" data-bind="text: artist_name"></span>
-<!--			<span class="" data-bind="text: service"></span>-->
-			<div class="result-btn-panel">
-				<button class="btn btn-danger btn-sm" data-bind="click: $parent.setFave.bind($data, $index())">fave</button>
-				<button class="btn btn-sm" data-bind="click: $parent.doAction">rave</button>
-				<a data-bind="attr:{ href: lyrics_url }, css:{ disable: lyrics_url === '#' }" target="_blank" role="button" class="btn btn-default btn-sm">lyrics</a>
-			</div>
-		</li>
-	</ul>
+<div data-bind="visible: tracks().length > 1">
+	<span class="list-filter-span" >has:</span>
+	<span class="list-filter-label">samples</span><input type="checkbox" data-bind="checked: hasSamples" /></span>
+<span class="list-filter-label">lyrics</span><input type="checkbox" data-bind="checked: hasLyrics" /></span>
+</div>
+
+<ul data-bind="foreach: display_list">
+	<li>
+		<p class="result-track" data-bind="text: track_name"></p> by
+		<span class="result-artist" data-bind="text: artist_name"></span>
+		<div class="result-btn-panel">
+			<button class="btn btn-danger btn-sm" data-bind="click: $parent.setFave.bind($data, $index())">fave</button>
+			<button class="btn btn-sm" data-bind="click: $parent.checkIt">check It</button>
+			<a data-bind="attr:{ href: lyrics_url }, css:{ disable: lyrics_url === '#' }" target="_blank" role="button" class="btn btn-default btn-sm">lyrics</a>
+		</div>
+	</li>
+</ul>

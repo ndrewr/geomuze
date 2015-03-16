@@ -13,9 +13,7 @@ var require = {
 
 			// add custom libraries
 			"knockout-postbox":
-			"knockout-postbox",
-			"models":
-			"models"
+			"app/knockout-postbox",
 		},
 		shim: {
 				"bootstrap": { deps: ["jquery"] }

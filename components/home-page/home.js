@@ -28,6 +28,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			// auto-switch list view to Results
 			var tab = $('#list-container').find('a').first();
 			tab.trigger('click');
+			app.showList(); // toggles visibility
 		};
 
 		// look for songs on spotify
@@ -40,11 +41,10 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 
 			$.getJSON(spotify_query, function(data) {
 				var track_list = data.tracks.items; // an array
-				console.log("Response from Spotify...");
 				track_list.forEach(function(track) {
 					var track_name = track.name;
 					var track_artist = track.artists[0].name;
-					var track_cover = track.album.images[2].url;
+					var track_cover = track.album.images[2]? track.album.images[2].url : undefined;
 					var track_url = track.preview_url;
 					var track_album = track.album.name;
 
@@ -90,22 +90,6 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 				});
 		}
 
-		function musixCallback(data) {
-			console.log("Response from Musixmatch...I'm handlin...data is %O", data);
-			var track_list = data.message.body.track_list;
-			track_list.forEach(function(track) {
-				var track_name = track.track.track_name;
-				var track_artist = track.track.artist_name;
-				var track_lyrics = track.track.track_share_url;
-				var track_cover = track.track.album_coverart_100x100;
-				var track_album = track.track.album_name;
-
-				// NOTE I currently don't query for spotify url
-				// and stick undefined as placeholder
-				results_buffer.push(new Result("musix", track_name, track_artist, track_album, track_cover, undefined, track_lyrics));
-			});
-		}
-
 		// look for songs on musixmatch
 		// NOTE I did not see repeat results from musix queries
 		// so I did not run response through a filter
@@ -113,7 +97,6 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			var musix_query = 'http://api.musixmatch.com/ws/1.1/track.search?q_lyrics=' + formatted_terms + '&f_has_lyrics=1&s_track_rating=ASC&f_lyrics_language=en&apikey=0bc726067d82f809bd3d1f7b5f0f7c2c&format=JSONP';
 
 			$.getJSON(musix_query+'&callback=?', function(data) {
-				console.log("Response from Musixmatch...");
 				var track_list = data.message.body.track_list;
 				track_list.forEach(function(track) {
 					var track_name = track.track.track_name;

@@ -1,7 +1,6 @@
 // Initialize app objects: map, media players
 (function() {
-
-	window.app = 	{}; // public interface obj for map and audio functions
+	window.app = 	{}; // public interface obj for app
 
 	// this will be called upon execution of IIFE
 	function loadScript() {
@@ -14,7 +13,6 @@
 	}
 
 	function initStorage(app) {
-		console.log("init storage!");
 		app.storage = {
 			set: function(key, value) {
 				if (!key || !value) {return;}
@@ -29,11 +27,7 @@
 
 				if (!value) {return;}
 
-				// assume it is an object that has been stringified
-				//if (value[0] === "{") {
-					value = JSON.parse(value);
-				//}
-
+				value = JSON.parse(value);
 				return value;
 			}
 		}
@@ -74,13 +68,13 @@
 		});
 	}
 
-	// updates player params with src and title info
+	// PUBLIC: updates player params with src and title info
 	app.configPlayer = function(url, title) {
 		app.player.audio.pause();
 		app.player.audio.currentTime = 0;
 		if(url === 'No Url' || url === 'No%20Url') {
 			$('.play').removeClass('icon-play3').addClass('disable');
-			title = 'No Sample';
+			$('.player-info').html('No Sample');
 		}
 		else {
 			app.player.audio.setAttribute('src', url);
@@ -94,8 +88,9 @@
 		}
 	}
 
-	/**** initialize google map functions ****/
-	// google api will search global obj for callback
+	/**** initialize app storage, media plaback and
+	      google map functions; Note: google api
+				will search global obj for callback ****/
 	window.initialize = function() {
 		// custom map styles as set at Maps Styling Wizard
 		var custom_style = [
@@ -138,22 +133,11 @@
 			}
 		];
 
+		// initialize app components
 		MapView(custom_style, app);
 		initPlayer(app);
 		initStorage(app);
-
-		app.configInfopane(initial_result);
-//			new Result(
-//			"spotify",
-//			"Dragonfire",
-//			"Lost Legacy",
-//			"Gates Of Wrath",
-//			"https://i.scdn.co/image/ecd1070cbc572dd534becd67b49fba23bdf0b406",
-//			"https://p.scdn.co/mp3-preview/8c4e0e9f50663d1a2ac537027708324c48e4d548",
-//			"https://www.musixmatch.com/lyrics/Lost-Legacy/Dragonfire"
-//		));
-
-		console.log("map started!?");
+		app.configInfopane(initial_result); //load first Result
 	}
 
 	function MapView(map_style, app) {
@@ -161,7 +145,7 @@
 		var markers = []; // Faves markers; see showAllMarkers
 		var current_marker; // ref for dealloc; see createMarker
 
-		self.current_location = new google.maps.LatLng(-33.8665433,151.1956316); // default location
+		self.current_location = new google.maps.LatLng(-33.8665433,151.1956316); // default
 
 		// Initial map settings, location
 		var mapOptions = {
@@ -170,6 +154,7 @@
 			styles: map_style
 		};
 
+		// PUBLIC: map reference accessible within map
 		self.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 		// bind page search bar to autocomplete function
@@ -183,15 +168,15 @@
 
 		self.service = new google.maps.places.PlacesService(self.map);
 
-		// create the map info window
+		// PUBLIC: create then access the map info window
 		// NOTE only one window open at a time; reuse!
 		self.infopane = new google.maps.InfoWindow({
 			content: "Well, Hullo! I'll have more to say after a lil' searchy-search!",
 			maxWidth: 320
 		});
 
-		// configs info window before it is displayed on map
-		// content: album cover, song title, artist title
+		// PUBLIC: configs info window before it
+		// is displayed on map
 		self.configInfopane = function(track) {
 			var audio_template =
 					'<div id="jukebox"><div class="player-info">Sample Clip</div><a class="audio-control play icon-play3" href="#"><span>Play</span></a><div class="loader"><div class="play-progress"></div></div><audio class="aud" src="http://www.scottandrew.com/mp3/demos/holding_back_demo_011504.mp3"><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
@@ -202,6 +187,8 @@
 					'<div class="infobox-player"><img src="' + 					track.cover + '"/>' + audio_template + '</div>';
 
 			self.infopane.setContent(info_template);
+			var track_loc = track.location;
+			self.infopane.setPosition(track_loc? track_loc : self.current_location);
 			// update audio player
 			self.configPlayer(track.url, track.track_name);
 		}
@@ -221,7 +208,7 @@
 			}
 		}
 
-		// create a new marker on demand
+		// PUBLIC: create a new marker on demand
 		// NOTE better to just use one obj over and over
 		// instead of repeatedly allocating a new obj...
 		self.createMarker = function(location) {
@@ -233,7 +220,7 @@
 				icon: 'images/geomuze-icon-small.png'
 			});
 
-			current_marker = marker;
+			current_marker = marker; // track for dealloc
 
 			google.maps.event.addListener(marker, 'click', function() {
 				self.infopane.open(self.map, marker);
@@ -256,20 +243,21 @@
 		// only the term(s) user actually typed!
 		//	self.gotoAutoComplete = function() {};
 
+		// PUBLIC: goto a new location on map;
 		// callback from doPlaceSearch which passes array of
 		// locations and status code
 		self.gotoLocation = function(location_data, status) {
 			if (status === google.maps.places.PlacesServiceStatus.OK) {
 				var place, new_coord;
-				// check if passed 'result' is an array of locations
 				clearMarker();
+				// check if param is an array of locations
 				if (Array.isArray(location_data)) {
 					place = location_data[0]; //first search result
 					new_coord = place.geometry.location;
 				}
 				else new_coord = location_data; //param is a location obj
 
-				console.log("Going to location...located at %O", new_coord);
+				//console.log("Going to location...located at %O", new_coord);
 
 				self.current_location = new_coord; // used by Faves
 				self.map.setCenter(new_coord);
@@ -278,6 +266,9 @@
 			}
 		};
 
+		// PUBLIC: takes array of tracks and sequentially
+		// drops markers on each associated location
+		// Called from Faves List View Model
 		self.showAllMarkers = function(items) {
 			clearMarker(); // remove prev set marker
 			markers = []; // reset markers in case of unfaves
@@ -307,15 +298,18 @@
 //		google.maps.event.addListener(self.autocomplete, 'place_changed', self.gotoAutoComplete);
 
 		// handles the list toggle btn for smaller screens
-		$('#list-toggle').click(function() {
-			var leftOffset = $("#list-container").css('left') === '0px' ? '-290px' : '0px';
-			$('#list-container').animate({ left: leftOffset }, 1000);
-			var icon = $('#list-toggle span');
+		var _listtoggle = $('#list-toggle');
+		var _icon = $('#list-toggle span');
+		var _listcontainer = $("#list-container");
+
+		_listtoggle.click(function() {
+			var leftOffset = _listcontainer.css('left') === '0px' ? '-290px' : '0px';
+			_listcontainer.animate({ left: leftOffset }, 1000);
 			// swap btn icons
-			if (icon.hasClass('icon-map'))
-				icon.removeClass('icon-map').addClass('icon-file-text');
+			if (_icon.hasClass('icon-map'))
+				_icon.removeClass('icon-map').addClass('icon-file-text');
 			else
-				icon.removeClass('icon-file-text').addClass('icon-map');
+				_icon.removeClass('icon-file-text').addClass('icon-map');
 		});
 
 		// makes bootstrap navbar auto collapse on selection
@@ -323,11 +317,22 @@
 			$(".navbar-collapse").collapse('hide');
 		});
 
+		// define a function to auto hide the list view
+		app.hideList = function() {
+			var isMobileMode = _listtoggle.css('display') === 'none' ? false : true;
+			if (isMobileMode)
+				_listtoggle.click();
+		}
 
-		/*** run default location ***/
-		// initial location default set to Pyrmont
+		app.showList = function() {
+			var isMobileMode = _listtoggle.css('display') === 'none' ? false : true;
+			var isHidden = _listcontainer.css('left') === '0px' ? false : true;
+			if (isMobileMode && isHidden)
+				_listtoggle.click();
+		}
+
+		// initial location default set to Udacity Intl HQ
 		var request = {
-//			location: new google.maps.LatLng(-33.8665433,151.1956316),
 			location: new google.maps.LatLng( 37.399864,-122.10840000000002),
 			radius: '500',
 			query: 'restaurant'
@@ -336,11 +341,6 @@
 		// textSearch() returns results array and status code
 		self.service.textSearch(request, self.gotoLocation);
 	}
-
-
-
-
-
 
 	// kick off map load and initializing functions
 	window.onload = loadScript;

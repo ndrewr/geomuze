@@ -1,5 +1,10 @@
 
-/*@import url(http://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise|Gochi+Hand|Architects+Daughter|Audiowide);*/
+/*@import url(http://fonts.googleapis.com/css?family=Architects+Daughter|Audiowide);*/
+
+.site-texture {
+	background-color: #000;
+	background-image: url(../images/line-texture.png);
+}
 
 body {
 	background: url(../images/bg4.jpg) no-repeat center center fixed;
@@ -7,12 +12,10 @@ body {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-
 	font-family: 'Architects Daughter';
-/*	font-family: 'Gochi Hand', cursive;*/
-/*	font-family: 'Waiting for the Sunrise', cursive;*/
 }
 
+/* customize bootstrap btn styles */
 input, button {
 	outline: none !important;
 }
@@ -23,33 +26,36 @@ a:hover, a:visited, a:link, a:active
 }
 
 .btn {
-	box-shadow: -1px 6px 2px -2px #a07423;
+	box-shadow: -1px 6px 2px -2px #A07423;
+	transition: all .3s ease;
 }
+
 .btn-sm, .btn-xs {
 	transform: translateY(-5px);
-	box-shadow: 0px 4px 2px -1px #837f77;
-	transition: all 0.3s ease;
-
+	box-shadow: 0 4px 2px -1px #837F77;
 }
+
 .btn-sm:active, .btn-xs:active {
 	transform: translateY(-3px);
-	box-shadow: 0px 1px 2px -1px #837f77;
+	box-shadow: 0 1px 2px -1px #837F77;
 }
+
 .btn-danger {
-	box-shadow: 0px 4px 2px -1px #900a0a;
-
+	box-shadow: 0px 4px 2px -1px #900A0A;
 }
 
+/* disable user interaction on certain links */
 .disable {
 	pointer-events: none;
 	text-decoration: line-through;
 }
+
 .disable:link {
 	text-decoration: line-through;
 }
 
 #page {
-	margin-top: 60px;
+	margin-top: 50px;
 }
 
 .navbar {
@@ -57,7 +63,6 @@ a:hover, a:visited, a:link, a:active
 }
 
 #main-message {
-
 	font-family: 'Audiowide';
 
 	/* WebKit (Safari/Chrome) Only */
@@ -79,30 +84,27 @@ a:hover, a:visited, a:link, a:active
 		1px  1px 0 #000;
 }
 
-#main-message img {
-	background: #d8d8c8;
-	border-radius: 14px;
-	height: 60px;
-}
 .brand-logo {
-	background: #d8d8c8;
+	background: #D8D8C8;
 	border-radius: 12px;
 	height: 32px;
 	transform: rotateY(180deg) translateX(5px);
 }
+
 .brand-name {
 	font-family: 'Audiowide';
 	transform: translateY(-5px);
 }
 
 #about {
-	background-color: #d8d8c8;
+	background-color: #D8D8C8;
 	padding: 20px;
-	border: 2px solid #bfbfb5;
-	border-radius: 0px 0px 14px 14px;
-	box-shadow: inset 0 0 10px #000000;
+	border: 2px solid #BFBFB5;
+	border-radius: 0 0 14px 14px;
+	box-shadow: inset 0 0 10px #000;
 	transform: translateY(-10px);
 }
+
 #appConsole {
 	display: -webkit-flex;
 	display: flex;
@@ -127,20 +129,12 @@ a:hover, a:visited, a:link, a:active
 	min-width: 60px;
 	border-radius: 0 10px 10px 0;
 	transform: translate(-6px, -5px);
-	transition: all 0.3s ease;
-
 }
 
 .search-btn:active {
 	transform: translate(-6px, -1px);
-	box-shadow: -1px 2px 2px -2px #a07423;
+	box-shadow: -1px 2px 2px -2px #A07423;
 }
-/*
-#searchbar:hover {
-	background: #d8d8c8;
-	opacity: .9;
-}
-*/
 
 #map-container {
 	position: relative;
@@ -168,20 +162,15 @@ a:hover, a:visited, a:link, a:active
 	height: 400px;
 	margin: 20px;
 	position: relative;
-
 	border-radius: 5px;
-
-/*	background: #d8d8c8;*/
 	background: #FFF;
-	opacity: .97;
-
-
+	opacity: .96;
 }
 
 .list-inform {
 	position: absolute;
 	display: none;
-	background-color: #d8d8c8;
+	background-color: #D8D8C8;
 	padding: 10px;
 	width: 60%;
 	top: 50%;
@@ -190,16 +179,9 @@ a:hover, a:visited, a:link, a:active
 	border: 3px solid #707070;
 	z-index: 2;
 }
+
 .list-inform img {
 	height: 50px;
-}
-.list-inform span {
-
-}
-
-.list-item-count {
-/*	margin-left: 1em;*/
-/*	text-decoration: none;*/
 }
 
 .list-head-btn {
@@ -210,9 +192,21 @@ a:hover, a:visited, a:link, a:active
 	display: none;
 	position: absolute;
 	right: 0;
-	height: 40px;
+	height: 36px;
+	width: 30px;
 	background-color: #ED9C28;
+}
 
+#list-toggle:active {
+	box-shadow: -1px 2px 2px -2px #A07423;
+	transform: translateY(3px);
+}
+
+#list-toggle span {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
 }
 
 #list-storage {
@@ -227,11 +221,11 @@ a:hover, a:visited, a:link, a:active
 	margin-top: 10px;
 }
 
-#list-filter-span {
+#list-filter span {
 	margin-left: 2em;
 }
 
-#list-filter-label {
+.list-filter-label {
 	margin-left: 1em;
 	margin-right: .5em;
 }
@@ -246,41 +240,40 @@ a:hover, a:visited, a:link, a:active
 	background: #d8d8c8;
 	opacity: .98;
 	border: 2px solid #ED9C28;
-
-	background-color: #fff;
+	background-color: #FFF;
 	background-image:
-		linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+		linear-gradient(90deg, transparent 79px, #ABCED4 79px, #abced4 81px, transparent 81px),
 		linear-gradient(#eee .1em, transparent .1em);
 	background-size: 100% 1.2em;
 }
+
 .track-list h3 {
 	margin: 10px;
 	text-decoration: underline;
 }
+
 .track-list ul {
 	list-style:none;
 	padding: 0;
 }
+
 .track-list li {
 	margin: 10px;
 	padding: 10px;
 	border-bottom: 1px solid gray;
-
-/*
-	-webkit-clip-path: polygon(1% 0%, 49% 0%, 49% 2%, 100% 4%, 99% 26%, 100% 26%, 99% 49%, 100% 58%, 99% 80%, 100% 84%, 98% 100%, 60% 100%, 59% 100%, 1% 100%, 2% 84%, 0% 78%, 0% 52%, 0% 47%, 0% 22%, 0% 19%);
-	clip-path: polygon(1% 0%, 49% 0%, 49% 2%, 100% 4%, 99% 26%, 100% 26%, 99% 49%, 100% 58%, 99% 80%, 100% 84%, 98% 100%, 60% 100%, 59% 100%, 1% 100%, 2% 84%, 0% 78%, 0% 52%, 0% 47%, 0% 22%, 0% 19%);
-*/
-
 	-webkit-clip-path: polygon(1% 0%, 69% 0%, 69% 2%, 100% 3%, 100% 18%, 99% 23%, 100% 29%, 100% 49%, 99% 59%, 99% 70%, 100% 78%, 100% 93%, 100% 100%, 75% 100%, 34% 97%, 33% 100%, 0% 98%, 1% 86%, 0% 83%, 0% 66%, 1% 64%, 0% 45%, 1% 43%, 0% 24%, 1% 23%);
 	clip-path: polygon(1% 0%, 69% 0%, 69% 2%, 100% 3%, 100% 18%, 99% 23%, 100% 29%, 100% 49%, 99% 59%, 99% 70%, 100% 78%, 100% 93%, 100% 100%, 75% 100%, 34% 97%, 33% 100%, 0% 98%, 1% 86%, 0% 83%, 0% 66%, 1% 64%, 0% 45%, 1% 43%, 0% 24%, 1% 23%);
 }
+
 .track-list li:hover {
 	box-shadow: inset 0 0 10px #CCCCCC;
-	background: #d8d8c8;
+	background: #D8D8C8;
 }
+
 .result-track {
 	font-size: 16px;
 }
+
 .result-artist {
 	font-style: italic;
 }
@@ -310,38 +303,12 @@ footer {
 	align-items: baseline;
 	width: 100%;
 	height: 100px;
-	color: #d8d8c8;
+	color: #D8D8C8;
 	background: black;
 	border-top: 4px solid #CC0000;
 }
 
-.site-texture {
-	background-color: #000000;
-	background-image: url(http://www.transparenttextures.com/patterns/lined-paper.png);
-}
-
-black-paper-texture {
-	background-color: #000000;
-	background-image: url(http://www.transparenttextures.com/patterns/lined-paper.png);
-	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-}
-
-wavecut-texture {
-	background-color: #000000;
-	background-image: url(http://www.transparenttextures.com/patterns/wavecut.png);
-	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-}
-
-dark-stripes-texture {
-	background-color: #000000;
-	background-image: url(http://www.transparenttextures.com/patterns/dark-stripes.png);
-	/* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
-}
-
-
-
-/* Scott Andrew's HTML5 audio player styles*/
-
+/* based on Scott Andrew's HTML5 audio player */
 .infobox-player {
 	display: -webkit-flex;
 	display: flex;
@@ -376,20 +343,17 @@ dark-stripes-texture {
 	-webkit-justify-content: space-around;
 	justify-content: space-around;
 }
+
 #jukebox .loader {
 	border:1px solid #FFF;
 	height:3px;
-	margin:10px 0px;
+	margin:10px 0;
 	margin-top: 5px;
 	width: 180px;
 }
-#jukebox .load-progress {
-	width:0px;
-	background-color:#FFF;
-	height:3px;
-}
+
 #jukebox .play-progress {
-	width:0px;
+	width:0;
 	background-color:#9999CC;
 	height:3px;
 }
@@ -402,7 +366,7 @@ dark-stripes-texture {
 	display:inline-block;
 	width:33px;
 	height:33px;
-	margin:0px 14px;
+	margin:0 14px;
 	overflow:hidden;
 	color: white;
 	text-align: center;
@@ -422,8 +386,6 @@ dark-stripes-texture {
 #jukebox .controls a.play {
 	background-position:top left;
 }
-
-
 
 .secret-embedded {
 	display: none;
@@ -461,9 +423,11 @@ dark-stripes-texture {
 
 @media only screen and (max-width: 800px) {
 
+	h3 {
+		font-size: 22px;
+	}
+
 	#map-container {
-/*		width: 100%;*/
-/*		overflow: auto;*/
 		z-index: 3;
 	}
 
@@ -491,6 +455,10 @@ dark-stripes-texture {
 	#list-toggle {
 		display: inherit;
 	}
+
+	.list-inform {
+		width: 90%;
+	}
 }
 
 /* for tablets in portrait mode*/
@@ -500,11 +468,6 @@ dark-stripes-texture {
 
 /* for larger device screens, increase name font and adjust spacing */
 @media only screen and (min-width: 768px) {
-
-}
-
-/* Enbiggen some stuff. */
-@media only screen and (min-width: 992px) {
 
 }
 

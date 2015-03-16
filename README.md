@@ -47,6 +47,7 @@ Steps:
 - Bind Map Marker items to Data model objects...lets call them SongMatch objects?
 
 Log of Resources:
+- http://www.scottandrew.com/pub/html5audioplayer
 - https://miguelmota.com/blog/basic-html5-audio-manipulation/
 - transparenttextures
 - knockmeout.com
@@ -59,6 +60,8 @@ Log of Resources:
 	- http://stackoverflow.com/questions/14248194/close-responsive-navbar-automatically
 	-
 - Google Maps API docs
--
+- CSS-Tricks
+	- https://css-tricks.com/adding-stroke-to-web-text/
+	-
 
 
