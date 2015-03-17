@@ -12,6 +12,72 @@
 		document.body.appendChild(script);
 	}
 
+	/****
+		initialize app storage, media plaback and
+	  google map functions; Note: google api
+		will search global obj for callback ****/
+	window.initialize = function() {
+		// custom map styles as set at Maps Styling Wizard
+		var custom_style = [
+			{
+				"stylers": [
+					{ "color": "#439a5c" }
+				]
+			},{
+				"featureType": "water",
+				"elementType": "geometry.fill",
+				"stylers": [
+					{ "color": "#268993" }
+				]
+			},{
+				"elementType": "labels.text.fill",
+				"stylers": [
+					{ "color": "#781543" }
+				]
+			},{
+				"elementType": "labels.text.stroke",
+				"stylers": [
+					{ "weight": 0.3 },
+					{ "color": "#121319" }
+				]
+			},{
+				"featureType": "landscape.natural.terrain",
+				"stylers": [
+					{ "color": "#3e7248" }
+				]
+			},{
+				"featureType": "road.highway",
+				"stylers": [
+					{ "color": "#e2c419" }
+				]
+			},{
+				"featureType": "transit.station.airport",
+				"stylers": [
+					{ "color": "#cfd2d5" }
+				]
+			}
+		];
+
+		// initialize app components
+		MapView(custom_style, app);
+		initStorage(app);
+
+		// following steps require jquery
+		var checker = 0;
+		(function checkJquery() {
+			if (window.jQuery) {
+				console.log("ok jquery loaded!");
+				clearInterval(checker);
+				initHandlers(app);
+				initPlayer(app);
+				app.configInfopane(initial_result); //load default
+			}
+			else {
+				checker = window.setInterval(checkJquery, 100);
+			}
+		})();
+	}
+
 	function initStorage(app) {
 		app.storage = {
 			set: function(key, value) {
@@ -67,15 +133,13 @@
 				$('#jukebox .play-progress').css( 'width', barWidth);
 			});
 		});
-
-		app.configInfopane(initial_result); //load default
 	}
 
 	// PUBLIC: updates player params with src and title info
 	app.configPlayer = function(url, title) {
 		app.player.audio.pause();
 		console.log("config the player. already called Pause()... Audio elmnt is..%O", app.player.audio);
-		app.player.audio.currentTime = 0;
+		//app.player.audio.currentTime = 0;
 		if(url === 'No Url' || url === 'No%20Url') {
 			$('.play').removeClass('icon-play3').addClass('disable');
 			$('.player-info').html('No Sample');
@@ -127,71 +191,6 @@
 			if (isMobileMode && isHidden)
 				_listtoggle.click();
 		}
-	}
-
-	/**** initialize app storage, media plaback and
-	      google map functions; Note: google api
-				will search global obj for callback ****/
-	window.initialize = function() {
-		// custom map styles as set at Maps Styling Wizard
-		var custom_style = [
-			{
-				"stylers": [
-					{ "color": "#439a5c" }
-				]
-			},{
-				"featureType": "water",
-				"elementType": "geometry.fill",
-				"stylers": [
-					{ "color": "#268993" }
-				]
-			},{
-				"elementType": "labels.text.fill",
-				"stylers": [
-					{ "color": "#781543" }
-				]
-			},{
-				"elementType": "labels.text.stroke",
-				"stylers": [
-					{ "weight": 0.3 },
-					{ "color": "#121319" }
-				]
-			},{
-				"featureType": "landscape.natural.terrain",
-				"stylers": [
-					{ "color": "#3e7248" }
-				]
-			},{
-				"featureType": "road.highway",
-				"stylers": [
-					{ "color": "#e2c419" }
-				]
-			},{
-				"featureType": "transit.station.airport",
-				"stylers": [
-					{ "color": "#cfd2d5" }
-				]
-			}
-		];
-
-		// initialize app components
-		MapView(custom_style, app);
-		initStorage(app);
-
-		// following steps require jquery
-		var checker = 0;
-		(function checkJquery() {
-			if (window.jQuery) {
-				console.log("ok jquery loaded!");
-				clearInterval(checker);
-				initHandlers(app);
-				initPlayer(app);
-//				app.configInfopane(initial_result); //load default
-			}
-			else {
-				checker = window.setInterval(checkJquery, 100);
-			}
-		})();
 	}
 
 	function MapView(map_style, app) {
