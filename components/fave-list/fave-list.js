@@ -7,6 +7,7 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		});
 		self.hasSamples = ko.observable(false);
 		self.hasLyrics = ko.observable(false);
+		// computed below can be filtered before displaying
 		self.display_list = ko.computed(function() {
 			if (!self.hasSamples() && !self.hasLyrics()) {
 				return self.fave_tracks();
@@ -56,11 +57,12 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		// can be restored with load call
 		self.saveList = function() {
 			app.storage.set('saved_list', self.fave_tracks());
-			_inform.find('span').html('Your list has been preserved.');
-			_inform.fadeIn().delay( 1000 ).fadeOut();
+//			_inform.find('span').html('Your list has been preserved.');
+//			_inform.fadeIn().delay( 1000 ).fadeOut();
+			informUser('Your list is now preserved.');
 
-			console.log("the saved list...voila %O", self.fave_tracks());
-			console.dir("here is the dir version: %O", self.fave_tracks());
+			console.log("the saved list...voila %O", JSON.stringify(self.fave_tracks()));
+			console.dir(self.fave_tracks());
 		}
 
 		// To make sure addFave callback was already

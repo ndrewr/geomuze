@@ -31,6 +31,7 @@
 				return value;
 			}
 		}
+		localStorage.setItem('saved-list', test_data);
 	}
 
 	function initPlayer(app) {
