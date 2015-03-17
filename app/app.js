@@ -31,7 +31,7 @@
 				return value;
 			}
 		}
-		localStorage.setItem('saved-list', test_data);
+		localStorage.setItem('saved_list', test_data);
 	}
 
 	function initPlayer(app) {
@@ -42,9 +42,6 @@
 
 		$('body').on('click', '.audio-control', function(evt) {
 			evt.preventDefault();
-
-			console.log("play/pause btn pressed");
-
 			// control state between play/pause
 			if(app.player.audio.isPlaying) {
 				aud.pause();
