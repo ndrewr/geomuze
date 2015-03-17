@@ -71,9 +71,7 @@ a:hover, a:visited, a:link, a:active
 	/* If we weren't using text-shadow, we'd set a fallback color
 	and use this to set color instead
 	-webkit-text-fill-color: white; */
-
 	color: white;
-
 	text-shadow:
 		3px 3px 0 #000,
 		/* Simulated effect for Firefox and Opera
@@ -100,17 +98,14 @@ a:hover, a:visited, a:link, a:active
 	display: none;
 	font-family: 'Audiowide';
 	transform: translateY(-5px);
-	font-size: .8em;
-
+	font-size: .9em;
 	/* WebKit (Safari/Chrome) Only */
 	-webkit-text-stroke: 1px black;
 
 	/* If we weren't using text-shadow, we'd set a fallback color
 	and use this to set color instead
 	-webkit-text-fill-color: white; */
-
 	color: white;
-
 	text-shadow:
 		3px 3px 0 #000,
 		/* Simulated effect for Firefox and Opera
@@ -424,8 +419,11 @@ footer {
 --------------------------------------------------
 /* For smaller screens, map and list sections overlap.
 		List section slides in and out of view as needed */
-/* iphone5/ nexus5 screen considered baseline width*/
-@media only screen and (max-width: 360px) {
+/* iphone6/ nexus5 screen considered baseline width*/
+@media only screen and (max-width: 375px) {
+	body {
+		background: url(../images/bg6.jpg) no-repeat center center fixed;
+	}
 
 	.brand-name-mobile {
 		display: inherit;
@@ -435,18 +433,16 @@ footer {
 		display: none;
 	}
 
-/*
-	#main-message h1 {
-		font-size: 30px;
-	}
-*/
-
 	#main-message {
 		display: none;
 	}
 
 	#searchbar {
 		margin-top: 20px;
+	}
+
+	#map-container {
+		margin-bottom: 20px;
 	}
 
 	#list-container {
@@ -502,14 +498,3 @@ footer {
 		width: 90%;
 	}
 }
-
-/* for tablets in portrait mode*/
-@media only screen and (min-width: 768px) and (max-width: 900px) {
-
-}
-
-/* for larger device screens, increase name font and adjust spacing */
-@media only screen and (min-width: 768px) {
-
-}
-

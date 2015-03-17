@@ -276,6 +276,9 @@
 			google.maps.event.addListener(marker, 'click', function() {
 				self.infopane.open(self.map, marker);
 			});
+			google.maps.event.addListener(marker, 'mousedown', function(){
+				self.infopane.open(self.map, marker);
+			});
 		};
 
 		// perform places search based on query string param
