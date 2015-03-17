@@ -29,6 +29,7 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		var _inform = $('.list-inform');
 
 		// sets, displays and removes user-informing elmnt
+		// Note: can probably move to app.js..
 		function informUser(message) {
 			_inform.find('span').html(message);
 			_inform.fadeIn().delay( 1000 ).fadeOut();
@@ -57,12 +58,7 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		// can be restored with load call
 		self.saveList = function() {
 			app.storage.set('saved_list', self.fave_tracks());
-//			_inform.find('span').html('Your list has been preserved.');
-//			_inform.fadeIn().delay( 1000 ).fadeOut();
 			informUser('Your list is now preserved.');
-
-			console.log("the saved list...voila %O", JSON.stringify(self.fave_tracks()));
-			console.dir(self.fave_tracks());
 		}
 
 		// To make sure addFave callback was already

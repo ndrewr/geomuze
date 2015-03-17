@@ -71,6 +71,7 @@
 
 	// PUBLIC: updates player params with src and title info
 	app.configPlayer = function(url, title) {
+		console.log("config the player. Audio elmnt is..%O", app.player.audio);
 		app.player.audio.pause();
 		app.player.audio.currentTime = 0;
 		if(url === 'No Url' || url === 'No%20Url') {
@@ -91,6 +92,7 @@
 
 	function initHandlers(app) {
 		// handles the list toggle btn for smaller screens
+		console.log("Init handlers is called!");
 		var _listtoggle = $('#list-toggle');
 		var _icon = $('#list-toggle span');
 		var _listcontainer = $("#list-container");
@@ -178,6 +180,7 @@
 		var checker = 0;
 		(function checkJquery() {
 			if (window.jQuery) {
+				console.log("ok jquery loaded!");
 				clearInterval(checker);
 				initPlayer(app);
 				app.configInfopane(initial_result); //load default
@@ -299,6 +302,7 @@
 		// callback from doPlaceSearch which passes array of
 		// locations and status code
 		self.gotoLocation = function(location_data, status) {
+			var status_code = google.maps.places.PlacesServiceStatus;
 			if (status === google.maps.places.PlacesServiceStatus.OK) {
 				var place, new_coord;
 				clearMarker();
@@ -316,6 +320,12 @@
 				self.map.setZoom(10);
 				self.createMarker(new_coord);
 			}
+//			else if (status === status_code.UNKNOWN_ERROR) {
+//
+//			}
+//			else if (status === status_code.ZERO_RESULTS) {
+//
+//			}
 		};
 
 		// PUBLIC: takes array of tracks and sequentially
