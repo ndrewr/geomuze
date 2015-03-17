@@ -67,12 +67,14 @@
 				$('#jukebox .play-progress').css( 'width', barWidth);
 			});
 		});
+
+		app.configInfopane(initial_result); //load default
 	}
 
 	// PUBLIC: updates player params with src and title info
 	app.configPlayer = function(url, title) {
-		console.log("config the player. Audio elmnt is..%O", app.player.audio);
 		app.player.audio.pause();
+		console.log("config the player. already called Pause()... Audio elmnt is..%O", app.player.audio);
 		app.player.audio.currentTime = 0;
 		if(url === 'No Url' || url === 'No%20Url') {
 			$('.play').removeClass('icon-play3').addClass('disable');
@@ -182,9 +184,9 @@
 			if (window.jQuery) {
 				console.log("ok jquery loaded!");
 				clearInterval(checker);
-				initPlayer(app);
-				app.configInfopane(initial_result); //load default
 				initHandlers(app);
+				initPlayer(app);
+//				app.configInfopane(initial_result); //load default
 			}
 			else {
 				checker = window.setInterval(checkJquery, 100);
