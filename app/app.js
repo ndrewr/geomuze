@@ -66,7 +66,6 @@
 		var checker = 0;
 		(function checkJquery() {
 			if (window.jQuery) {
-				console.log("ok jquery loaded!");
 				clearInterval(checker);
 				initHandlers(app);
 				initPlayer(app);
@@ -138,7 +137,7 @@
 	// PUBLIC: updates player params with src and title info
 	app.configPlayer = function(url, title) {
 		app.player.audio.pause();
-		console.log("config the player. already called Pause()... Audio elmnt is..%O", app.player.audio);
+		// this line does not work in Firefox; chrome/safari ok
 		//app.player.audio.currentTime = 0;
 		if(url === 'No Url' || url === 'No%20Url') {
 			$('.play').removeClass('icon-play3').addClass('disable');
@@ -158,7 +157,6 @@
 
 	function initHandlers(app) {
 		// handles the list toggle btn for smaller screens
-		console.log("Init handlers is called!");
 		var _listtoggle = $('#list-toggle');
 		var _icon = $('#list-toggle span');
 		var _listcontainer = $("#list-container");
@@ -231,7 +229,6 @@
 		// PUBLIC: configs info window before it
 		// is displayed on map
 		self.configInfopane = function(track) {
-			console.log("config info pane called!");
 			var audio_template =
 					'<div id="jukebox"><div class="player-info">Sample Clip</div><a class="audio-control play icon-play3" href="#"><span>Play</span></a><div class="loader"><div class="play-progress"></div></div><audio class="aud" src="http://www.scottandrew.com/mp3/demos/holding_back_demo_011504.mp3"><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
 

@@ -28,7 +28,9 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 
 		// user selects a track to see additional options
 		// Note: called from view using bind(), this = data_obj
-		self.selectResult = function() {
+		// NOTE2: not specifying event as param breaks in
+		// Firefox; Chrome/Safari ok
+		self.selectResult = function(event) {
 			// if the target wasnt a btn, toggle the class
 			// if other item had the class, remove it
 			if(event.target.nodeName !== "BUTTON" ) {
