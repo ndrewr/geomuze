@@ -13,31 +13,17 @@
 			'&signed_in=true&callback=initMap';
 		document.body.appendChild(script);
 
-		// load up our parts of our app...
+		// load up parts of our app...
 		initStorage(app);
-
-		// following steps require jquery
-//		var checker = 0;
-//		(function checkJquery() {
-//			if (window.jQuery) {
-//				clearInterval(checker);
-//				initHandlers(app);
-//				initPlayer(app);
-//				app.configInfopane(initial_result); //load default
-//			}
-//			else {
-//				checker = window.setInterval(checkJquery, 100);
-//			}
-//		})();
-
+		// following requires jQuery
 		jqueryYet(function() {
 			initHandlers(app);
 			initPlayer(app);
 		});
 	}
 
+	// if google map load fails, displays a msg to user
 	function mapsError(e) {
-		console.log('Google maps seems to have a problem. More info: %O', e);
 		jqueryYet(function() {
 			$('#map-error').fadeIn();
 		});
@@ -107,28 +93,14 @@
 
 		// initialize map components
 		MapView(custom_style, app);
-		//initStorage(app);
 
 		// need jquery to config infopane...sooo check for $
 		jqueryYet(function() {
 			app.configInfopane(initial_result); //load default
 		});
-
-//		// following steps require jquery
-//		var checker = 0;
-//		(function checkJquery() {
-//			if (window.jQuery) {
-//				clearInterval(checker);
-//				initHandlers(app);
-//				initPlayer(app);
-//				app.configInfopane(initial_result); //load default
-//			}
-//			else {
-//				checker = window.setInterval(checkJquery, 100);
-//			}
-//		})();
 	}
 
+	// wraps up localStorage function in helper functions
 	function initStorage(app) {
 		app.storage = {
 			set: function(key, value) {
@@ -151,6 +123,7 @@
 		localStorage.setItem('saved_list', test_data);
 	}
 
+	// sets up app audio player object and controls
 	function initPlayer(app) {
 		app.player = {};
 		app.player.audio = $('.aud')[0];
@@ -243,7 +216,6 @@
 		};
 
 		// sets, displays and removes user-informing elmnt
-		// Note: can probably move to app.js..
 		app.informUser = function(message) {
 			var _inform = $('.list-inform');
 			_inform.find('span').html(message);
@@ -287,7 +259,7 @@
 		});
 
 		google.maps.event.addListener(self.infopane, 'closeclick', function(){
-			current_marker.setIcon('../src/images/geomuze-icon-small.png');
+			current_marker.setIcon('images/geomuze-icon-small.png');
 		});
 
 		// PUBLIC: configs info window before it
@@ -331,17 +303,17 @@
 				map: self.map,
 				position: location,
 				animation:google.maps.Animation.DROP,
-				icon: '../src/images/geomuze-icon-small.png'
+				icon: 'images/geomuze-icon-small.png'
 			});
 
 			current_marker = marker; // track for dealloc
 
 			google.maps.event.addListener(marker, 'click', function() {
-				current_marker.setIcon('../src/images/geomuze-icon-small2.png');
+				current_marker.setIcon('images/geomuze-icon-small2.png');
 				self.infopane.open(self.map, marker);
 			});
 			google.maps.event.addListener(marker, 'mousedown', function(){
-				current_marker.setIcon('../src/images/geomuze-icon-small2.png');
+				current_marker.setIcon('images/geomuze-icon-small2.png');
 				self.infopane.open(self.map, marker);
 			});
 		};
