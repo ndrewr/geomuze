@@ -6,7 +6,7 @@
 
 <div id="list-options" data-bind="visible: fave_tracks().length > 1">
 	<button class="btn btn-warning btn-xs list-head-btn" data-bind="click: locateAll">scatter</button><button class="btn btn-danger btn-xs list-head-btn" data-bind="click: emptyList">trash</button>
-	<div id="list-filter">
+	<div class="list-filter">
 		<span>has:</span>
 		<span class="list-filter-label">samples</span><input type="checkbox" data-bind="checked: hasSamples" /></span>
 		<span class="list-filter-label">lyrics</span><input type="checkbox" data-bind="checked: hasLyrics" /></span>
@@ -17,6 +17,7 @@
 	<li data-bind="">
 		<p class="result-track" data-bind="text: track_name"></p> by
 		<span class="result-artist" data-bind="text: artist_name"></span>
+		<div class="track-keywords">(<span>key terms:   </span><em><span data-bind="text: keyterms"></span></em>)</div>
 		<div class="result-btn-panel" data-bind="">
 			<button class="btn btn-success btn-sm" data-bind="click: $parent.locateFave">locate</button>
 			<button class="btn btn-primary btn-sm" data-bind="click: $parent.removeFave.bind($data, $index())">unfave</button>

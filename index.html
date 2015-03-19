@@ -4,22 +4,16 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		<title>udacityP5</title>
-		<!-- build:css -->
-			<link href="bower_modules/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--
-			<link href="css/styles.css" rel="stylesheet">
-			<link href="css/geomuze-if.css" rel="stylesheet">
--->
-			<link href="dist/css/bundle.css" rel="stylesheet">
-			<link href='http://fonts.googleapis.com/css?family=Architects+Daughter|Audiowide' rel='stylesheet' type='text/css'>
-
-		<!-- endbuild -->
-		<!-- build:js -->
-
-			<script src="app/require.config.js"></script>
-			<script data-main="app/startup" src="bower_modules/requirejs/require.js"></script>
-
+		<title>udacityP5 - Andrew Roy Chen</title>
+		<link href='http://fonts.googleapis.com/css?family=Architects+Daughter|Audiowide' rel='stylesheet' type='text/css'>
+	<!-- build:css -->
+		<link href="bower_modules/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="dist/css/bundle.css" rel="stylesheet">
+	<!-- endbuild -->
+	<!-- build:js -->
+		<script src="app/require.config.js"></script>
+		<script data-main="app/startup" src="bower_modules/requirejs/require.js"></script>
+		<script type="text/javascript" src="dist/js/build.js"></script>
 		<!-- endbuild -->
 	</head>
 	<body>
@@ -31,10 +25,18 @@
 				<button id="list-toggle" class="btn">
 					<span class="icon-map"></span>
 				</button>
-				<div class="list-inform"><img src="images/geomuze-icon-large.png"/><span>Something happened here.</span></div>
+				<div class="list-inform">
+					<img src="../src/images/geomuze-icon-large.png"/>
+					<span>Something happened here.</span>
+				</div>
+				<!-- List view Tabs -->
 				<ul class="nav nav-tabs">
-					<li class="active"><a href="#result-list" data-toggle="tab">RESULTS</a></li>
-					<li><a href="#fave-list" data-toggle="tab">FAVES</a></li>
+					<li class="active">
+						<a href="#result-list" data-toggle="tab">RESULTS</a>
+					</li>
+					<li>
+						<a href="#fave-list" data-toggle="tab">FAVES</a>
+					</li>
 				</ul>
 				<!-- Tab panes -->
 				<div class="tab-content">
@@ -42,7 +44,9 @@
 					<fave-list id="fave-list" class="tab-pane track-list"></fave-list>
 				</div>
 			</section>
-			<div id="map-canvas"></div>
+			<div id="map-canvas">
+				<div id="map-error">Well, that sucks. Google Maps has encountered a problem...please check your internet and try again. Regardless, have a most excellent day!</div>
+			</div>
 		</section>
 
 		<div class="secret-embedded">
@@ -63,9 +67,5 @@
 			<a href="https://developer.musixmatch.com/">lyrics by musixmatch</a>
 			<a href="https://developer.spotify.com/">tracks by spotify</a>
 		</footer>
-<!--		<script type="text/javascript" src="app/app.js"></script>-->
-<!--		<script type="text/javascript" src="app/models.js"></script>-->
-		<script type="text/javascript" src="dist/js/build.js"></script>
-
 	</body>
 </html>

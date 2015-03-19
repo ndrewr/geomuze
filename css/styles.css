@@ -1,11 +1,11 @@
 /* Custom styles for Udacity P5 Geomuze */
 .site-texture {
 	background-color: #000;
-	background-image: url(../../images/line-texture.png);
+	background-image: url(../src/images/line-texture.png);
 }
 
 body {
-	background: url(../../images/bg4.jpg) no-repeat center center fixed;
+	background: url(../src/images/bg4.jpg) no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -170,12 +170,25 @@ a:hover, a:visited, a:link, a:active
 }
 
 #map-canvas {
+	position: relative;
 	height: 400px;
 	width: 50%;
 	margin: 20px;
 	padding: 0;
 	border-radius: 5px;
 	border: 2px solid #ED9C28;
+}
+
+#map-error {
+	display: none;
+	position: absolute;
+	height: 200px;
+	width: auto;
+	padding: 20px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: #D8D8C8;
 }
 
 #list-container {
@@ -230,6 +243,11 @@ a:hover, a:visited, a:link, a:active
 	transform: translate(-50%, -50%);
 }
 
+.list-keywords {
+	margin: 10px;
+	text-align: center;
+}
+
 #list-storage {
 	display: inline;
 }
@@ -238,8 +256,9 @@ a:hover, a:visited, a:link, a:active
 	display: inline;
 }
 
-#list-filter {
+.list-filter {
 	margin-top: 10px;
+	text-align: center;
 }
 
 #list-filter span {
@@ -289,6 +308,10 @@ a:hover, a:visited, a:link, a:active
 .track-list li:hover {
 	box-shadow: inset 0 0 10px #CCCCCC;
 	background: #D8D8C8;
+}
+
+.track-keywords {
+	margin-top: 5px;
 }
 
 .result-track {
@@ -420,7 +443,7 @@ footer {
 /* iphone6/ nexus5 screen considered baseline width*/
 @media only screen and (max-width: 375px) {
 	body {
-		background: url(../../images/bg6.jpg) no-repeat center center fixed;
+		background: url(../src/images/bg6.jpg) no-repeat center center fixed;
 	}
 
 	.brand-name-mobile {

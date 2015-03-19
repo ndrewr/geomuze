@@ -1,6 +1,6 @@
 <h3>SEARCH RESULTS<span class="list-item-count" data-bind="text: list_size"</span></h3>
-
-<div data-bind="visible: tracks().length > 1">
+<div class="list-keywords" data-bind="visible: search_terms() !== 'nada'"><span>key terms:   </span><em><span data-bind="text: search_terms"></span></em></div>
+<div class="list-filter" data-bind="visible: tracks().length > 1">
 	<span class="list-filter-span" >has:</span>
 	<span class="list-filter-label">samples</span><input type="checkbox" data-bind="checked: hasSamples" /></span>
 <span class="list-filter-label">lyrics</span><input type="checkbox" data-bind="checked: hasLyrics" /></span>

@@ -2,21 +2,68 @@
 (function() {
 	window.app = 	{}; // public interface obj for app
 
-	// this will be called upon execution of IIFE
+	// this will be called upon execution of module
 	function loadScript() {
+		// load up the google map api
 		var script = document.createElement('script');
 		script.type = 'text/javascript';
+		script.onerror = mapsError;
 		script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places' +
 //			'&key=AIzaSyCoh9OIWE1vT85aaoVRqszGR6E3TeEut24' +
-			'&signed_in=true&callback=initialize';
+			'&signed_in=true&callback=initMap';
 		document.body.appendChild(script);
+
+		// load up our parts of our app...
+		initStorage(app);
+
+		// following steps require jquery
+//		var checker = 0;
+//		(function checkJquery() {
+//			if (window.jQuery) {
+//				clearInterval(checker);
+//				initHandlers(app);
+//				initPlayer(app);
+//				app.configInfopane(initial_result); //load default
+//			}
+//			else {
+//				checker = window.setInterval(checkJquery, 100);
+//			}
+//		})();
+
+		jqueryYet(function() {
+			initHandlers(app);
+			initPlayer(app);
+		});
+	}
+
+	function mapsError(e) {
+		console.log('Google maps seems to have a problem. More info: %O', e);
+		jqueryYet(function() {
+			$('#map-error').fadeIn();
+		});
+	}
+
+	// checks if jquery has loaded yet
+	// NOTE to self: good reason to not use jquery
+	function jqueryYet(callback) {
+		// following steps require jquery
+		var checker = 0;
+		(function checkJquery() {
+			if (window.jQuery) {
+				clearInterval(checker);
+				callback();
+			}
+			else {
+				checker = window.setInterval(checkJquery, 100);
+			}
+		})();
 	}
 
 	/****
 		initialize app storage, media plaback and
 	  google map functions; Note: google api
 		will search global obj for callback ****/
-	window.initialize = function() {
+	window.initMap = function() {
 		// custom map styles as set at Maps Styling Wizard
 		var custom_style = [
 			{
@@ -58,23 +105,28 @@
 			}
 		];
 
-		// initialize app components
+		// initialize map components
 		MapView(custom_style, app);
-		initStorage(app);
+		//initStorage(app);
 
-		// following steps require jquery
-		var checker = 0;
-		(function checkJquery() {
-			if (window.jQuery) {
-				clearInterval(checker);
-				initHandlers(app);
-				initPlayer(app);
-				app.configInfopane(initial_result); //load default
-			}
-			else {
-				checker = window.setInterval(checkJquery, 100);
-			}
-		})();
+		// need jquery to config infopane...sooo check for $
+		jqueryYet(function() {
+			app.configInfopane(initial_result); //load default
+		});
+
+//		// following steps require jquery
+//		var checker = 0;
+//		(function checkJquery() {
+//			if (window.jQuery) {
+//				clearInterval(checker);
+//				initHandlers(app);
+//				initPlayer(app);
+//				app.configInfopane(initial_result); //load default
+//			}
+//			else {
+//				checker = window.setInterval(checkJquery, 100);
+//			}
+//		})();
 	}
 
 	function initStorage(app) {
@@ -181,14 +233,22 @@
 			var isMobileMode = _listtoggle.css('display') === 'none' ? false : true;
 			if (isMobileMode)
 				_listtoggle.click();
-		}
+		};
 
 		app.showList = function() {
 			var isMobileMode = _listtoggle.css('display') === 'none' ? false : true;
 			var isHidden = _listcontainer.css('left') === '0px' ? false : true;
 			if (isMobileMode && isHidden)
 				_listtoggle.click();
-		}
+		};
+
+		// sets, displays and removes user-informing elmnt
+		// Note: can probably move to app.js..
+		app.informUser = function(message) {
+			var _inform = $('.list-inform');
+			_inform.find('span').html(message);
+			_inform.fadeIn().delay( 1000 ).fadeOut();
+		};
 	}
 
 	function MapView(map_style, app) {
@@ -224,6 +284,10 @@
 		self.infopane = new google.maps.InfoWindow({
 			content: "Well, Hullo! I'll have more to say after a lil' searchy-search!",
 			maxWidth: 320
+		});
+
+		google.maps.event.addListener(self.infopane, 'closeclick', function(){
+			current_marker.setIcon('../src/images/geomuze-icon-small.png');
 		});
 
 		// PUBLIC: configs info window before it
@@ -267,16 +331,17 @@
 				map: self.map,
 				position: location,
 				animation:google.maps.Animation.DROP,
-				draggable: true,
-				icon: 'images/geomuze-icon-small.png'
+				icon: '../src/images/geomuze-icon-small.png'
 			});
 
 			current_marker = marker; // track for dealloc
 
 			google.maps.event.addListener(marker, 'click', function() {
+				current_marker.setIcon('../src/images/geomuze-icon-small2.png');
 				self.infopane.open(self.map, marker);
 			});
 			google.maps.event.addListener(marker, 'mousedown', function(){
+				current_marker.setIcon('../src/images/geomuze-icon-small2.png');
 				self.infopane.open(self.map, marker);
 			});
 		};

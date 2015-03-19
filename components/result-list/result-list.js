@@ -1,13 +1,14 @@
-define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko, resultsTemplate) {
+define(['knockout', 'text!./result-list.html', 'knockout-postbox'], function(ko, template) {
 	function ListViewModel() {
 		var self = this;
+		self.search_terms = ko.observable('nada').subscribeTo('search_terms');
 		self.tracks = ko.observableArray([initial_result]	).subscribeTo('new_results');
 		self.list_size = ko.computed(function() {
 			return ' ' + 	self.tracks().length;
 		});
 		self.hasSamples = ko.observable(false);
 		self.hasLyrics = ko.observable(false);
-		self.latest_fave = ko.observable({}).publishOn('fave_alert', function () { return false; }); // second param forces update even if same value
+		self.latest_fave = ko.observable({}).publishOn('fave_alert', function () { return false; }); // second param forces update even if same value...otherwise btn click gets suppressed
 		self.display_list = ko.computed(function() {
 			if (!self.hasSamples() && !self.hasLyrics()) {
 				return self.tracks();
@@ -64,5 +65,5 @@ define(["knockout", "text!./result-list.html", "knockout-postbox"], function(ko,
 		$('#result-list').on('click', 'li', self.selectResult);
 	}
 	// end Ist Model definition
-	return { viewModel: ListViewModel, template: resultsTemplate };
+	return { viewModel: ListViewModel, template: template };
 });

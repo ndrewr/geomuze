@@ -1,6 +1,7 @@
 define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, favesTemplate) {
 	function FaveListViewModel() {
 		var self = this;
+		self.search_terms = ko.observable('Udacity HQ').subscribeTo('search_terms');
 		self.fave_tracks = ko.observableArray();
 		self.list_size = ko.computed(function() {
 			return ' ' + 	self.fave_tracks().length;
@@ -26,39 +27,35 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 			}
 		});
 
-		var _inform = $('.list-inform');
-
-		// sets, displays and removes user-informing elmnt
-		// Note: can probably move to app.js..
-		function informUser(message) {
-			_inform.find('span').html(message);
-			_inform.fadeIn().delay( 1000 ).fadeOut();
-		}
-
 		// check for saved fave list and load if so
 		function checkStorage() {
 			var user_list = app.storage.get('saved_list');
 			if(user_list) {
 				// restore certain properties
-				user_list.forEach(function(track) {
-					// restore the maps lat/loong obj
-					var lat = track.location.D;
-					var long = track.location.k;
-					track.location = new google.maps.LatLng(long, lat);
-				});
-				// set into list view...
-				self.fave_tracks(user_list);
-				informUser('Here is your precious list!');
+				if(!window.google) {
+					app.informUser('Load needs Google Maps. Please refresh. Again try.');
+				}
+				else {
+					user_list.forEach(function(track) {
+						// restore the maps lat/loong obj
+						var lat = track.location.D;
+						var long = track.location.k;
+						track.location = new google.maps.LatLng(long, lat);
+					});
+					// set into list view...
+					self.fave_tracks(user_list);
+					app.informUser('Here is your precious list!');
+				}
 			}
 			else
-				informUser('I am so sorry. No trace of a list.');
+				app.informUser('I am so sorry. No trace of a list.');
 		}
 
 		// save user fave list to localstorage;
 		// can be restored with load call
 		self.saveList = function() {
 			app.storage.set('saved_list', self.fave_tracks());
-			informUser('Your list is now preserved.');
+			app.informUser('Your list is now preserved.');
 		}
 
 		// To make sure addFave callback was already
@@ -73,12 +70,12 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 			// also make sure the track isn't already faved!
 				if(!self.fave_tracks().alreadyInArray(result.track_name, result.artist_name)) {
 					var result_origin = app.current_location;
-					var new_fave = new FaveTrack(result, result_origin);
+					var new_fave = new FaveTrack(result, result_origin, self.search_terms());
 					self.fave_tracks.push(new_fave);
-					informUser('this track has been faved!');
+					app.informUser('this track has been faved!');
 				}
 				else {
-					informUser('this track is ALREADY faved..')
+					app.informUser('this track is ALREADY faved..')
 				}
 			}
 		}
@@ -86,7 +83,7 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		// allows user to remove track from this list
 		self.removeFave = function(index) {
 			self.fave_tracks.remove(self.fave_tracks()[index]);
-			informUser('this track hath been UNfaved.');
+			app.informUser('this track hath been UNfaved.');
 		};
 
 		// user selects a track to see additional options

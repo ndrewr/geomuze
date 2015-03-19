@@ -23,14 +23,20 @@ Fave Track lists can be saved and reloaded next time you visit geomuze.
 
 Both lists can be filtered by tracks that have samples, lyrics, or both.
 
+ERROR MESSAGES:
+If Google Maps fails to load, the onerror callback fires and a message will appear in the maps window.
+If either music service query fails to load, two messages will appear: one in the main message at top and the other in the list window. These use jQuery async error handling for convenience.
+
 
 ***************************************************************************
-Tech:
-This project primarily uses Knockout.js to provide app structure, jQuery for DOM manipulation,
+App Structure:
+This project primarily uses Knockout.js to provide app view binding, jQuery for DOM manipulation,
 Bootstrap for basic styles and Google Maps JS api for content manipulation.
 Song track search is provided by both Spotify and Musixmatch.
-Gulp.js is used for build process.
+Gulp.js is used for build process. The Gulp task concats all css files into build.css and all JS files into build.js.
 
+-Knockout view models can be found in ./src/components
+-Main app file can be found in .src/app/app.js
 
 ****************************************************************************
 Log of Resources:

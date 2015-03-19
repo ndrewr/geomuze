@@ -3,6 +3,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 		var self = this;
 		self.message = ko.observable('Lets get rockin!').subscribeTo('home_msg');
 		self.search_terms = ko.observable();
+		self.display_terms = ko.observable().publishOn('search_terms');
 
 		var results_buffer = []; // hold results for one push into observable array; better perf
 		var filter_list = []; // used to check for same results
@@ -18,6 +19,8 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 
 			// lets simplify the search terms shall we?
 			var simple_terms = self.search_terms().split(/\s|,/g, 2).join(' ');
+			// alert result list of search terms
+			self.display_terms(simple_terms);
 			// update map by calling google place search
 			app.doPlaceSearch(simple_terms);
 
@@ -88,6 +91,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 				.fail(function(e) {
 					// update home msg with status
 					self.message("Aw man! Problem with Spotify!");
+					app.informUser("Um. Spotify search error..try again?");
 				});
 		}
 
@@ -130,6 +134,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 						self.search_results.push(new Result("Oh No", "I'm Sorry", "Sad Pandas"));
 					}
 					self.message("Uh-oh! Problem with MusixMatch!");
+					app.informUser("Hey. MusixMatch error..never give up!");
 			});
 		}
 
