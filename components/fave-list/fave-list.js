@@ -125,7 +125,7 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		};
 
 		// will load saved list if one exists;
-		// NOTE: overwrites current list!
+		// NOTE: overwrites current list! Future version can append..
 		self.loadList = function() {
 			checkStorage();
 		};

@@ -19,7 +19,7 @@ The Favorites list is contructed from search results and allows several new opti
 - UNFAVE removes the track from the Faves list
 Finally, there is a special option SCATTER which simultaneously displays all geo-pts associated with each song track.
 
-Fave Track lists can be saved and reloaded next time you visit geomuze.
+Fave Track lists can be saved and reloaded (local store) next time you visit geomuze.
 
 Both lists can be filtered by tracks that have samples, lyrics, or both.
 
@@ -32,8 +32,9 @@ If either music service query fails to load, two messages will appear: one in th
 App Structure:
 This project primarily uses Knockout.js to provide app view binding, jQuery for DOM manipulation,
 Bootstrap for basic styles and Google Maps JS api for content manipulation.
-Song track search is provided by both Spotify and Musixmatch.
-Gulp.js is used for build process. The Gulp task concats all css files into build.css and all JS files into build.js.
+Song track search is provided by both Spotify and Musixmatch APIs.
+
+Gulp.js is used for build process. The Gulp task concats all files: CSS into build.css with auto-prefixes. All JS files into scripts.js with uglification.
 
 -Knockout view models can be found in ./src/components
 -Main app file can be found in .src/app/app.js

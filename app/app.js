@@ -94,7 +94,6 @@
 		// initialize map components
 		MapView(custom_style, app);
 
-
 		// need jquery to config infopane...sooo check for $
 		jqueryYet(function() {
 				setTimeout(function() {
@@ -224,6 +223,14 @@
 			_inform.find('span').html(message);
 			_inform.fadeIn().delay( 1000 ).fadeOut();
 		};
+
+		// just for kicks, calculate a random offset for background img in mobile mode
+		// same image, different position. lets leave it in IIFE. for kicks.
+		(function() {
+			var bg_vals = ['left top', 'left center', 'left bottom', 'right top', 'right center', 'right bottom', 'center top', 'center center', 'center bottom'];
+			var random_val = Math.floor(Math.random() * 10); // integer btwn 0-9
+			document.body.style.background = 	'url(images/bg6.jpg) no-repeat fixed ' + bg_vals[random_val];
+		})();
 	}
 
 	function MapView(map_style, app) {
@@ -256,7 +263,7 @@
 		// PUBLIC: create then access the map info window
 		// NOTE only one window open at a time; reuse!
 		self.infopane = new google.maps.InfoWindow({
-			content: '<p>Well, Hullo! You can click on me to open these InfoBoxes! I will have more to show after a lil searchy-search!</p><p>You might be thinkin <em>what the heck is this.</em></p><p>Search for your city and check out the results. Clicking on a result box will show some fun-buttons. Maybe your city is mentioned in some gritty lyrics?</p><p>Here is one to get ya started...I got this searcing for "Udacity"!</p>',
+			content: '<p>Well, Hullo! You can click on me to open these InfoBoxes! I will have more to show after a lil searchy-search!</p><p>You might be thinkin <em>what the heck is this.</em></p><p>Search for your city and check out the results. Clicking on a result box will show some fun-buttons.</p><p>Here is one to get ya started...I got this searching for "Udacity"!</p>',
 			maxWidth: 320
 		});
 
