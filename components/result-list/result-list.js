@@ -6,9 +6,10 @@ define(['knockout', 'text!./result-list.html', 'knockout-postbox'], function(ko,
 		self.list_size = ko.computed(function() {
 			return ' ' + 	self.tracks().length;
 		});
-		self.hasSamples = ko.observable(false);
-		self.hasLyrics = ko.observable(false);
+		self.hasSamples = ko.observable(false); // filter flag
+		self.hasLyrics = ko.observable(false); // filter flag
 		self.latest_fave = ko.observable({}).publishOn('fave_alert', function () { return false; }); // second param forces update even if same value...otherwise btn click gets suppressed
+		// determines list to be displayed based on filter flags
 		self.display_list = ko.computed(function() {
 			if (!self.hasSamples() && !self.hasLyrics()) {
 				return self.tracks();
@@ -25,6 +26,12 @@ define(['knockout', 'text!./result-list.html', 'knockout-postbox'], function(ko,
 					return item.lyrics_url !== '#' && item.url !== 'No Url';
 				});
 			}
+		});
+
+		var list_location = {k:37.399864, D:-122.10840000000002}; // default location
+		// timing is key: this alert occurs when a search has been made. We want the location at THAT time
+		ko.postbox.subscribe('new_results', function() {
+			list_location = app.current_location;
 		});
 
 		// user selects a track to see additional options
@@ -52,13 +59,21 @@ define(['knockout', 'text!./result-list.html', 'knockout-postbox'], function(ko,
 		// allows user to mark a track as "favorite", thereby
 		// alerting faves array list
 		self.setFave = function(index) {
-			self.latest_fave(self.tracks()[index]);
+			// timing is key; I want the location at time of search
+			// I can then append to Result obj to be incorporated into Fave
+			var new_fave = self.tracks()[index];
+			new_fave.location = list_location;
+			self.latest_fave(new_fave);
 		};
 
 		// open info window
-		self.checkIt = function() {
+		self.checkIt = function(track) {
+			app.infopane.close();
+			app.configInfopane(track);
 			app.hideList();
-			app.infopane.open(app.map);
+			setTimeout(function() {
+				app.infopaneOpen(list_location, self.search_terms());
+			}, 800);
 		};
 
 		// delegate click handling to the parent list

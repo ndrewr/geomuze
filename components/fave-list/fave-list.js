@@ -69,8 +69,7 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 			if(Result.prototype.isPrototypeOf(result)) {
 			// also make sure the track isn't already faved!
 				if(!self.fave_tracks().alreadyInArray(result.track_name, result.artist_name)) {
-					var result_origin = app.current_location;
-					var new_fave = new FaveTrack(result, result_origin, self.search_terms());
+					var new_fave = new FaveTrack(result, self.search_terms());
 					self.fave_tracks.push(new_fave);
 					app.informUser('this track has been faved!');
 				}
@@ -107,12 +106,10 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		// meant to fire a location change request on map
 		// and preconfig the map infobox
 		self.locateFave = function(track) {
+			app.infopane.close();
 			app.configInfopane(track);
 			app.hideList(); // if mobile mode, auto-hide list
 			app.gotoLocation(track.location, google.maps.places.PlacesServiceStatus.OK);
-			setTimeout(function() {
-				app.infopane.open(app.map);
-			}, 1000);
 		};
 
 		// shows location of all faved tracks on map

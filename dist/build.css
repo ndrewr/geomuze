@@ -133,9 +133,6 @@
 
 body {
 	background: url(../images/bg4.jpg) no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
 	background-size: cover;
 	font-family: 'Architects Daughter';
 }
@@ -156,11 +153,13 @@ a:hover, a:visited, a:link, a:active
 }
 
 .btn-sm, .btn-xs {
+	-webkit-transform: translateY(-5px);
 	transform: translateY(-5px);
 	box-shadow: 0 4px 2px -1px #837F77;
 }
 
 .btn-sm:active, .btn-xs:active {
+	-webkit-transform: translateY(-3px);
 	transform: translateY(-3px);
 	box-shadow: 0 1px 2px -1px #837F77;
 }
@@ -211,17 +210,20 @@ a:hover, a:visited, a:link, a:active
 	background: #D8D8C8;
 	border-radius: 12px;
 	height: 32px;
+	-webkit-transform: rotateY(180deg) translateX(5px);
 	transform: rotateY(180deg) translateX(5px);
 }
 
 .brand-name {
 	font-family: 'Audiowide';
+	-webkit-transform: translateY(-5px);
 	transform: translateY(-5px);
 }
 
 .brand-name-mobile {
 	display: none;
 	font-family: 'Audiowide';
+	-webkit-transform: translateY(-5px);
 	transform: translateY(-5px);
 	font-size: .9em;
 	/* WebKit (Safari/Chrome) Only */
@@ -251,17 +253,22 @@ a:hover, a:visited, a:link, a:active
 	border: 2px solid #BFBFB5;
 	border-radius: 0 0 14px 14px;
 	box-shadow: inset 0 0 10px #000;
+	-webkit-transform: translateY(-10px);
 	transform: translateY(-10px);
 }
 
 #appConsole {
 	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	-webkit-flex-flow: row wrap;
+	-ms-flex-flow: row wrap;
 	flex-flow: row wrap;
 	-webkit-align-items: center;
+	-ms-flex-align: center;
 	align-items: center;
 	-webkit-justify-content: space-between;
+	-ms-flex-pack: justify;
 	justify-content: space-between;
 	width: 100%;
 }
@@ -276,10 +283,12 @@ a:hover, a:visited, a:link, a:active
 	height: 50px;
 	min-width: 60px;
 	border-radius: 0 10px 10px 0;
+	-webkit-transform: translate(-6px, -5px);
 	transform: translate(-6px, -5px);
 }
 
 .search-btn:active {
+	-webkit-transform: translate(-6px, -1px);
 	transform: translate(-6px, -1px);
 	box-shadow: -1px 2px 2px -2px #A07423;
 }
@@ -287,10 +296,13 @@ a:hover, a:visited, a:link, a:active
 #map-container {
 	position: relative;
 	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	-webkit-flex-flow: row wrap;
+	-ms-flex-flow: row wrap;
 	flex-flow: row wrap;
 	-webkit-align-items: center;
+	-ms-flex-align: center;
 	align-items: center;
 	margin-bottom: 40px;
 	width: 100%;
@@ -314,6 +326,7 @@ a:hover, a:visited, a:link, a:active
 	padding: 20px;
 	top: 50%;
 	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	background-color: #D8D8C8;
 }
@@ -336,6 +349,7 @@ a:hover, a:visited, a:link, a:active
 	width: 70%;
 	top: 50%;
 	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	border: 3px solid #707070;
 	z-index: 2;
@@ -360,6 +374,7 @@ a:hover, a:visited, a:link, a:active
 
 #list-toggle:active {
 	box-shadow: -1px 2px 2px -2px #A07423;
+	-webkit-transform: translateY(3px);
 	transform: translateY(3px);
 }
 
@@ -367,6 +382,7 @@ a:hover, a:visited, a:link, a:active
 	position: absolute;
 	left: 50%;
 	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 }
 
@@ -465,12 +481,16 @@ a:hover, a:visited, a:link, a:active
 
 footer {
 	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	-webkit-flex-flow: row wrap;
+	-ms-flex-flow: row wrap;
 	flex-flow: row wrap;
 	-webkit-justify-content: space-around;
+	-ms-flex-pack: distribute;
 	justify-content: space-around;
 	-webkit-align-items: baseline;
+	-ms-flex-align: baseline;
 	align-items: baseline;
 	width: 100%;
 	height: 100px;
@@ -482,12 +502,16 @@ footer {
 /* based on Scott Andrew's HTML5 audio player */
 .infobox-player {
 	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	-webkit-flex-flow: row;
+	-ms-flex-flow: row;
 	flex-flow: row;
 	-webkit-align-items: center;
+	-ms-flex-align: center;
 	align-items: center;
 	-webkit-justify-content: space-around;
+	-ms-flex-pack: distribute;
 	justify-content: space-around;
 }
 
@@ -506,12 +530,16 @@ footer {
 	font-weight:bold;
 	width:180px;
 	display: -webkit-flex;
+	display: -ms-flexbox;
 	display: flex;
 	-webkit-flex-flow: row wrap;
+	-ms-flex-flow: row wrap;
 	flex-flow: row wrap;
 	-webkit-align-items: center;
+	-ms-flex-align: center;
 	align-items: center;
 	-webkit-justify-content: space-around;
+	-ms-flex-pack: distribute;
 	justify-content: space-around;
 }
 

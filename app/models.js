@@ -8,14 +8,14 @@ function Result(service, track, artist, album, cover, url, lyrics) {
 	this.url = url || 'No Url';
 	this.artist_name = artist || 'No Name';
 	this.track_name = track || 'No Title';
-	this.cover = cover || 'No Cover';
+	this.cover = cover || 'images/nocover_owl.png';
 	this.lyrics_url = lyrics || '#';
 	this.service = service || 'unaffiliated';
 	this.album = album || 'No Album Title';
 }
 
 // Data model for a Fave music track result
-function FaveTrack(result, location, keyterms) {
+function FaveTrack(result, keyterms) {
 	this.result = result || {msg: 'uh oh nuthin'};
 	this.track_name = result.track_name;
 	this.artist_name = result.artist_name;
@@ -23,7 +23,7 @@ function FaveTrack(result, location, keyterms) {
 	this.url = result.url || '#';
 	this.lyrics_url = result.lyrics_url || '#';
 	this.album = result.album || 'No Album Title';
-	this.location = location || {msg: 'oh noes nowhere'};
+	this.location = result.location || {msg: 'oh noes nowhere'};
 	this.keyterms = keyterms || 'Udacia';
 }
 

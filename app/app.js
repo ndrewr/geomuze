@@ -94,9 +94,12 @@
 		// initialize map components
 		MapView(custom_style, app);
 
+
 		// need jquery to config infopane...sooo check for $
 		jqueryYet(function() {
-			app.configInfopane(initial_result); //load default
+				setTimeout(function() {
+				app.createMarker(new google.maps.LatLng( 37.399864,-122.10840000000002));
+			}, 2500);
 		});
 	}
 
@@ -226,13 +229,12 @@
 	function MapView(map_style, app) {
 		var self = app;
 		var markers = []; // Faves markers; see showAllMarkers
-		var current_marker; // ref for dealloc; see createMarker
-
-		self.current_location = new google.maps.LatLng(-33.8665433,151.1956316); // default
+		self.current_marker = null; // ref for dealloc; see createMarker
+		self.current_location = new google.maps.LatLng( 37.399864,-122.10840000000002); // default
 
 		// Initial map settings, location
 		var mapOptions = {
-			center: { lat: -34.397, lng: 150.644},
+			center: { lat: 37.399864, lng: -122.10840000000002},
 			zoom: 10,
 			styles: map_style
 		};
@@ -254,13 +256,22 @@
 		// PUBLIC: create then access the map info window
 		// NOTE only one window open at a time; reuse!
 		self.infopane = new google.maps.InfoWindow({
-			content: "Well, Hullo! I'll have more to say after a lil' searchy-search!",
+			content: '<p>Well, Hullo! You can click on me to open these InfoBoxes! I will have more to show after a lil searchy-search!</p><p>You might be thinkin <em>what the heck is this.</em></p><p>Search for your city and check out the results. Clicking on a result box will show some fun-buttons. Maybe your city is mentioned in some gritty lyrics?</p><p>Here is one to get ya started...I got this searcing for "Udacity"!</p>',
 			maxWidth: 320
 		});
 
+		// resets marker icon
 		google.maps.event.addListener(self.infopane, 'closeclick', function(){
-			current_marker.setIcon('images/geomuze-icon-small.png');
+			self.current_marker.setIcon('images/geomuze-icon-small.png');
 		});
+
+		// wrapper for opening info window ... see ListViewModel:checkIt()
+		self.infopaneOpen = function(list_location) {
+			if((self.current_marker !== null) && (self.current_marker.position === list_location)) {
+				 self.infopane.open(self.map, self.current_marker);
+			}
+			else self.gotoLocation(list_location, google.maps.places.PlacesServiceStatus.OK);
+		};
 
 		// PUBLIC: configs info window before it
 		// is displayed on map
@@ -271,11 +282,10 @@
 			var info_template = '<h3>' + track.track_name +
 					'</h3><p>' + track.artist_name +
 					'</p><p><em>' + track.album + '</em></p>' +
-					'<div class="infobox-player"><img src="' + 					track.cover + '"/>' + audio_template + '</div>';
-
+					'<div class="infobox-player"><img src="' +
+					track.cover + '"/>' + audio_template + '</div>';
 			self.infopane.setContent(info_template);
-			var track_loc = track.location;
-			self.infopane.setPosition(track_loc? track_loc : self.current_location);
+
 			// update audio player
 			self.configPlayer(track.url, track.track_name);
 		}
@@ -283,9 +293,9 @@
 		// Destroy previously placed markers;
 		// In case showAll was called, remove those markers
 		function clearMarker() {
-			if (current_marker) {
-				current_marker.setMap(null);
-				current_marker = null;
+			if (self.current_marker !== null) {
+				self.current_marker.setMap(null);
+				self.current_marker = null;
 			}
 			if (markers.length > 0) {
 				markers.forEach(function(marker) {
@@ -306,16 +316,18 @@
 				icon: 'images/geomuze-icon-small.png'
 			});
 
-			current_marker = marker; // track for dealloc
+			self.current_marker = marker; // track for dealloc
 
 			google.maps.event.addListener(marker, 'click', function() {
-				current_marker.setIcon('images/geomuze-icon-small2.png');
+				self.current_marker.setIcon('images/geomuze-icon-small2.png');
 				self.infopane.open(self.map, marker);
 			});
 			google.maps.event.addListener(marker, 'mousedown', function(){
-				current_marker.setIcon('images/geomuze-icon-small2.png');
+				self.current_marker.setIcon('images/geomuze-icon-small2.png');
 				self.infopane.open(self.map, marker);
 			});
+
+			setTimeout(function() {self.infopane.open(self.map, marker); }, 1000);
 		};
 
 		// perform places search based on query string param
@@ -339,7 +351,7 @@
 		// locations and status code
 		self.gotoLocation = function(location_data, status) {
 			var status_code = google.maps.places.PlacesServiceStatus;
-			if (status === google.maps.places.PlacesServiceStatus.OK) {
+			if (status === status_code.OK) {
 				var place, new_coord;
 				clearMarker();
 				// check if param is an array of locations
@@ -356,9 +368,9 @@
 				self.map.setZoom(10);
 				self.createMarker(new_coord);
 			}
-//			else if (status === status_code.UNKNOWN_ERROR) {
-//
-//			}
+			else if (status === status_code.UNKNOWN_ERROR) {
+				mapsError();
+			}
 //			else if (status === status_code.ZERO_RESULTS) {
 //
 //			}
@@ -394,16 +406,6 @@
 
 		/*** Event handlers ***/
 //		google.maps.event.addListener(self.autocomplete, 'place_changed', self.gotoAutoComplete);
-
-		// initial location default set to Udacity Intl HQ
-		var request = {
-			location: new google.maps.LatLng( 37.399864,-122.10840000000002),
-			radius: '500',
-			query: 'restaurant'
-		};
-		// run search for initial location as set above
-		// textSearch() returns results array and status code
-		self.service.textSearch(request, self.gotoLocation);
 	}
 
 	// kick off map load and initializing functions

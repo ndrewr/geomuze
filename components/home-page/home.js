@@ -16,6 +16,7 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 		// phase 2 music track search thru spotify/musixmatch
 		self.goSearch = function() {
 			self.message("Searching for..." + self.search_terms());
+			app.infopane.close();
 
 			// lets simplify the search terms shall we?
 			var simple_terms = self.search_terms().split(/\s|,/g, 2).join(' ');
