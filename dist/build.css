@@ -674,3 +674,33 @@ footer {
 		width: 90%;
 	}
 }
+
+@media only screen and (min-height: 750px) {
+	#map-container {
+		margin-bottom: 60px;
+		margin-top: 10px;
+	}
+
+	#list-container {
+		min-height: 450px;
+	}
+
+	#map-canvas {
+		min-height: 450px;
+	}
+}
+
+@media only screen and (min-height: 850px) {
+	#map-container {
+		margin-top: 20px;
+		margin-bottom: 80px;
+	}
+
+	#list-container {
+		min-height: 600px;
+	}
+
+	#map-canvas {
+		min-height: 600px;
+	}
+}

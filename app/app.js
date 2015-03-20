@@ -225,12 +225,12 @@
 		};
 
 		// just for kicks, calculate a random offset for background img in mobile mode
-		// same image, different position. lets leave it in IIFE. for kicks.
-		(function() {
+		// same image, different position. Check first for browser 375px wide and below
+		if($( window ).width() <= 375) {
 			var bg_vals = ['left top', 'left center', 'left bottom', 'right top', 'right center', 'right bottom', 'center top', 'center center', 'center bottom'];
 			var random_val = Math.floor(Math.random() * 10); // integer btwn 0-9
 			document.body.style.background = 	'url(images/bg6.jpg) no-repeat fixed ' + bg_vals[random_val];
-		})();
+		}
 	}
 
 	function MapView(map_style, app) {
