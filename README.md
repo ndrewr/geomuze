@@ -39,6 +39,8 @@ Gulp.js is used for build process. The Gulp task concats all files: CSS into bui
 -Knockout view models can be found in ./src/components
 -Main app file can be found in .src/app/app.js
 
+* tested in Chrome, Safari and Firefox browsers. Responsive for screens small as iPhone5 and large as Nexus 7.
+
 ****************************************************************************
 Log of Resources:
 - http://www.scottandrew.com/pub/html5audioplayer
@@ -56,5 +58,7 @@ Log of Resources:
 	- http://stackoverflow.com/questions/17240544/jquery-toggle-animated-width
 	- http://stackoverflow.com/questions/14248194/close-responsive-navbar-automatically
 - Google Maps API docs
+- Spotify API docs
+- MusixMatch API docs
 - CSS-Tricks
 	- https://css-tricks.com/adding-stroke-to-web-text
