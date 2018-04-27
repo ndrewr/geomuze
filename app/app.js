@@ -9,7 +9,7 @@
 		script.type = 'text/javascript';
 		script.onerror = mapsError;
 		script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places' +
-//			'&key=AIzaSyCoh9OIWE1vT85aaoVRqszGR6E3TeEut24' +
+      '&key=AIzaSyConZMCPS70cjsNgHVnv_xnqoeUGeTxnDw' +
 			'&signed_in=true&callback=initMap';
 		document.body.appendChild(script);
 

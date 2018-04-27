@@ -3,7 +3,9 @@ var fs = require('fs'), vm = require('vm'), merge = require('deeply'), chalk = r
 
 // Gulp and plugins
 var gulp = require('gulp'), rjs = require('gulp-requirejs-bundler'), concat = require('gulp-concat'), clean = require('gulp-clean'),
-		replace = require('gulp-replace'), uglify = require('gulp-uglify'), htmlreplace = require('gulp-html-replace'), autoprefixer = require('gulp-autoprefixer');
+		replace = require('gulp-replace'), uglify = require('gulp-uglify'), htmlreplace = require('gulp-html-replace'),
+		autoprefixer = require('gulp-autoprefixer'), plumber = require('gulp-plumber');
+
 
 // Config
 var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('app/require.config.js') + '; require;');
@@ -12,7 +14,7 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('app/require.con
 				baseUrl: './',
 				name: 'app/startup',
 				paths: {
-						requireLib: 'bower_modules/requirejs/require'
+						requireLib: 'node_modules/requirejs/require'
 				},
 				include: [
 						'requireLib',
@@ -25,25 +27,19 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('app/require.con
 						'app/app.js',
 				],
 				insertRequire: ['app/startup'],
-				bundles: {
-						// If you want parts of the site to load on demand, remove them from the 'include' list
-						// above, and group them into bundles here.
-						// 'bundle-name': [ 'some/module', 'another/module' ],
-						// 'another-bundle-name': [ 'yet-another-module' ]
-				}
 		});
 
 // Discovers all AMD dependencies, concatenates together all required .js files, minifies them
 gulp.task('js', function () {
 		return rjs(requireJsOptimizerConfig)
-				.pipe(uglify({ preserveComments: 'some' }))
+		    .pipe(plumber())
+				.pipe(uglify())
 				.pipe(gulp.dest('./dist/'));
-//				.pipe(gulp.dest('./dist/'));
 });
 
 // Concatenates CSS files, rewrites relative paths to Bootstrap fonts, copies Bootstrap fonts
 gulp.task('css', function () {
-		var bowerCss = gulp.src('bower_modules/components-bootstrap/css/bootstrap.min.css')
+		var bowerCss = gulp.src('bower_components/bootstrap/dist/css/bootstrap.min.css')
 						.pipe(replace(/url\((')?\.\.\/fonts\//g, 'url($1fonts/')),
 				appCss = gulp.src('css/*.css')
 							.pipe(autoprefixer({
@@ -73,6 +69,7 @@ gulp.task('clean', function() {
 });
 
 gulp.task('default', ['html', 'js', 'css'], function(callback) {
+    console.log('Build done!')
 		callback();
 		console.log('\nPlaced optimized files in ' + chalk.magenta('dist/\n'));
 });
