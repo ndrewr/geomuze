@@ -10,7 +10,7 @@
 		script.onerror = mapsError;
 		script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places' +
       '&key=AIzaSyConZMCPS70cjsNgHVnv_xnqoeUGeTxnDw' +
-			'&signed_in=true&callback=initMap';
+			'&callback=initMap';
 		document.body.appendChild(script);
 
 		// load up parts of our app...

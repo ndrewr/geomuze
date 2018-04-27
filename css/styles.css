@@ -92,6 +92,10 @@ a:hover, a:visited, a:link, a:active
 	transform: translateY(-5px);
 }
 
+.brand-name img {
+	display: inline-block;
+}
+
 .brand-name-mobile {
 	display: none;
 	font-family: 'Audiowide';
