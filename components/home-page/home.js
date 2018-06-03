@@ -10,24 +10,34 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 
 		// uses postbox lib to sync results with List View
 		self.search_results = ko.observableArray().publishOn('new_results');
-
+		
 		// kicks off all search activity:
 		// phase 1 google map location update
 		// phase 2 music track search thru spotify/musixmatch
 		self.goSearch = function() {
-			self.message("Searching for..." + self.search_terms());
+			var query = self.search_terms();
+
+			if (! query) {
+				console.log('empty query!')
+				return
+			}
+
+			self.message("Searching for..." + query);
 			app.infopane.close();
 
 			// lets simplify the search terms shall we?
-			var simple_terms = self.search_terms().split(/\s|,/g, 2).join(' ');
+			var simple_terms = query.split(/\s|,/g, 2).join(' ');
 			// alert result list of search terms
 			self.display_terms(simple_terms);
 			// update map by calling google place search
 			app.doPlaceSearch(simple_terms);
 
 			// format search string then run api query
-			var formatted_terms = self.search_terms().replace( /\s|,/g ,"%20");
-			spotifySearch(formatted_terms);
+			var formatted_terms = query.replace( /\s|,/g ,"%20");
+			// spotifySearch(formatted_terms);
+
+			lyrixSearch(simple_terms)
+
 
 			// auto-switch list view to Results
 			var tab = $('#list-container').find('a').first();
@@ -35,6 +45,29 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			app.showList(); // toggles visibility
 			self.search_terms(''); // reset search box
 		};
+
+
+		function lyrixSearch(query) {
+			function handleErrors(response) {
+				console.log('yay', response.ok)			
+				if (!response.ok) {
+					throw Error(response.statusText);
+				}
+				return response.json();
+			}
+			
+			console.log('search for...', query)
+
+			fetch('https://lyrix-api-v1.now.sh/?q=' + query)
+				.then(handleErrors)
+				.then(function(data) {
+					console.log('response is...', data)
+
+				}).catch(function(error) {
+					console.log('Ruhroh...', error);
+				});
+		};
+		
 
 		// look for songs on spotify
 		// NOTE I saw a number of repeat results so I
