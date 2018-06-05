@@ -18,7 +18,6 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			var query = self.search_terms();
 
 			if (! query) {
-				console.log('empty query!')
 				return
 			}
 
@@ -26,16 +25,17 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			app.infopane.close();
 
 			// lets simplify the search terms shall we?
-			var simple_terms = query.split(/\s|,/g, 2).join(' ');
+			var simple_terms = query.split(/\s|,/g, 5).join(' ');
 			// alert result list of search terms
 			self.display_terms(simple_terms);
 			// update map by calling google place search
 			app.doPlaceSearch(simple_terms);
 
 			// format search string then run api query
-			var formatted_terms = query.replace( /\s|,/g ,"%20");
+			// var formatted_terms = query.replace( /\s|,/g ,"%20");
 			// spotifySearch(formatted_terms);
 
+			// console.log('checking terms...', query, simple_terms)
 			lyrixSearch(simple_terms)
 
 
@@ -47,21 +47,55 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 		};
 
 
-		function lyrixSearch(query) {
-			function handleErrors(response) {
-				console.log('yay', response.ok)			
-				if (!response.ok) {
-					throw Error(response.statusText);
-				}
-				return response.json();
+		function handleErrors(response) {
+			console.log('yay', response.ok)			
+			if (!response.ok) {
+				throw Error(response.statusText);
 			}
-			
+			return response.json();
+		}
+	
+		function lyrixSearch(query) {
 			console.log('search for...', query)
+
+			filter_list = []; // reset buffers
 
 			fetch('https://lyrix-api-v1.now.sh/?q=' + query)
 				.then(handleErrors)
 				.then(function(data) {
 					console.log('response is...', data)
+
+					// data should contain two lists of records from SPotify and MM
+					// lets filter out common results
+					// then push that single list to the observable array
+
+					// check to see if this result already exists
+					if (data.spotify) {
+						data.spotify.forEach(function (track) {
+							if(!filter_list.alreadyInArray(track.track_name, track.artist_name)) {
+								filter_list.push(track);
+							}
+						});
+					}
+
+					if (data.musixMatch) {
+						data.musixMatch.forEach(function (track) {
+							if(!filter_list.alreadyInArray(track.track_name, track.artist_name)) {
+								filter_list.push(track);
+							}
+						});
+					}
+
+					console.log('filtered results...', filter_list);
+
+					self.search_results(filter_list);
+					// preconfig the map infobox with top result
+					var top_hit = self.search_results()[0];
+					if(top_hit) app.configInfopane(top_hit);
+
+					self.message("Track search completed!");
+					// TODO: if no "url" field, InfoWIndow player should be disabled...
+
 
 				}).catch(function(error) {
 					console.log('Ruhroh...', error);

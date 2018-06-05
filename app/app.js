@@ -2,26 +2,6 @@
 (function() {
 	window.app = 	{}; // public interface obj for app
 
-	// console.log('lets test api...')
-	// function testAPI() {
-	// 	function handleErrors(response) {
-	// 		console.log('yay', response.ok)			
-	// 		if (!response.ok) {
-	// 			throw Error(response.statusText);
-	// 		}
-	// 		return response.json();
-	// 	}
-		
-	// 	fetch('https://lyrix-api-v1.now.sh/?q=all stars')
-	// 		.then(handleErrors)
-	// 		.then(function(data) {
-	// 			console.log('response is...', data)				
-	// 		}).catch(function(error) {
-	// 			console.log('Ruhroh...', error);
-	// 		});
-	// };
-	// testAPI();
-
 	// this will be called upon execution of module
 	function loadScript() {
 		// load up the google map api
