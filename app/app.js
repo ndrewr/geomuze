@@ -221,7 +221,7 @@
 		app.informUser = function(message) {
 			var _inform = $('.list-inform');
 			_inform.find('span').html(message);
-			_inform.fadeIn().delay( 1000 ).fadeOut();
+			_inform.fadeIn().delay( 3000 ).fadeOut();
 		};
 
 		// just for kicks, calculate a random offset for background img in mobile mode

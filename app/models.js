@@ -29,13 +29,10 @@ function FaveTrack(result, keyterms) {
 
 // helper function to check a song tracks array for doubles
 Array.prototype.alreadyInArray = function(prop1, prop2) {
-	var found = false;
-	this.forEach(function(item) {
-		if (item.track_name === prop1 && item.artist_name === prop2) {
-			found = true;
-		}
-	});
-	return found;
+	return this.some(function(item) {
+		return item.track_name.toLowerCase() === prop1.toLowerCase() &&
+			item.artist_name.toLowerCase() === prop2.toLowerCase()
+	})
 };
 
 // test data and initial state data
