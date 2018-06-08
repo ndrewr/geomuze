@@ -15,6 +15,7 @@
 
 		// load up parts of our app...
 		initStorage(app);
+
 		// following requires jQuery
 		jqueryYet(function() {
 			initHandlers(app);
@@ -163,6 +164,7 @@
 
 	// PUBLIC: updates player params with src and title info
 	app.configPlayer = function(url, title) {
+		console.log('player check...', url, title)
 		app.player.audio.pause();
 		// this line does not work in Firefox; chrome/safari ok
 		//app.player.audio.currentTime = 0;
@@ -283,6 +285,7 @@
 		// PUBLIC: configs info window before it
 		// is displayed on map
 		self.configInfopane = function(track) {
+			console.log('switch to this track...', track)
 			var audio_template =
 					'<div id="jukebox"><div class="player-info">Sample Clip</div><a class="audio-control play icon-play3" href="#"><span>Play</span></a><div class="loader"><div class="play-progress"></div></div><audio class="aud" src=""><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
 

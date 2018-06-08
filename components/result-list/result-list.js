@@ -38,7 +38,7 @@ define(['knockout', 'text!./result-list.html', 'knockout-postbox'], function(ko,
 		// Note: called from view using bind(), this = data_obj
 		// NOTE2: not specifying event as param breaks in
 		// Firefox; Chrome/Safari ok
-		self.selectResult = function(event) {
+		self.selectResult = function(event) {			
 			// if the target wasnt a btn, toggle the class
 			// if other item had the class, remove it
 			if(event.target.nodeName !== "BUTTON" ) {
@@ -67,7 +67,9 @@ define(['knockout', 'text!./result-list.html', 'knockout-postbox'], function(ko,
 		};
 
 		// open info window
-		self.checkIt = function(track) {
+		self.checkIt = function(track, event) {
+			event.stopPropagation()
+
 			app.infopane.close();
 			app.configInfopane(track);
 			app.hideList();

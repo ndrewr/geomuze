@@ -89,7 +89,7 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 		// Note: called from view using bind(), this = data_obj
 		// NOTE2: not specifying event as param breaks in
 		// Firefox; Chrome/Safari ok
-		self.selectFave = function(event) {
+		self.selectFave = function(event) {			
 			// if the target wasnt a btn, toggle the class
 			// if other item had the class, remove it
 			if(event.target.nodeName !== "BUTTON" ) {
@@ -105,7 +105,9 @@ define(["knockout", "text!./fave-list.html", "knockout-postbox"], function(ko, f
 
 		// meant to fire a location change request on map
 		// and preconfig the map infobox
-		self.locateFave = function(track) {
+		self.locateFave = function(track, event) {
+			event.stopPropagation();
+
 			app.infopane.close();
 			app.configInfopane(track);
 			app.hideList(); // if mobile mode, auto-hide list

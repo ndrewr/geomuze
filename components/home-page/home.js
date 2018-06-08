@@ -5,15 +5,12 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 		self.search_terms = ko.observable();
 		self.display_terms = ko.observable().publishOn('search_terms');
 
-		// var results_buffer = []; // hold results for one push into observable array; better perf
-		// var filter_list = []; // used to check for same results
-
 		// uses postbox lib to sync results with List View
 		self.search_results = ko.observableArray().publishOn('new_results');
 		
 		// kicks off all search activity:
 		// phase 1 google map location update
-		// phase 2 music track search thru spotify/musixmatch
+		// phase 2 music track search thru lyrix api
 		self.goSearch = function() {
 			var query = self.search_terms();
 
@@ -30,13 +27,8 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			self.display_terms(simple_terms);
 			// update map by calling google place search
 			app.doPlaceSearch(simple_terms);
-
-			// format search string then run api query
-			// var formatted_terms = query.replace( /\s|,/g ,"%20");
-			// spotifySearch(formatted_terms);
-
+			// lyrix server aggregates spotify and musixmatch search results
 			lyrixSearch(simple_terms)
-
 
 			// auto-switch list view to Results
 			var tab = $('#list-container').find('a').first();
@@ -44,14 +36,6 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 			app.showList(); // toggles visibility
 			self.search_terms(''); // reset search box
 		};
-
-
-		function handleErrors(response) {
-			if (!response.ok) {
-				throw Error(response.statusText);
-			}
-			return response.json();
-		}
 
 		function checkRepeats (filter_list, track) {
 			if(!filter_list.alreadyInArray(track.track_name, track.artist_name)) {
@@ -70,32 +54,20 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 		function lyrixSearch(query) {
 			console.log('search for...', query)
 
-			fetch('https://lyrix-api-v1.now.sh/?q=' + query)
-				.then(handleErrors)
-				.then(function(data) {
-					console.log('response is...', data)
+			$.get('https://lyrix-api-v1.now.sh/?q=' + query)
+			.then(function(data) {
+				self.search_results(createFilteredList(data));
+				// preconfig the map infobox with top result
+				var top_hit = self.search_results()[0];
+				if(top_hit) app.configInfopane(top_hit);
 
-					// lets filter out common results
-					// then push that single list to the observable array
+				self.message("Track search completed!");
+				// TODO: if no "url" field, InfoWIndow player should be disabled...
 
-					// check to see if this result already exists
-					// filter_list = createFilteredList(data)
-					// console.log('filtered results...', filter_list);
-
-					self.search_results(createFilteredList(data));
-					// preconfig the map infobox with top result
-					var top_hit = self.search_results()[0];
-					if(top_hit) app.configInfopane(top_hit);
-
-					self.message("Track search completed!");
-					// TODO: if no "url" field, InfoWIndow player should be disabled...
-
-
-				}).catch(function(error) {
-					// console.log('Ruhroh whle searching lyrics...', error);
-					self.message("Uh-oh! Problem fetching tracks...");		
-					app.informUser("Search error..try again?");								
-				});
+			}).catch(function(error) {
+				self.message("Uh-oh! Problem fetching tracks...");		
+				app.informUser("Search error..try again?");								
+			});
 		};
 		
 
