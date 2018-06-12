@@ -20,6 +20,9 @@
 		jqueryYet(function() {
 			initHandlers(app);
 			initPlayer(app);
+
+			// TODO: "prep" lyrix api with a trivial api request?
+			// Via utility function?
 		});
 	}
 
@@ -163,23 +166,16 @@
 	}
 
 	// PUBLIC: updates player params with src and title info
-	app.configPlayer = function(url, title) {
-		console.log('player check...', url, title)
+	app.configPlayer = function(url) {
 		app.player.audio.pause();
-		// this line does not work in Firefox; chrome/safari ok
-		//app.player.audio.currentTime = 0;
-		if(url === 'No Url' || url === 'No%20Url') {
-			$('.play').removeClass('icon-play3').addClass('disable');
-			$('.player-info').html('No Sample');
-		}
-		else {
+
+		if (url) {
 			app.player.audio.setAttribute('src', url);
 			app.player.audio.load();
-			$('.player-info').html('Sample Clip');
 		}
 
 		// if player was middle of playing, set back to false
-		if(app.player.audio.isPlaying) {
+		if (app.player.audio.isPlaying) {
 			app.player.audio.isPlaying = false;
 		}
 	}
@@ -275,20 +271,31 @@
 		});
 
 		// wrapper for opening info window ... see ListViewModel:checkIt()
-		self.infopaneOpen = function(list_location) {
+		// self.infopaneOpen = function(list_location) {
+		self.infopaneOpen = function(list_location, track) {
 			if((self.current_marker !== null) && (self.current_marker.position === list_location)) {
-				 self.infopane.open(self.map, self.current_marker);
+				console.log('open marker business')
+				self.infopane.open(self.map, self.current_marker);
 			}
-			else self.gotoLocation(list_location, google.maps.places.PlacesServiceStatus.OK);
+			else {
+				console.log('lets go to location')
+				self.gotoLocation(list_location, google.maps.places.PlacesServiceStatus.OK);
+			}
 		};
+
+		function buildJukebox(url) {
+			return '<div id="jukebox"><div class="player-info">' +
+				(url ? 'Sample Clip' : 'No Sample') +
+				'</div><a class="audio-control play ' +
+				(url ? ' icon-play3' : 'disable') +
+				'" href="#"><span>Play</span></a><div class="loader"><div class="play-progress"></div></div><audio class="aud" src=""><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
+		}
 
 		// PUBLIC: configs info window before it
 		// is displayed on map
 		self.configInfopane = function(track) {
-			console.log('switch to this track...', track)
-			var audio_template =
-					'<div id="jukebox"><div class="player-info">Sample Clip</div><a class="audio-control play icon-play3" href="#"><span>Play</span></a><div class="loader"><div class="play-progress"></div></div><audio class="aud" src=""><p>Oops, looks like your browser does not support HTML 5 audio.</p></audio></div>';
-
+			var sample_url = (track.url === 'No Url' || track.url === 'No%20Url') ? null : track.url;
+			var audio_template = buildJukebox(sample_url);
 			var info_template = '<h3>' + track.track_name +
 					'</h3><p>' + track.artist_name +
 					'</p><p><em>' + track.album + '</em></p>' +
@@ -297,7 +304,7 @@
 			self.infopane.setContent(info_template);
 
 			// update audio player
-			self.configPlayer(track.url, track.track_name);
+			self.configPlayer(sample_url);
 		}
 
 		// Destroy previously placed markers;
@@ -371,12 +378,13 @@
 				}
 				else new_coord = location_data; //param is a location obj
 
-				//console.log("Going to location...located at %O", new_coord);
-
 				self.current_location = new_coord; // used by Faves
 				self.map.setCenter(new_coord);
 				self.map.setZoom(10);
 				self.createMarker(new_coord);
+
+				// test
+				// app.infopaneOpen(new_coord)
 			}
 			else if (status === status_code.UNKNOWN_ERROR) {
 				mapsError();

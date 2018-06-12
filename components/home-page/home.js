@@ -52,19 +52,18 @@ define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTe
 		}
 	
 		function lyrixSearch(query) {
-			console.log('search for...', query)
-
 			$.get('https://lyrix-api-v1.now.sh/?q=' + query)
 			.then(function(data) {
 				self.search_results(createFilteredList(data));
 				// preconfig the map infobox with top result
 				var top_hit = self.search_results()[0];
-				if(top_hit) app.configInfopane(top_hit);
+				if(top_hit) {
+					app.configInfopane(top_hit);
+				}
 
 				self.message("Track search completed!");
-				// TODO: if no "url" field, InfoWIndow player should be disabled...
-
-			}).catch(function(error) {
+			})
+			.catch(function(error) {
 				self.message("Uh-oh! Problem fetching tracks...");		
 				app.informUser("Search error..try again?");								
 			});
