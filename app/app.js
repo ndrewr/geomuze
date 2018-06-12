@@ -23,6 +23,15 @@
 
 			// TODO: "prep" lyrix api with a trivial api request?
 			// Via utility function?
+			// need to wrap in try-catch or update api to receive this "warmup" request
+			try {
+				$.get('https://lyrix-api-v1.now.sh/')
+				.catch(function(res) {
+					console.log('Warmup for lyrix api...', res);
+				});
+			} catch (error) {
+				console.log('Outer wrapper for lyrix warmup...', error);
+			}
 		});
 	}
 
@@ -268,17 +277,16 @@
 		// resets marker icon
 		google.maps.event.addListener(self.infopane, 'closeclick', function(){
 			self.current_marker.setIcon('images/geomuze-icon-small.png');
+			app.configPlayer(null); // stop audio playback
 		});
 
 		// wrapper for opening info window ... see ListViewModel:checkIt()
 		// self.infopaneOpen = function(list_location) {
 		self.infopaneOpen = function(list_location, track) {
 			if((self.current_marker !== null) && (self.current_marker.position === list_location)) {
-				console.log('open marker business')
 				self.infopane.open(self.map, self.current_marker);
 			}
 			else {
-				console.log('lets go to location')
 				self.gotoLocation(list_location, google.maps.places.PlacesServiceStatus.OK);
 			}
 		};
@@ -384,7 +392,7 @@
 				self.createMarker(new_coord);
 
 				// test
-				// app.infopaneOpen(new_coord)
+				app.infopaneOpen(new_coord)
 			}
 			else if (status === status_code.UNKNOWN_ERROR) {
 				mapsError();
