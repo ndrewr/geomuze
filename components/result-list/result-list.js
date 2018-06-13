@@ -74,7 +74,7 @@ define(['knockout', 'text!./result-list.html', 'knockout-postbox'], function(ko,
 			app.hideList();
 			setTimeout(function() {
 				app.infopaneOpen(list_location);				
-			}, 500);
+			}, 800);
 		};
 
 		// delegate click handling to the parent list

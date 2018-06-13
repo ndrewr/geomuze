@@ -23,15 +23,10 @@
 
 			// TODO: "prep" lyrix api with a trivial api request?
 			// Via utility function?
-			// need to wrap in try-catch or update api to receive this "warmup" request
-			try {
-				$.get('https://lyrix-api-v1.now.sh/')
-				.catch(function(res) {
-					console.log('Warmup for lyrix api...', res);
-				});
-			} catch (error) {
-				console.log('Outer wrapper for lyrix warmup...', error);
-			}
+			$.get('https://lyrix-api-v1.now.sh/')
+			.catch(function(res) {
+				console.log('"One good thing about music, when it hits you, you feel no pain." ― Bob Marley');
+			});
 		});
 	}
 
@@ -270,7 +265,7 @@
 		// PUBLIC: create then access the map info window
 		// NOTE only one window open at a time; reuse!
 		self.infopane = new google.maps.InfoWindow({
-			content: '<p>Well, Hullo! You can click on me to open these InfoBoxes! I will have more to show after a lil searchy-search!</p><p>You might be thinkin <em>what the heck is this.</em></p><p>Search for your city and check out the results. Clicking on a result box will show some fun-buttons.</p><p>Here is one to get ya started...I got this searching for "Udacity"!</p>',
+			content: '<h3>Well, Hullo!</h3><h4>Search for your city and check out the results. Click on me to open these InfoBoxes or click on a list result to show some fun-buttons.</h4><h4>Here is one to get ya started...I got this searching for "Udacity"!</h4>',
 			maxWidth: 320
 		});
 
@@ -281,8 +276,7 @@
 		});
 
 		// wrapper for opening info window ... see ListViewModel:checkIt()
-		// self.infopaneOpen = function(list_location) {
-		self.infopaneOpen = function(list_location, track) {
+		self.infopaneOpen = function(list_location) {
 			if((self.current_marker !== null) && (self.current_marker.position === list_location)) {
 				self.infopane.open(self.map, self.current_marker);
 			}
@@ -391,7 +385,7 @@
 				self.map.setZoom(10);
 				self.createMarker(new_coord);
 
-				// test
+				// display infopane if a location found
 				app.infopaneOpen(new_coord)
 			}
 			else if (status === status_code.UNKNOWN_ERROR) {
