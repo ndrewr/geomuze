@@ -1,16 +1,14 @@
-Udacity Nanodegree Project 5: The Neighborhood Map/ Geomuze
+# Udacity Nanodegree Project 5: The Neighborhood Map/ Geomuze
+(last update June 2018)
 ***************************************************************************
-Project hosted here:
-http://uncleoptimus.github.io/udacityP5/
 
-and
+[Project hosted here](http://ndrewr.github.io/geomuze/)
 
-http://demo.geomuze.xyz
 
-Description:
+## Description:
 Geomuze connects place names with song track titles, artists and even song lyrics. Many results will have links to lyrics provided by the MusixMatch service and some will have song samples via Spotify. Songs you like can be saved to a separate list.
 
-Instructions:
+## Instructions:
 Enter a city or place name into the search bar and hit 'DO IT'.
 The map is sent to that place (or wherever Google decides) and a pin is dropped representing the first match.
 The results can be clicked to expand with more options:
@@ -33,7 +31,7 @@ If either music service query fails to load, two messages will appear: one in th
 
 
 ***************************************************************************
-App Structure:
+## App Structure:
 This project primarily uses Knockout.js to provide app view binding, jQuery for DOM manipulation,
 Bootstrap for basic styles and Google Maps JS api for content manipulation.
 Song track search is provided by both Spotify and Musixmatch APIs.
@@ -46,7 +44,7 @@ Gulp.js is used for build process. The Gulp task concats all files: CSS into bui
 * tested in Chrome, Safari and Firefox browsers. Responsive for screens small as iPhone5 and large as Nexus 7.
 
 ****************************************************************************
-Log of Resources:
+## Log of Resources:
 - http://www.scottandrew.com/pub/html5audioplayer
 - https://miguelmota.com/blog/basic-html5-audio-manipulation/
 - http://snipplr.com/view/54863/wait-for-jquery-to-load/
