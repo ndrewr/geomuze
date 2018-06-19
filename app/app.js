@@ -23,7 +23,10 @@
 
 			// TODO: "prep" lyrix api with a trivial api request?
 			// Via utility function?
-			$.get('https://lyrix-api-v1.now.sh/')
+			$.get('https://lyrix-api-v1.now.sh/?com=hi')
+			.then(function (res) {
+				console.log(res);
+			})
 			.catch(function(res) {
 				console.log('"One good thing about music, when it hits you, you feel no pain." ― Bob Marley');
 			});
