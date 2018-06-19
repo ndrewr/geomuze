@@ -1,95 +1,74 @@
 define(["knockout", "text!./home.html", "knockout-postbox"], function(ko, homeTemplate) {
-
 	function HomeViewModel(route) {
 		var self = this;
 		self.message = ko.observable('Lets get rockin!').subscribeTo('home_msg');
 		self.search_terms = ko.observable();
+		self.display_terms = ko.observable().publishOn('search_terms');
 
-		var results_buffer = []; // hold results for one push into observable array; better perf
-
-		var test_list = [new Result("Can't Stop", "RHCP"), new Result("Flaws", "Bastille"), new Result("Rainbow Connection", "Willie Nelson"), new Result("Raindance Maggie", "RHCP"), new Result("Pompeii", "Bastille"), new Result("Star Wars Cantina", "Weird Al Yankovic"), new Result("Changes", "Tupac Shakur")];
-
-		self.search_results = ko.observableArray(test_list).publishOn('new_results');
-
-
+		// uses postbox lib to sync results with List View
+		self.search_results = ko.observableArray().publishOn('new_results');
+		
+		// kicks off all search activity:
+		// phase 1 google map location update
+		// phase 2 music track search thru lyrix api
 		self.goSearch = function() {
+			var query = self.search_terms();
+
+			if (! query) {
+				return
+			}
+
+			self.message("Searching for..." + query);
+			app.infopane.close();
+
+			// lets simplify the search terms shall we?
+			var simple_terms = query.split(/\s|,/g, 5).join(' ');
+			// alert result list of search terms
+			self.display_terms(simple_terms);
 			// update map by calling google place search
-//				mapView.doPlaceSearch(self.search_terms());
-			console.log("Search terms are...%s", self.search_terms());
-			self.message("Searching for..." + self.search_terms());
+			app.doPlaceSearch(simple_terms);
+			// lyrix server aggregates spotify and musixmatch search results
+			lyrixSearch(simple_terms)
 
-			var loc = app.doPlaceSearch(self.search_terms());
-			console.log("New location is at...%O", loc);
-
-			// format search string for api query
-			var formatted_terms = self.search_terms().replace( /\s|,/g ,"%20");
-			results_buffer = []; // reset results buffer
-			spotifySearch(formatted_terms);
-			musixSearch(formatted_terms); // note currently only this call actually updates observable!
-
-
+			// auto-switch list view to Results
+			var tab = $('#list-container').find('a').first();
+			tab.trigger('click');
+			app.showList(); // toggles visibility
+			self.search_terms(''); // reset search box
 		};
 
-		// look for songs on spotify
-		function spotifySearch(formatted_terms) {
-			var spotify_query = 'https://api.spotify.com/v1/search?q=' + formatted_terms + '&type=track&limit=10';
-
-			$.getJSON(spotify_query, function(data) {
-				var track_list = data.tracks.items; // an array
-				console.log("Response from Spotify...");
-				track_list.forEach(function(track) {
-
-					console.log("This spotify track object...%O", track);
-
-					var track_name = track.name;
-					var track_artist = track.artists[0].name;
-					var track_cover = track.album.images[2].url;
-					var track_url = track.preview_url;
-					if(!results_buffer.alreadyInArray(track_name, track_artist)) {
-						results_buffer.push(new Result(track_name, track_artist, track_cover, track_url));
-					}
-				});
-
-				self.search_results(results_buffer);
-			}).error(function(e) {
-				self.message("Aw man! Problem with Spotify!");
-			});
+		function checkRepeats (filter_list, track) {
+			if(!filter_list.alreadyInArray(track.track_name, track.artist_name)) {
+				filter_list.push(track);
+			}
+			return filter_list;
 		}
 
-		// look for songs on musixmatch
-		function musixSearch(formatted_terms) {
-			var musix_query = 'http://api.musixmatch.com/ws/1.1/track.search?q_lyrics=' + formatted_terms + '&f_has_lyrics=1&s_track_rating=ASC&f_lyrics_language=en&apikey=0bc726067d82f809bd3d1f7b5f0f7c2c';
-
-			$.getJSON(musix_query, function(data) {
-				console.log("Response from Musixmatch...");
-				var track_list = data.message.body.track_list;
-				track_list.forEach(function(track) {
-					var track_name = track.track.track_name;
-					var track_artist = track.track.artist_name;
-
-					var track_cover = track.track.album_coverart_100x100;
-//					console.log("The cover value for %s is %s", track_name, track_cover);
-
-
-					results_buffer.push(new Result(track_name, track_artist, track_cover));
-
-
-				});
-
-				// finally, upate the actual observable in one go
-				// AFTER async call returns
-
-				// should filter the array here for same results
-				console.log("results buffer has %s items", results_buffer.length);
-
-				console.log("Updating search results!!!");
-				self.search_results(results_buffer);
-			}).error(function(e) {
-				self.message("Uh-oh! Problem with MusixMatch!");
-			});
+		function createFilteredList(data) {
+			return data.spotify.reduce(
+				checkRepeats,
+				data.musixMatch.reduce(checkRepeats, [])
+			);
 		}
+	
+		function lyrixSearch(query) {
+			$.get('https://lyrix-api-v1.now.sh/?q=' + query)
+			.then(function(data) {
+				self.search_results(createFilteredList(data));
+				// preconfig the map infobox with top result
+				var top_hit = self.search_results()[0];
+				if(top_hit) {
+					app.configInfopane(top_hit);
+				}
 
+				self.message("Track search completed!");
+			})
+			.catch(function(error) {
+				self.message("Uh-oh! Problem fetching tracks...");		
+				app.informUser("Search error..try again?");								
+			});
+		};
+	// end of HomeViewModel definition
 	}
-
 	return { viewModel: HomeViewModel, template: homeTemplate };
 });

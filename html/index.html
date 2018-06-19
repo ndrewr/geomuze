@@ -9,8 +9,15 @@
 		<meta name="author" content="Andrew R Chen">
 		<title>Geomuze</title>
 		<link href='https://fonts.googleapis.com/css?family=Architects+Daughter|Audiowide' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="dist/build.css">
-	<script src="dist/scripts.js"></script>	</head>
+	<!-- build:css -->
+		<link href="dist/css/bundle.css" rel="stylesheet">
+	<!-- endbuild -->
+	<!-- build:js -->
+		<!-- <script src="app/require.config.js"></script> -->
+		<!-- <script data-main="app/startup" src="bower_modules/requirejs/require.js"></script> -->
+		<script type="text/javascript" src="dist/js/build.js"></script>
+		<!-- endbuild -->
+	</head>
 	<body>
 		<nav-bar params="route: route"></nav-bar>
 		<div id="page" class="container" data-bind="component: { name: route().page, params: route }">
