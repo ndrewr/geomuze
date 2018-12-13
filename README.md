@@ -1,4 +1,4 @@
-# Udacity Nanodegree Project 5: The Neighborhood Map/ Geomuze
+# Geomuze
 (last update June 2018)
 ***************************************************************************
 
@@ -6,7 +6,8 @@
 
 
 ## Description:
-Geomuze connects place names with song track titles, artists and even song lyrics. Many results will have links to lyrics provided by the MusixMatch service and some will have song samples via Spotify. Songs you like can be saved to a separate list.
+Geomuze connects place names with song track titles, artists and even song lyrics. Many results will have links to lyrics provided by the MusixMatch service and some will have song samples via Spotify. Songs you like can be saved to a separate list. 
+First built in fulfillment of Udacity Front-end developer program.
 
 ## Instructions:
 Enter a city or place name into the search bar and hit 'DO IT'.
